@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-03-07T20:32:59Z" product-name="participants">
+		<header />
+		<body>
+			<trans-unit id="plugin.name">
+				<source>Personal duty roster</source>
+				<target state="tanslated">Persönlicher Dienstplan</target>
+			</trans-unit>
+			<trans-unit id="plugin.description">
+				<source>With this plugin you can manage event commitments.</source>
+				<target state="tanslated">Mit diesem Plugin kannst Du Deine Veranstaltungszusagen verwalten.</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.title">
+				<source>Settings</source>
+				<target state="tanslated">Einstellungen</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.visibleTargetGroups">
+				<source>Visible target groups</source>
+				<target state="tanslated">Angezeigte Zielgruppen</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.optionalUserHiddenTargetGroups">
+				<source>Target groups that can optionally be hidden for the user</source>
+				<target state="tanslated">Für den Benutzer optional versteckbare Zielgruppen</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.dutyRosterStorageUids">
+				<source>Storage places of the duty roster </source>
+				<target state="tanslated">Speicherorte des Dienstplanes</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.planningStorageUid">
+				<source>Storage place of the duty roster planning</source>
+				<target state="tanslated">Speicherort Dienstplanzusagen</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.canViewMembers">
+				<source>Can view the members of event</source>
+				<target state="tanslated">Kann die Veranstaltungsteilnehmer sehen:</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.canViewCurrentlyOffDuty">
+				<source>Can view the currently off duty flag</source>
+				<target state="tanslated">Kann "Derzeit außer Dienst"-Marker sehen</target>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

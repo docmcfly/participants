@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-03-18T15:36:48Z" product-name="participants">
+		<header/>
+		<body>
+			<trans-unit id="plugin.name">
+				<source>Task force overview</source>
+				<target>Übersicht der Einsatzkräfte</target>
+			</trans-unit>
+			<trans-unit id="plugin.description">
+				<source>Displays the task forces.</source>
+				<target>Zeit die Einsatzkräfte an.</target>
+			</trans-unit>
+				<trans-unit id="flexforms_general.title">
+				<source>Settings</source>
+				<target>Einstellungen</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.localFireChief">
+				<source>Local fire chief</source>
+				<target>Ortsbrandmeister</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.deputyLocalFireChief">
+				<source>Deputy local fire chief</source>
+				<target>Stellvertr. Ortsbrandmeister</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.taskForceList">
+				<source>Task force list</source>
+				<target>Liste der Aktiven Kammerad:innen</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.userProfile">
+				<source>User profile page</source>
+				<target>Benutzereinstellungen</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.fireDepartmentGroupLeader">
+				<source>Fire department group leaders</source>
+				<target>Gruppenführer</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.fireDepartmentGroup1">
+				<source>Fire department group 1</source>
+				<target>Dienstgruppe 1</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.fireDepartmentGroup2">
+				<source>Fire department group 2</source>
+				<target>Dienstgrupper 2</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.withoutDigitalSignalingUnit">
+				<source>Without digital signal unit</source>
+				<target>Ohne DME</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.specialForces">
+				<source>Background color: Special forces</source>
+				<target>Hintergrundfarbe: Spezialkräfte</target>
+			</trans-unit>
+			
+			
+			<trans-unit id="flexforms_general.settings.currentFireDepartmentGroupColor">
+				<source>Background color: Active fire department group</source>
+				<target>Hintergrundfarbe: Aktive Dienstgruppe</target>
+			</trans-unit>
+			
+			
+		</body>
+	</file>
+</xliff>

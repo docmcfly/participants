@@ -1,0 +1,12 @@
+<!-- errors and infos -->
+<f:for each="{messages.infos}" as="info" >
+	 <div class="alert alert-success">
+			<f:translate key="{prefix}.{info}"/>
+	</div>
+</f:for>
+
+<f:for each="{messages.errors}" as="error" >
+	 <div class="alert alert-danger">
+			<f:translate key="{prefix}.{error}"/>
+	</div>
+</f:for>

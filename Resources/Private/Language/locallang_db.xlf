@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext"
+		original="messages" date="2020-03-18T15:36:48Z"
+		product-name="participants">
+		<header />
+		<body>
+		
+			<!--  COMMITMENT -->
+		
+			<trans-unit id="tx_participants_domain_model_commitment">
+				<source>Commitment</source>
+			</trans-unit>
+			<trans-unit
+				id="tx_participants_domain_model_commitment.present">
+				<source>Present</source>
+			</trans-unit>
+			<trans-unit
+				id="tx_participants_domain_model_commitment.present_default">
+				<source>Present Default</source>
+			</trans-unit>
+			<trans-unit
+				id="tx_participants_domain_model_commitment.user">
+				<source>User</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_user">
+				<source>User</source>
+			</trans-unit>
+			
+
+			<!--  USER  -->
+			
+			<trans-unit	id="tx_participants_domain_model_user.tx_extbase_type">
+				<source>Participants</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_user.tab_settings">
+				<source>Participation (duty roster)</source>
+			</trans-unit>
+
+			<trans-unit id="tx_participants_domain_model_user.hidden_personal_duty_roster_groups">
+				<source>Hidden personal duty roster groups</source>
+			</trans-unit>
+			<trans-unit	id="tx_participants_domain_model_user.apply_planning_data">
+				<source>Apply the planning data in your own events list if an event is added.</source>
+			</trans-unit>
+			<trans-unit
+				id="tx_participants_domain_model_user.info_mail_when_personal_duty_roster_changed">
+				<source>Sends an email if the own event is changed.</source>
+			</trans-unit>
+			<trans-unit
+				id="tx_participants_domain_model_user.personal_duty_event_reminder">
+				<source>Reminder email when an event is coming up.</source>
+			</trans-unit>
+
+			<!-- TIME_OUT -->
+
+			<trans-unit id="tx_participants_domain_model_time_out.from">
+				<source>From</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_time_out.until">
+				<source>Until</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_time_out.reason">
+				<source>Reason</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_time_out.user">
+				<source>User</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_time_out.title">
+				<source>Time out</source>
+			</trans-unit>
+			<trans-unit
+				id="tx_participants_domain_model_time_out.description">
+				<source>Contains all entries from a user time offes.</source>
+			</trans-unit>
+			
+
+			<!--  EVENT_TYPE -->
+			
+			<trans-unit id="tx_participants_domain_model_event_type.title">
+				<source>Event type</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event_type.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event_type.public">
+				<source>Public</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event_type.usergroups">
+				<source>Website user group</source>
+			</trans-unit>
+
+
+			<!--  EVENT -->
+			
+			<trans-unit id="tx_participants_domain_model_event.title">
+				<source>Event</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.eventType">
+				<source>Event type</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.publicDescription">
+				<source>Public description</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.showPublicDescription">
+				<source>Show the public description</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.canceled">
+				<source>Canceled</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.public">
+				<source>Public</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.public.option.public">
+				<source>Public</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.public.option.internal">
+				<source>Internal</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.public.option.inherited">
+				<source>Like the event type...</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.usergroups">
+				<source>Additional website user groups</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.showPublicUsergroups">
+				<source>Show the alternative website user groups in the public view</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.publicUsergroups">
+				<source>Website user groups (alternative for the public view)</source>
+			</trans-unit>
+
+			<trans-unit id="tx_participants_domain_model_event.date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.fullDay">
+				<source>Full day</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.time">
+				<source>Time</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.duration">
+				<source>Duration in hours</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.tabGroupSettings">
+				<source>User group settings</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.tabDescription">
+				<source>Description</source>
+			</trans-unit>
+
+
+			<!--  FE_GROUPS -->	
+			<trans-unit id="tx_participants_domain_model_feGroups.acronym">
+				<source>Acronym</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

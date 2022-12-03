@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//WC//DTD XHTML . Strict//EN"
+	"http://www.w.org/TR/xhtml/DTD/xhtml-strict.dtd">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:c="http://typo3.org/ns/Cylancer/Participants/ViewHelpers"
+	data-namespace-typo3-fluid="true" xmlns="http://www.w.org//xhtml" xml:lang="en" lang="en"
+>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+<body>
+	<f:layout name="Default" />
+	<f:section name="content">
+		<style type="text/css">
+.margin0 {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.fireFighter {
+	width: 15rem;
+	padding: .5rem 1rem .5rem 1rem;
+	margin-right: .5rem;
+	margin-bottom: .5rem;
+	vertical-align: middle;
+}
+
+.fireFighter * {
+	margin: auto;
+	text-align: center;
+}
+
+.fireFighter details {
+	margin: auto;
+	text-align: left;
+}
+
+.fireDepartmentGroup {
+	padding: .5rem 1rem .5rem 1rem;
+}
+.card-text:last-child {
+    margin-bottom: .5rem;
+}
+
+</style>
+		<f:format.htmlentitiesDecode>{specialForcesColor}</f:format.htmlentitiesDecode>
+		<div class="card profile taskForceOverview">
+			<f:security.ifAuthenticated>
+				<f:then>
+					<f:render section="authenticated" arguments="{_all}" />
+				</f:then>
+				<f:else>
+					<f:render section="nonauthenticated" arguments="{_all}" />
+				</f:else>
+			</f:security.ifAuthenticated>
+		</div>
+	</f:section>
+	<f:section name="authenticated">
+		<h2>
+			<f:translate key="taskForceOverview.title" />
+		</h2>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm">
+					<h4>
+						<f:translate key="taskForceOverview.show.localFireChief" />
+					</h4>
+					<f:render partial="userCard"
+						arguments="{user:localFireChief, userProfileLink:userProfileLink,taskForceListLink:taskForceListLink, currentUser:currentUser, specialForces:specialForces }"
+					/>
+				</div>
+				<div class="col-sm">
+					<h4>
+						<f:translate key="taskForceOverview.show.deputyLocalFireChief" />
+					</h4>
+					<f:render partial="userCard"
+						arguments="{user:deputyLocalFireChief, userProfileLink:userProfileLink,taskForceListLink:taskForceListLink, currentUser:currentUser, specialForces:specialForces }"
+					/>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-12">
+					<h4>
+						<f:translate key="taskForceOverview.show.fireDepartmentGroupLeaders" />
+					</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="row margin0">
+						<f:for each="{fireDepartmentGroupLeaders}" as="fireDepartmentGroupLeader">
+							<f:render partial="userCard"
+								arguments="{user:fireDepartmentGroupLeader, userProfileLink:userProfileLink,taskForceListLink:taskForceListLink, currentUser:currentUser, specialForces:specialForces }"
+							/>
+						</f:for>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-12">
+					<h4 style="{fireDepartmentGroup1Marker}" class="fireDepartmentGroup">
+						<f:translate key="taskForceOverview.show.fireDepartmentGroup1" />
+						<f:if condition="{currentFireDepartmentGroup}==1">
+							<f:translate key="taskForceOverview.show.currentFireDepartmentGroup" />
+						</f:if>
+					</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="row margin0">
+						<f:for each="{fireDepartmentGroup1}" as="fireFighter">
+							<f:render partial="userCard"
+								arguments="{user:fireFighter, userProfileLink:userProfileLink,taskForceListLink:taskForceListLink, currentUser:currentUser, specialForces:specialForces }"
+							/>
+						</f:for>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-12">
+					<h4 style="{fireDepartmentGroup2Marker}" class="fireDepartmentGroup">
+						<f:translate key="taskForceOverview.show.fireDepartmentGroup2" />
+						<f:if condition="{currentFireDepartmentGroup} == 0">
+							<f:translate key="taskForceOverview.show.currentFireDepartmentGroup" />
+						</f:if>
+					</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="row margin0">
+						<f:for each="{fireDepartmentGroup2}" as="fireFighter">
+							<f:render partial="userCard"
+								arguments="{user:fireFighter, userProfileLink:userProfileLink,taskForceListLink:taskForceListLink, currentUser:currentUser, specialForces:specialForces }"
+							/>
+						</f:for>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-12">
+					<h4>
+						<f:translate key="taskForceOverview.show.withoutDigitalSignalingUnit" />
+					</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="row margin0">
+						<f:for each="{withoutDigitalSignalingUnitAll}" as="withoutDigitalSignalingUnit">
+							<f:render partial="userCard"
+								arguments="{user:withoutDigitalSignalingUnit, userProfileLink:userProfileLink,taskForceListLink:taskForceListLink, currentUser:currentUser, specialForces:specialForces }"
+							/>
+						</f:for>
+					</div>
+				</div>
+			</div>			
+			<f:for each="{timeOuts}" key="reason" as="reasonTimeOuts">
+				<hr>
+				<div class="row">
+					<div class="col-12">
+						<h4>{reason}</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="row margin0">
+							<f:for each="{reasonTimeOuts}" as="timeout">
+								<f:render partial="userCard"
+									arguments="{user:timeout.user, userProfileLink:userProfileLink,taskForceListLink:taskForceListLink, currentUser:currentUser, specialForces:specialForces, until:timeout.until }"
+								/>
+							</f:for>
+						</div>
+					</div>
+				</div>
+				<div style="height: 2em;"></div>
+			</f:for>
+			<hr>
+			<h5><f:translate key="taskForceOverview.show.legende" /></h5>
+			<div class="card card-text fireFighter specialForces" title="{specialForces.title}">
+				{specialForces.title}
+			</div>
+			<div style="height: 2em;"></div>
+		</div>
+	</f:section>
+	<f:section name="nonauthenticated">
+		<div class="card-body">
+			<div class="card-text">
+				<f:translate key="taskForceOverview.error.notLoggedIn" />
+			</div>
+		</div>
+	</f:section>
+</body>
+</html>

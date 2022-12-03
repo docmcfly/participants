@@ -1,0 +1,45 @@
+
+plugin.tx_participants_personaldutyroster {
+    view {
+        # cat=plugin.tx_participants_personaldutyroster/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:participants/Resources/Private/Templates/
+        # cat=plugin.tx_participants_personaldutyroster/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:participants/Resources/Private/Partials/
+        # cat=plugin.tx_participants_personaldutyroster/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:participants/Resources/Private/Layouts/
+    }
+    persistence {
+        # cat=plugin.tx_participants_personaldutyroster//a; type=string; label=Default storage PID
+        storagePid =
+    }
+}
+
+plugin.tx_participants_dutyroster {
+    view {
+        # cat=plugin.tx_participants_dutyroster/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:participants/Resources/Private/Templates/
+        # cat=plugin.tx_participants_dutyroster/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:participants/Resources/Private/Partials/
+        # cat=plugin.tx_participants_dutyroster/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:participants/Resources/Private/Layouts/
+    }
+    persistence {
+        # cat=plugin.tx_participants_dutyroster//a; type=string; label=Default storage PID
+        storagePid =
+    }
+}
+
+plugin.tx_participants_taskforceoverview{
+    view {
+        # cat=plugin.tx_participants_taskforceoverview/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:participants/Resources/Private/Templates/
+        # cat=plugin.tx_participants_taskforceoverview/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:participants/Resources/Private/Partials/TaskForceOverview/
+        # cat=plugin.tx_participants_taskforceoverview/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:participants/Resources/Private/Layouts/
+    }
+    persistence {
+        # cat=plugin.tx_participants_taskforceoverview//a; type=string; label=Default storage PID
+        storagePid =
+    }
+}

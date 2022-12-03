@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-03-18T15:36:48Z" product-name="participants">
+		<header/>
+		<body>
+			<trans-unit id="plugin.name">
+				<source>Setting for the commitment settings</source>
+			</trans-unit>
+			<trans-unit id="plugin.description">
+				<source>WWith this plugin, settings regarding the individual duty roster can be made.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

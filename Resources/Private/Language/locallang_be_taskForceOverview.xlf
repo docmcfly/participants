@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-03-18T15:36:48Z" product-name="participants">
+		<header />
+		<body>
+			<trans-unit id="plugin.name">
+				<source>Task force overview</source>
+			</trans-unit>
+			<trans-unit id="plugin.description">
+				<source>Displays the task forces.</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.title">
+				<source>Settings</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.localFireChief">
+				<source>Local fire chief</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.deputyLocalFireChief">
+				<source>Deputy local fire chief</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.taskForceList">
+				<source>Task force list</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.userProfile">
+				<source>User profile page</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.fireDepartmentGroupLeader">
+				<source>Fire department group leaders</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.fireDepartmentGroup1">
+				<source>Fire department group 1</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.fireDepartmentGroup2">
+				<source>Fire department group 2</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.withoutDigitalSignalingUnit">
+				<source>Without digital signal unit</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.specialForces">
+				<source>Background color: Special forces</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.currentFireDepartmentGroupColor">
+				<source>Background color: Active fire department group</source>
+			</trans-unit>
+			
+		</body>
+	</file>
+</xliff>

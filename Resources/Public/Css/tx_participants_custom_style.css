@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+.tx_participants .lnkBtn, .tx_participants .lnkBtn:active,
+	.tx_participants .lnkBtn:focus, .tx_participants .lnkBtn:hover,
+	.tx_participants .lnkBtn:visited {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	box-shadow: 0;
+	outline: 0;
+	background-color: transparent;
+}
+
+.tx_participants .card-body.members-spinner {
+	width: .5rem;
+	height: .5rem;
+	padding: .25rem !important;
+}
+
+.tx_participants label.btn.btn-.toggle-on, .tx_participants label.btn.btn-.toggle-off
+	{
+	border: 1px solid #eaebec;
+	white-space: nowrap;
+	font-size: 75%;
+	border-radius: 12px
+}
+
+.tx_participants label.btn.btn-.toggle-on {
+	background-color: #8bd09b;
+}
+
+.tx_participants label.btn.btn-.toggle-off {
+	background-color: #eea38d;
+}
+
+.tx_participants span.toggle-handle.btn.btn-default {
+	background-color: #888;
+}
+
+.tx_participants label.btn.btn-.toggle-on.canceled, .tx_participants label.btn.btn-.toggle-off.canceled,
+	.tx_participants label.btn.btn-.toggle-on.tooLate, .tx_participants label.btn.btn-.toggle-off.tooLate
+	{
+	text-decoration: none;
+	background-color: #888 !important;
+}
+
+.tx_participants div.btn.btn-.toggle {
+	height: 2em;
+	width: 100% !important;
+}
+
+.tx_participants.table th h4 {
+	hyphens: none;
+}
+
+.tx_participants .dutyRoster.big .evenRow {
+	background-color: var(- -light);
+}
+
+.tx_participants .dutyRoster.big .upcomingDate {
+	background-color: #eb987e;
+}
+
+.tx_participants .dutyRoster.big .upcomingDateNext {
+	background-color: #f2baa9;
+}
+
+.tx_participants .dutyRoster.big .upcomingDateNextNext {
+	background-color: #f8dcd3;
+}
+
+.tx_participants  ul.commalist {
+	display: inline;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.tx_participants ul.commalist li {
+	display: inline;
+}
+
+.tx_participants ul.commalist.withBrackets li:first-child::before {
+	content: '(';
+}
+
+.tx_participants ul.commalist.withBrackets li:last-child::after {
+	content: ')';
+}
+
+.tx_participants ul.commalist li:not(:last-child)::after {
+	content: ',\0020';
+}
+
+.tx_participants .canceled {
+	text-decoration: line-through;
+}
+
+.error {
+	color: #d31f1f;
+}

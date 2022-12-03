@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//WC//DTD XHTML . Strict//EN"
+	"http://www.w.org/TR/xhtml/DTD/xhtml-strict.dtd">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:c="http://typo3.org/ns/Cylancer/Participants/ViewHelpers"
+	data-namespace-typo3-fluid="true" xmlns="http://www.w.org//xhtml" xml:lang="en" lang="en"
+>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+<body>
+	<f:layout name="Default" />
+	<f:section name="content">
+		<f:asset.css identifier="personalDutyRoster_custom_style" href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
+		<div class="dutyRoster {settings.renderType}">
+			<f:switch expression="{settings.renderType}">
+				<f:case value="big">
+					<table class="table">
+						<tr>
+							<th><h4 class="date">
+									<f:translate key="dutyRoster.large.header.date" />
+								</h4></th>
+							<th>
+								<div class="row">
+									<div class="col-sm">
+										<h4 class="label-info eventName">
+											<f:translate key="dutyRoster.large.header.event" />
+										</h4>
+									</div>
+									<div class="col-sm">
+										<h4 class="label-info eventName">
+											<f:translate key="dutyRoster.large.header.targetGroups" />
+										</h4>
+									</div>
+									<div class="col-sm">
+										<h4 class="label-info eventName">
+											<f:translate key="dutyRoster.large.header.descriptions" />
+										</h4>
+									</div>
+							</th>
+						</tr>
+						<f:for each="{events}" as="event" iteration="iterator">
+							<tr
+								class="
+						{f:if(condition:'{iterator.index % 2} == 0', then: 'evenRow')}
+						{f:if(condition='{event.current} == 0', then:'upcomingDate')} 
+						{f:if(condition='{event.current} == 1', then:'upcomingDateNext')} 
+						{f:if(condition='{event.current} == 2', then:'upcomingDateNextNext')}"
+							>
+								<td><span class="date"> <time
+											datetime="{f:if(condition:event.fullDay,then:'{f:format.date(date:event.dateTime, format:\'Y-m-d\')}', else:'{f:format.date(date:event.dateTime, format:\'Y-m-d H:i\')}')}"
+										> <f:format.date format="d.m.Y">{event.date}</f:format.date> <f:if condition="!{event.fullDay}">
+											<f:format.date format="H:i">{event.time}</f:format.date>
+										</f:if></time>
+								</span></td>
+								<td>
+									<div class="row">
+										<div class="col-sm">
+											<span class="label-info eventName {f:if(condition:event.canceled, then:'canceled')}">{event.eventType.title}</span>
+										</div>
+										<div class="col-sm">
+											<ul class="commalist">
+												<f:for each="{event.visiblePublicUserGroups}" as="usergroup">
+													<li><span class="label-info targetGroup" style="white-space: nowrap;">{usergroup.title}</span></li>
+												</f:for>
+											</ul>
+										</div>
+										<div class="col-sm ">
+											<span class="label-info teaser"><f:if condition="{event.canceled}">
+													<f:then>
+														<f:translate key="dutyRoster.large.event.canceled" />
+													</f:then>
+													<f:else>
+														<f:if condition="{event.showPublicDescription}">
+															<f:then>
+																<f:if condition="{event.publicDescription}">
+																	<f:then>
+																		<f:format.html>{event.publicDescription}</f:format.html>
+																	</f:then>
+																	<f:else>&nbsp;</f:else>
+																</f:if>
+															</f:then>
+															<f:else>
+																<f:if condition="{event.description}">
+																	<f:then>
+																		<f:format.html>{event.description}</f:format.html>
+																	</f:then>
+																	<f:else>&nbsp;</f:else>
+																</f:if>
+															</f:else>
+														</f:if>
+													</f:else>
+												</f:if> </span>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</f:for>
+					</table>
+					<f:link.action action="downloadIcs" pageType="102" arguments="{id:uid}">
+						<f:translate key="dutyRoster.large.link.download.iCalendar" />
+					</f:link.action>
+				</f:case>
+				<f:case value="little">
+					<f:for each="{events}" as="event" iteration="iterator">
+						<div class="row" style="margin-left: 0; margin-right: 0;">
+							<!-- date -->
+							<div class="col-">
+								<time datetime="{f:format.date(date:event.date, format:'Y-m-d')}"> <f:format.date format="d.m">{event.date}</f:format.date> </time>
+							</div>
+							<!-- category -->
+							<div class="col-">
+								&nbsp; <span class="label label-info"><span class=" {f:if(condition:event.canceled, then:'canceled')}"
+									title="{f:if(condition:event.canceled, then:'{f:translate(key:\'dutyRoster.small.event.canceled\')}')}"
+								>{event.eventType.title}</span> <f:if condition="{f:count(subject:event.visiblePublicUsergroups)} > 0">
+										<ul class="commalist withBrackets">
+											<f:for each="{event.visiblePublicUsergroups}" as="ug" iteration="iter">
+												<f:if condition="{ug.accronym}">
+													<li><abbr title="{ug.title}">{ug.accronym}</abbr></li>
+												</f:if>
+											</f:for>
+										</ul>
+									</f:if> </span>
+								<div class="col-"></div>
+							</div>
+						</div>
+						<!-- row -->
+					</f:for>
+				</f:case>
+			</f:switch>
+		</div>
+	</f:section>
+</body>
+</html>

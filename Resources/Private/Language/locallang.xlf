@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-03-07T20:32:59Z" product-name="participants">
+		<header />
+		<body>
+
+			<!-- personal duty roster -->
+			<trans-unit id="personalDutyRoster.list.present">
+				<source>Present</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.event">
+				<source>Event</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.targetGroups">
+				<source>Target groups</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.presentOverview">
+				<source>Present overview</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.allMembers">
+				<source>All members</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.members">
+				<source>Members</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.dropouts">
+				<source>Dropouts</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.listOfMembers">
+				<source>List of Members ...</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.members.nobody">
+				<source>None members</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.members.currentlyOffDuty">
+				<source>( &#128683; Currently off duty )</source>
+			</trans-unit>
+
+			<trans-unit id="personalDutyRoster.list.scheduled">
+				<source>Scheduled.</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.notScheduled">
+				<source>Not scheduled.</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.in">
+				<source>I am involved</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.absent">
+				<source>I am absend</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.visibleCalendarEntries.symbols">
+				<source>📅 🔎</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.visibleCalendarEntries">
+				<source>Download visible calendar entries.</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.visiblePromisedCalendarEntries.symbols">
+				<source>📅 🔎 ✔️</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.visiblePromisedCalendarEntries">
+				<source>Download visible calendar entries.</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.promisedCalendarEntries.symbols">
+				<source>📅 ✔️</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.promisedCalendarEntries">
+				<source>Download all promised calendar entries.</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.calendarEntriesTitle">
+				<source>Download calendar entries in CalDAV format:</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.calendarEntriesFileHelp">
+				<source>This download contains an ICS file. This file contains the calendar entries in CalDAV format. Many calendars can import this file format.</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.event.canceled">
+				<source>⛔ Canceled</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.filterSettings.title">
+				<source>Filter settings</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.filterSettings.submit">
+				<source>Accept</source>
+			</trans-unit>
+
+
+
+			<!-- Task personal duty roster planning -->
+			<trans-unit id="task.personalDutyRosterPlanning.title">
+				<source>Planning of the personal duty rosters</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.description">
+				<source>Updates and creates planning commitments for the personal duty rosters</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.dutyRosterStorageUids">
+				<source>Storage / page uids of the duty rosters (contains the events)</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.planningStorageUid">
+				<source>Storage / page uids for the commitments:</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.feUserStorageUids">
+				<source>Storage / page uids of the frontend users:</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.feUsergroupStorageUids">
+				<source>Storage / page uids of the frontend user groups:</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.specifiedUserUids">
+				<source>Limit calculation to the following website users (optional, comma separated list):</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.resetUsers">
+				<source>Resets the user commitments:</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.error.invalidPage.dutyRosterStorageUids">
+				<source>Duty roster page id is not valid. (Not a number or not a valid page: %1)</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.error.invalidPage.planningStorageUid">
+				<source>Plannung page id is not valid. (is not a number or not a valid page: %1)</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.error.invalidPage.feUserStorageUids">
+				<source>Front end user page id is not valid. (Not a number or not a valid page: %1)</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.error.invalidPage.feUsergroupStorageUids">
+				<source>Front end user group page id is not valid. (Not a number or not a valid page: %1)</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.error.invalidUser.specifiedUserUids">
+				<source>Specified user uids are not valid. (Not a number or not a valid page: %1)</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.senderName">
+				<source>Personal duty roster planner</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.subject">
+				<source>Your personal duty roster is changed</source>
+
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.salutation">
+				<source>Hello %s,</source>
+
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.teaser">
+				<source>Your list of own events is updated: </source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.titleInserts">
+				<source>New events:</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.titleUpdates">
+				<source>Updated events: </source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.titleCanceled">
+				<source>Canceled events: </source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.footer">
+				<source>Check all listed events and update your commitments, please.</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.regards">
+				<source>Your adminstration</source>
+			</trans-unit>
+
+			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.senderName">
+				<source>Personal duty roster planner</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.subject">
+				<source>Do you have one or more Events tomorrow</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.salutation">
+				<source>Hello %s,</source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.teaser">
+				<source>Do you have one or more Events tomorrow: </source>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.regards">
+				<source>Your adminstration</source>
+			</trans-unit>
+
+			<!-- Timneout management -->
+			<trans-unit id="timeOutManagement.deleteTimeOut">
+				<source>Delete</source>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.list.title">
+				<source>Time out management</source>
+			</trans-unit>
+
+			<!-- add time list -->
+			<trans-unit id="timeOutManagement.list.from">
+				<source>From</source>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.list.until">
+				<source>Until</source>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.list.reason">
+				<source>Reason</source>
+			</trans-unit>
+
+
+			<!-- add time out form -->
+			<trans-unit id="timeOutManagement.addTimeOut.title">
+				<source>Add a new time out</source>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.from">
+				<source>From</source>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.until">
+				<source>Until</source>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.updateCommitments">
+				<source>Updtes the comitments</source>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.reason">
+				<source>Reason</source>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.submit">
+				<source>Add</source>
+			</trans-unit>
+
+			<trans-unit id="timeOutManagement.addTimeOut.info.savedSuccessful">
+				<source>Successful saved</source>
+			</trans-unit>
+
+			<!-- add time out form :: errors -->
+			<trans-unit id="timeOutManagement.addTimeOut.error.notLoggedIn">
+				<source>You are not logged in.</source>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.error.mysteryError">
+				<source>It is an unknown error.</source>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.error.invalidFrom">
+				<source>The start timestamp is invalid.</source>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.error.invalidUntil">
+				<source>The end timestamp is invalid.</source>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.error.untilBeforeFrom">
+				<source>The end timestamp is before the start timestamp.</source>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.localFireChief">
+				<source>Local fire chief</source>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.deputyLocalFireChief">
+				<source>Deputy local fire chief</source>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.fireDepartmentGroupLeaders">
+				<source>Fire department group leaders</source>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.fireDepartmentGroup1">
+				<source>Fire department group 1</source>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.fireDepartmentGroup2">
+				<source>Fire department group 2</source>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.withoutDigitalSignalingUnit">
+				<source>Without digital signal unit</source>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.currentFireDepartmentGroup">
+				<source>(Active fire department group)</source>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.userCard.until">
+				<source>Until including</source>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.error.notLoggedIn">
+				<source>You are not logged in.</source>
+			</trans-unit>
+
+
+			<!-- commitment settings -->
+			<trans-unit id="commitmentSettings.title">
+				<source>Setting of onw events</source>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.form.applyPlanningData">
+				<source>Checked: active logout
+					Not checked: active logon
+				</source>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.form.applyPlanningData.hint">
+				<source>Apply the planning data in your personal duty roster if an event is added.</source>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.form.infoMailWhenPersonalDutyRosterChanged">
+				<source>Sends an email if your personal duty roster is changed.</source>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.form.infoMailWhenPersonalDutyRosterChanged.hint">
+				<source>Info mail contains added, changed or deleted information.</source>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.form.personalDutyEventReminder">
+				<source>Sends an email when you have an event the next day.</source>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.form.submit">
+				<source>Save</source>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.show.legende">
+				<source>Legende</source>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.error.notLoggedIn">
+				<source>You are not logged in.</source>
+			</trans-unit>
+
+			<!-- public duty roster -->
+			<trans-unit id="dutyRoster.large.header.date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.large.header.event">
+				<source>Event</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.large.header.targetGroups">
+				<source>Target group</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.large.header.descriptions">
+				<source>Descriptions</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.large.event.canceled">
+				<source>⛔ Canceled</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.large.link.download.iCalendar">
+				<source>📆 Download the duty roster in the iCal format</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.small.event.canceled">
+				<source>⛔ Canceled</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>
