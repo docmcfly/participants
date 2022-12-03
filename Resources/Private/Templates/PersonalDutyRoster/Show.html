@@ -1,0 +1,346 @@
+<!DOCTYPE html PUBLIC "-//WC//DTD XHTML . Strict//EN"
+	"http://www.w.org/TR/xhtml/DTD/xhtml-strict.dtd">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:c="http://typo3.org/ns/Cylancer/Participants/ViewHelpers"
+	data-namespace-typo3-fluid="true" xmlns="http://www.w.org//xhtml" xml:lang="en" lang="en"
+>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+<body>
+	<f:layout name="Default" />
+	This Template is responsible for creating a table of domain objects. If you modify this template, do not forget to change the overwrite settings in
+	/Configuration/ExtensionBuilder/settings.yaml: Resources: Private: Templates: List.html: keep Otherwise your changes will be overwritten the next time you save
+	the extension in the extension builder
+	<f:section name="content">
+		<f:asset.css identifier="personalDutyRoster_bootstrap-toggle.min.css" href="EXT:participants/Resources/Public/Css/bootstrap-toggle.min.css" />
+		<f:asset.css identifier="personalDutyRoster_custom_style" href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
+		<f:asset.script identifier="personalDutyRoster_jquery-3.6.1.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.1.min.js" />
+		<f:asset.script identifier="personalDutyRoster_bootstrap-toggle.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/bootstrap-toggle.min.js"
+			defer="true"
+		/>
+		<f:if condition="{personalDutyRosterFilterSettings.usable()}">
+			<div class="accordion" id="accordionExample">
+				<div class="card">
+					<div class="card-header" id="headingOne">
+						<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							<h5>
+								<f:translate key="personalDutyRoster.list.filterSettings.title" />
+							</h5>
+						</button>
+					</div>
+					<div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+						<div class="card-body">
+							<div class="form-group">
+								<f:form action="setPersonalDutyRosterFilter" class="form" method="POST" object="{personalDutyRosterFilterSettings}"
+									objectName="personalDutyRosterFilterSettings"
+								>
+									<div class="row">
+										<f:for each="{personalDutyRosterFilterSettings.settings}" as="set" iteration="iter">
+											<div class="form-check col">
+												<div class="checkbox">
+													<label for="visibilities.{set.frontendUserGroup.uid}" style="width: 15rem;"> <f:form.checkbox
+															property="settings.{set.frontendUserGroup.uid}.{visible}" value="1" checked="{set.visible}"
+														/> {set.frontendUserGroup.title}
+													</label>
+												</div>
+											</div>
+										</f:for>
+									</div>
+									<div class="row">
+										<div class="col" style="text-align: right;">
+											<f:form.submit value="{f:translate(key:'personalDutyRoster.list.filterSettings.submit')}">
+												<f:translate key="personalDutyRoster.list.filterSettings.submit" />
+											</f:form.submit>
+										</div>
+									</div>
+								</f:form>
+							</div>
+						</div>
+						<hr />
+						<f:variable name="paragraph">
+							&#013;&#010;&#013;&#010;
+						</f:variable>
+						<div class="row" style="padding-bottom: 1em;">
+							<div class="col col-5" style="padding-left: 2em;">
+								<f:translate key="personalDutyRoster.list.download.calendarEntriesTitle" />
+							</div>
+							<div class="col-2">
+								<f:link.action
+									title="{f:translate(key:'personalDutyRoster.list.download.visibleCalendarEntries')}{paragraph -> f:format.htmlentitiesDecode(encoding: 'utf-8')}{f:translate(key:'personalDutyRoster.list.download.calendarEntriesFileHelp')}"
+									class="btn btn-outline-primary" pageType="104" action="downloadAllVisibleCalendarEntries" arguments="{id:uid}"
+								>
+									<f:translate key="personalDutyRoster.list.download.visibleCalendarEntries.symbols" />
+								</f:link.action>
+							</div>
+							<div class="col-2">
+								<f:link.action
+									title="{f:translate(key:'personalDutyRoster.list.download.visiblePromisedCalendarEntries')}{paragraph -> f:format.htmlentitiesDecode(encoding: 'utf-8')}{f:translate(key:'personalDutyRoster.list.download.calendarEntriesFileHelp')}"
+									class="btn btn-outline-primary" pageType="104" action="downloadAllPromisedVisibleCalendarEntries" arguments="{id:uid}"
+								>
+									<f:translate key="personalDutyRoster.list.download.visiblePromisedCalendarEntries.symbols" />
+								</f:link.action>
+							</div>
+							<div class="col-2">
+								<f:link.action
+									title="{f:translate(key:'personalDutyRoster.list.download.promisedCalendarEntries')}{paragraph -> f:format.htmlentitiesDecode(encoding: 'utf-8')}{f:translate(key:'personalDutyRoster.list.download.calendarEntriesFileHelp')}"
+									class="btn btn-outline-primary" pageType="104" action="downloadAllPromisedCalendarEntries" arguments="{id:uid}"
+								>
+									<f:translate key="personalDutyRoster.list.download.promisedCalendarEntries.symbols" />
+								</f:link.action>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</f:if>
+		<f:variable name="dataOn">{f:translate(key:'personalDutyRoster.list.in')}</f:variable>
+		<f:variable name="dataOff">{f:translate(key:'personalDutyRoster.list.absent')}</f:variable>
+		<br>
+		<table class="tx_participants table">
+			<thead>
+				<tr>
+					<th scope="col"><h4>
+							<f:translate key="personalDutyRoster.list.present" />
+						</h4></th>
+					<th scope="col"><h4>
+							<f:translate key="personalDutyRoster.list.event" />
+						</h4></th>
+				</tr>
+			</thead>
+			<tbody>
+				<f:for each="{commitments}" as="commitment">
+					<f:variable name="presentDefaultCount">{counts.{commitment.event.uid}.presentDefaultCount}</f:variable>
+					<f:variable name="progressColor">bg-success</f:variable>
+					<f:variable name="progressOverloadColor">{f:if(condition:'{presentDefaultCount} == 0', then:'bg-success', else: 'bg-primary')}</f:variable>
+					<f:variable name="dataOnStyle">
+						<f:if condition="{commitment.isNotChangable}">tooLate</f:if>
+						<f:if condition="{commitment.event.canceled}">canceled</f:if>
+						<f:if condition="{commitment.presentDefault} || ({presentDefaultCount} == 0) ">
+							<f:then> success</f:then>
+							<f:else> primary</f:else>
+						</f:if>
+					</f:variable>
+					<f:variable name="dataOffStyle">
+						<f:if condition="{commitment.isNotChangable}">tooLate</f:if>
+						<f:if condition="{commitment.event.canceled}">canceled</f:if>
+						<f:if condition="{commitment.presentDefault}">
+							<f:then> primary</f:then>
+							<f:else> light</f:else>
+						</f:if>
+					</f:variable>
+					<tr>
+						<td><f:form absolute="true" action="setPresent" name="commitment" object="{commitment}" arguments="{commitment:commitment, id:uid}"
+								id="event_{commitment.event.uid}" pageType="103" enctype="multipart/form-data"
+							>
+								<f:form.checkbox id="checkbox_{commitment.event.uid}" additionalAttributes="{onchange:'presentAjaxSubmit({commitment.event.uid})'}" property="present"
+									value="1" style="display:none"
+									data="{toggle:'toggle', 
+													 on:'{dataOn}' ,
+													 off:'{dataOff}',
+													 onstyle: '{dataOnStyle}',
+													 offstyle:'{dataOffStyle}'
+													 }"
+									checked="{f:if(condition:commitment.event.canceled,then:false, else:commitment.present)}"
+									disabled="{f:if(condition:'({commitment.isNotChangable} || {commitment.event.canceled}',then:'disabled')}"
+								/>
+							</f:form></td>
+						<td>
+							<div class="container">
+								<div class="row">
+									<div class="col-">
+										<f:format.date format="j.m.Y">{commitment.event.date}</f:format.date>
+										<f:if condition="!{commitment.event.fullDay}">
+											<f:then>
+												<f:format.date format="H:i">{commitment.event.time}</f:format.date>
+											</f:then>
+											<f:else>
+												<span style="padding-left: 4ex;">&nbsp;</span>
+											</f:else>
+										</f:if>
+									</div>
+									<div class="col-sm ">
+										<span class="label-info eventName strong {f:if(condition:commitment.event.canceled,then:'canceled')}">{commitment.event.eventType.title}</span>
+										<div>
+											<f:if condition="{commitment.event.canceled}">
+												<f:translate key="personalDutyRoster.list.event.canceled" />
+											</f:if>
+											<f:if condition="{commitment.event.description}">
+												<f:format.html>{commitment.event.description}</f:format.html>
+											</f:if>
+										</div>
+									</div>
+									<div class="col-sm">
+										<f:variable name="targetGroupFound" value="false" />
+										<ul class="commalist">
+											<f:for each="{commitment.event.visibleUserGroups}" as="userGroup" iteration="iter">
+												<li><span class="label-info targetGroup">{userGroup.title}</span></li>
+											</f:for>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<f:if condition="!{commitment.event.canceled}">
+						<tr>
+							<td style="border: 0"><f:if condition="{commitment.presentDefault}">
+									<f:then>
+										<div class="badge badge-pill badge-success" style="display: block">
+											<f:translate key="personalDutyRoster.list.scheduled" />
+										</div>
+									</f:then>
+									<f:else>
+										<div class="badge badge-pill badge-light" style="display: block">
+											<f:translate key="personalDutyRoster.list.notScheduled" />
+										</div>
+									</f:else>
+								</f:if></td>
+							<td style="border: 0">
+								<div class="progress">
+									<div class="progress-bar {progressColor}" id="progressbar_{commitment.event.uid}" role="progressbar" style="width: {counts.{commitment.event.uid"
+										aria-valuenow="{counts.{commitment.event.uid}.presentPercent}" aria-valuemin="0" aria-valuemax="{counts.{commitment.event.uid}.presentDefaultPercent}"
+									>{counts.{commitment.event.uid}.displayPercent}%</div>
+									<div class="progress-bar {progressOverloadColor}" id="overProgressbar_{commitment.event.uid}" role="progressbar"
+										style="width: {counts.{commitment.event.uid" aria-valuenow="{counts.{commitment.event.uid}.presentOverPercent}" aria-valuemin="0" aria-valuemax="100"
+									></div>
+								</div> <f:translate key="personalDutyRoster.list.members" />: <span id="presentCount_{commitment.event.uid}">{counts.{commitment.event.uid}.presentCount}</span>
+								( {counts.{commitment.event.uid}.presentDefaultCount} ) <f:if condition="{canViewMembers}">
+									<f:form style="display:inline" absolute="true" action="getMembers" name="commitment" hiddenFieldClassName="d-none" object="{commitment}"
+										arguments="{commitment:commitment, id=uid}" id="member_list_{commitment.event.uid}" pageType="103" enctype="multipart/form-data"
+									>
+										<button id="getMemberBtn_{commitment.event.uid}" class="getMemberBtn text-primary lnkBtn" type="button" data-toggle="collapse"
+											data-target="#members_list_{commitment.event.uid}" aria-expanded="true" aria-controls="members_list_{commitment.event.uid}"
+											onclick="getMembersAjaxSubmit({commitment.event.uid})"
+										>
+											&nbsp; :: &nbsp;
+											<f:translate key="personalDutyRoster.list.listOfMembers" />
+										</button>
+									</f:form>
+								</f:if>
+							</td>
+						</tr>
+						<f:if condition="{canViewMembers}">
+							<tr>
+								<td style="border: 0"></td>
+								<td style="border: 0">
+									<div id="members_list_{commitment.event.uid}" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+										<div class="card-body spinner-border members-spinner" role="status">
+											<span class="sr-only">Loading...</span>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</f:if>
+					</f:if>
+				</f:for>
+			</tbody>
+		</table>
+		<script defer>
+			
+			
+			function presentAjaxSubmit(id) {
+				var form = $('#event_' + id);
+				var u = form.attr('action');
+				var cb = $('#checkbox_' + id)[0]
+				var service = {
+					ajaxCall : function(data) {
+						$.ajax({
+							method : "POST",
+							url : u,
+							cache : false,
+							data : form.serialize(),
+							success : function(response) {
+								var r = JSON.parse(response)
+								var p = $('#progressbar_' + id)
+								p.html(r['counts']['displayPercent'] + '%')
+								p.css('width', r['counts']['presentPercent'] + '%')
+								var o = $('#overProgressbar_' + id)
+								o.css('width', r['counts']['presentOverPercent'] + '%')
+								$('#presentCount_' + id).html(r['counts']['presentCount'])
+								var c = $('#checkbox_' + id)
+								c[0].checked = true
+								c.prop('checked', r['present'])
+								getMembersAjaxSubmit(id, true)
+								
+							},
+							error : function(jqXHR, textStatus, errorThrow) {
+								alert(textStatus)
+							}
+						});
+					}
+				};
+				service.ajaxCall(form);
+
+				
+			}
+			
+			function getMembersAjaxSubmit(id, refresh = false) {
+				var ml = $('#members_list_' + id)
+				if (refresh | (!ml.hasClass('show') && ml.hasClass('collapse'))) {
+					var form = $('#member_list_' + id);
+					var u = form.attr('action');
+					var service = {
+						ajaxCall : function(data) {
+							$.ajax({
+								method : "POST",
+								url : u,
+								cache : false,
+								data : form.serialize(),
+								success : function(response) {
+									var r = JSON.parse(response)
+									var ml = $('#members_list_' + id).first()
+								    ml.empty()
+									var m = r['members']
+									if(m != null) {
+										var content = '<ul>'
+										Object.values(m).forEach( value => {
+											content += '<li>'
+											content += value['first_name']+' '+value['last_name'] 
+											<f:if condition="{canViewCurrentlyOffDuty}">
+												if( value['currently_off_duty'] == 1 ) {
+											 		content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
+											 	}	
+											</f:if>
+											content += '</li>'
+										})
+										content += '</ul>'
+										ml.append(content)
+									} else {
+										ml.append('<ul><li><f:translate key="personalDutyRoster.list.members.nobody" /></li></ul>')
+									}
+									var d =  r['dropouts']           
+									if(d != null && d.length > 0) {
+									
+										var content = '<strong><f:translate key="personalDutyRoster.list.dropouts" /></strong><ul>'
+										for( i=0; i < d.length; i++) {
+												  content += '<li>'
+												  content += d[i]['first_name']+' '+d[i]['last_name'] 
+												  <f:if condition="{canViewCurrentlyOffDuty}">
+												  	if( d[i]['currently_off_duty'] == 1 ) {
+												  		content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
+												  	}	
+												  </f:if>
+												  content += '</li>'
+										}
+										content += '</ul>'
+										ml.append(content)
+									} 
+									
+								},
+								error : function(jqXHR, textStatus, errorThrow) {
+									var ml = $('#members_list_' + id).first()
+									ml.empty()
+									ml.text = 'Loading error...'
+									
+								}
+							});
+						}
+					};
+					service.ajaxCall(form);
+				}
+			}
+			
+		</script>
+	</f:section>
+</body>
+</html>

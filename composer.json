@@ -1,0 +1,30 @@
+{
+	"name" : "cylancer/participants",
+	"type" : "typo3-cms-extension",
+	"description" : "A extension for user participants. ",
+	"license" : "GPL-2.0-or-later",
+	"require" : {
+		"typo3/cms-core" : "^11.5"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Cylancer\\Participants\\" : "Classes"
+		}
+	},
+	"authors" : [{
+			"name" : "Clemens Gogolin",
+			"email" : "service@cylancer.net",
+			"role" : "developer",
+			"homepage" : "https://github.com/docmcfly/participants"
+		}
+	],
+	"support" : {
+		"issues" : "https://github.com/docmcfly/participants/issues",
+		"source" : "https://github.com/docmcfly/participants/master/loginViaEmail"
+	},
+	"extra" : {
+		"typo3/cms" : {
+			"extension-key" : "participants"
+		}
+	}
+}

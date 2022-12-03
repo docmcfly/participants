@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//WC//DTD XHTML . Strict//EN"
+	"http://www.w.org/TR/xhtml/DTD/xhtml-strict.dtd">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:c="http://typo3.org/ns/Cylancer/Participants/ViewHelpers"
+	data-namespace-typo3-fluid="true" xmlns="http://www.w.org//xhtml" xml:lang="en" lang="en"
+>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+<body>
+	<f:layout name="Default" />
+	<f:section name="content">
+		<f:format.htmlentitiesDecode>{specialForcesColor}</f:format.htmlentitiesDecode>
+		<div class="card profile commitmentSettings">
+			<f:security.ifAuthenticated>
+				<f:then>
+					<f:render section="authenticated" arguments="{_all}" />
+				</f:then>
+				<f:else>
+					<f:render section="nonauthenticated" arguments="{_all}" />
+				</f:else>
+			</f:security.ifAuthenticated>
+		</div>
+	</f:section>
+	<f:section name="authenticated">
+		<div class="card-body">
+			<h4 class="card-title">
+				<f:translate key="commitmentSettings.title" />
+			</h4>
+			<f:form action="save" name="commitmentSettings" object="{commitmentSettings}" enctype="multipart/form-data">
+				<div class="form-check">
+					<f:form.checkbox id="applyPlanningData" property="applyPlanningData" value="someValue" class="form-check-input" />
+					&nbsp;&nbsp;&nbsp; <label for="applyPlanningData"><f:format.nl2br><f:translate key="commitmentSettings.form.applyPlanningData" /></f:format.nl2br></label>
+					<details><f:format.nl2br><f:translate key="commitmentSettings.form.applyPlanningData.hint" /></f:format.nl2br></details>
+				</div>
+				<div class="form-check">
+					<f:form.checkbox id="infoMailWhenPersonalDutyRosterChanged" property="infoMailWhenPersonalDutyRosterChanged" value="someValue" class="form-check-input" />
+					&nbsp;&nbsp;&nbsp; <label for="infoMailWhenPersonalDutyRosterChanged"><f:format.nl2br><f:translate key="commitmentSettings.form.infoMailWhenPersonalDutyRosterChanged" /></f:format.nl2br></label>
+					<details><f:format.nl2br><f:translate key="commitmentSettings.form.infoMailWhenPersonalDutyRosterChanged.hint" /></f:format.nl2br></details>
+				</div>
+				<div class="form-check">
+					<f:form.checkbox id="personalDutyEventReminder" property="personalDutyEventReminder" value="someValue" class="form-check-input" />
+					&nbsp;&nbsp;&nbsp; <label for="personalDutyEventReminder"><f:format.nl2br><f:translate key="commitmentSettings.form.personalDutyEventReminder" /></f:format.nl2br></label>
+				</div>
+				<div class="form-check" style="margin-top:1rem;">
+					<f:form.submit class="btn btn-primary btn-lg" value="{f:translate(key: 'commitmentSettings.form.submit')}" />
+				</div>
+			</f:form>
+		</div>
+	</f:section>
+	<f:section name="nonauthenticated">
+		<div class="card-body">
+			<div class="card-text">
+				<f:translate key="commitmentSettings.error.notLoggedIn" />
+			</div>
+		</div>
+	</f:section>
+</body>
+</html>

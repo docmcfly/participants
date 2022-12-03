@@ -1,0 +1,36 @@
+<f:variable name="isSpecialForce" value="{c:containsObjectWithUid(uid:specialForces.uid, objects:user.usergroup)}" />
+<div class="card card-text fireFighter {f:if(condition:isSpecialForce, then:'specialForces')}" title="{f:if(condition:isSpecialForce, then:specialForces.title)}">
+	<f:if condition="{currentUser.uid}=={user.uid}">
+		<f:then>
+			<f:if condition="{userProfileLink}">
+				<f:then>
+					<f:link.typolink parameter="{userProfileLink}">
+						<strong>{user.firstName}&nbsp;{user.lastName}</strong>
+					</f:link.typolink>
+				</f:then>
+				<f:else>
+					<strong>{user.firstName}&nbsp;{user.lastName}</strong>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:if condition="{taskForceListLink}">
+				<f:then>
+					<f:link.typolink parameter="{taskForceListLink}#name_{user.username}">
+						<strong>{user.firstName}&nbsp;{user.lastName}</strong>
+					</f:link.typolink>
+				</f:then>
+				<f:else>
+					<strong>{user.firstName}&nbsp;{user.lastName}</strong>
+				</f:else>
+			</f:if>
+		</f:else>
+	</f:if>
+	<f:if condition="{until}">
+		<details>
+			<f:translate key="taskForceOverview.show.userCard.until" />
+			:
+			<f:format.date format="d.m.Y">{until}</f:format.date>
+		</details>
+	</f:if>
+</div>

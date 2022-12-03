@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-03-07T20:32:59Z" product-name="participants">
+		<header />
+		<body>
+
+			<!-- personal duty roster -->
+			<trans-unit id="personalDutyRoster.list.present">
+				<source>Present</source>
+				<target state="tanslated">Anwesenheit</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.date">
+				<source>Date</source>
+				<target state="tanslated">Datum</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.event">
+				<source>Event</source>
+				<target state="tanslated">Veranstaltung</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.targetGroups">
+				<source>Target groups</source>
+				<target state="tanslated">Zielgruppen</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.presentOverview">
+				<source>Present overview</source>
+				<target state="tanslated">Überblick</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.allMembers">
+				<source>All members</source>
+				<target state="tanslated">Alle Feuerwehrmitglieder</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.members">
+				<source>Members</source>
+				<target state="tanslated">Teilnehmer*innen</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.dropouts">
+				<source>Dropouts</source>
+				<target state="tanslated">Absagen</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.listOfMembers">
+				<source>List of Members ...</source>
+				<target state="tanslated">Liste der Teilnehmer*innen...</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.members.nobody">
+				<source>None members</source>
+				<target state="tanslated">Keine Teilnehmer*in</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.members.currentlyOffDuty">
+				<source>( &#128683; Currently off duty )</source>
+				<target state="tanslated">( &#128683; Derzeit außer Dienst )</target>
+			</trans-unit>
+
+			<trans-unit id="personalDutyRoster.list.scheduled">
+				<source>Scheduled.</source>
+				<target state="tanslated">Eingeplant</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.notScheduled">
+				<source>Not scheduled.</source>
+				<target state="tanslated">Nicht eingeplant</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.in">
+				<source>I am involved</source>
+				<target state="tanslated">Bin dabei</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.absent">
+				<source>I am absend</source>
+				<target state="tanslated">Bin abwesend</target>
+			</trans-unit>
+
+			<trans-unit id="personalDutyRoster.list.download.visibleCalendarEntries.symbols">
+				<source>📅 🔎</source>
+				<target state="tanslated">📅 🔎</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.visibleCalendarEntries">
+				<source>Download visible calendar entries.</source>
+				<target state="tanslated">Alle sichtbaren Kalendereinträge herunterladen.</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.visiblePromisedCalendarEntries.symbols">
+				<source>📅 🔎 ✔️</source>
+				<target state="tanslated">📅 🔎 ✔️</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.visiblePromisedCalendarEntries">
+				<source>Download visible calendar entries.</source>
+				<target state="tanslated">Sichtbare zugestimmte Kalendereinträge herunterladen.</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.promisedCalendarEntries.symbols">
+				<source>📅 ✔️</source>
+				<target state="tanslated">📅 ✔️</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.promisedCalendarEntries">
+				<source>Download all promised calendar entries.</source>
+				<target state="tanslated">Alle zugestimmte Kalendereinträge herunterladen.</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.calendarEntriesTitle">
+				<source>Download calendar entries in CalDAV format:</source>
+				<target state="tanslated">Kalendereinträge im CalDAV-Format herunterladen:</target>
+			</trans-unit>
+
+			<trans-unit id="personalDutyRoster.list.download.calendarEntriesFileHelp">
+				<source>This download contains an ICS file. This file contains the calendar entries in CalDAV format. Many calendars can import this file format.</source>
+				<target state="tanslated">Dieser Download enhält eine ICS-Datei. Diese Datei enhält die Kalendereinträge im CalDAV-Format. Viele Kalender können dieses Datei-Format importieren.</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.event.canceled">
+				<source>⛔ Canceled</source>
+				<target>⛔ Abgesagt</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.filterSettings.title">
+				<source>Filter settings</source>
+				<target state="tanslated">Filter-Einstellungen</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.filterSettings.submit">
+				<source>Accept</source>
+				<target state="tanslated">Übernehmen</target>
+			</trans-unit>
+
+			
+
+			<!--  Task personal duty roster planning -->
+			<trans-unit id="task.personalDutyRosterPlanning.title">
+				<source>Planning of the personal duty rosters</source>
+				<target state="tanslated">Planungen der persönlichen Dienstpläne</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.description">
+				<source>Updates and creates planning commitments for the personal duty rosters</source>
+				<target state="tanslated">Aktuallisiert und fügte neue Planungszuagen für die persönliche Dienstpläne</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.dutyRosterStorageUids">
+				<source>Storage / page uids of the duty rosters (contains the events)</source>
+				<target state="tanslated">Seiten-UIDs des Dienstplanes (Enthält die Events):</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.planningStorageUid">
+				<source>Storage / page uids for the commitments:</source>
+				<target state="tanslated">Seiten-UIDs der Plannungszusagen:</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.feUserStorageUids">
+				<source>Storage / page uids of the frontend users:</source>
+				<target state="tanslated">Seiten-UIDs der Webseiten-Benutzer:</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.feUsergroupStorageUids">
+				<source>Storage / page uids of the frontend user groups:</source>
+				<target state="tanslated">Seiten-UIDs der Webseiten-Benutzergruppen:</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.specifiedUserUids">
+				<source>Limit calculation to the following website users (optional, comma separated list):</source>
+				<target state="tanslated">Berechnung beschränken auf die folgenden Webseitenbenutzer (optional, kommaseparierte Liste):</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.resetUsers">
+				<source>Resets the user commitments:</source>
+				<target state="tanslated">Zurücksetzen der Nutzereinstellungen für die Webseitenbenutzer:</target>
+			</trans-unit> 
+			<trans-unit id="task.personalDutyRosterPlanning.enableReminder">
+				<source>Enables the reminder for the next event...</source>
+				<target state="tanslated">Schaltet den Erinnungsmechanismus für das nächste Event ein.</target>
+			</trans-unit> 
+			<trans-unit id="task.personalDutyRosterPlanning.error.invalidPage.dutyRosterStorageUids">
+				<source>Duty roster page id is not valid. (Not a number or not a valid page: %1)</source>
+				<target state="tanslated">Seiten-UIDs des Dienstplanes ist ungültig. (Keine Nummer oder keine gültige Seite: %1)</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.error.invalidPage.planningStorageUid">
+				<source>Plannung page id is not valid. (is not a number or not a valid page: %1)</source>
+				<target state="tanslated">Seiten-UID für Planungszusagen ist ungültig. (Keine Nummer oder keine gültige Seite: %1)</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.error.invalidPage.feUserStorageUids">
+				<source>Front end user page id is not valid. (Not a number or not a valid page: %1)</source>
+				<target state="tanslated">Seiten-UID der Webseitennutzer ist ungültig. (Keine Nummer oder keine gültige Seite: %1)</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.error.invalidPage.feUsergroupStorageUids">
+				<source>Front end user group page id is not valid. (Not a number or not a valid page: %1)</source>
+				<target state="tanslated">Seiten-UID der Webseitennutzergruppen ist ungültig. (Keine Nummer oder keine gültige Seite: %1)</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.error.invalidUser.specifiedUserUids">
+				<source>Specified user uids are not valid. (Not a number or not a valid page: %1)</source>
+				<target state="tanslated">Die UIDs der Nutzereinschränkung ist ungültig: %1.</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.senderName">
+				<source>Personal duty roster planner</source>
+				<target state="tanslated">Persönlicher Dienstplaner</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.subject">
+				<source>Your personal duty roster is changed</source>
+				<target state="tanslated">Der persönliche Dienstplan wurde verändert.</target>
+			</trans-unit>
+
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.salutation">
+				<source>Hello %s,</source>
+				<target state="tanslated">Hallo %s,</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.teaser">
+				<source>Your list of own events is updated: </source>
+				<target state="tanslated">Dein persönlicher Dienstplan wurde aktualisert: Termine wurden hinzugefügt, abgesagt oder die Planung wurde so geändert, dass es Dich betrifft.</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.titleInserts">
+				<source>New events:</source>
+				<target state="tanslated">Neu hinzugefügte Veranstaltungen:</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.titleUpdates">
+				<source>Updated events: </source>
+				<target state="tanslated">Bei den folgenden Terminen hat sich die Planung geändert:</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.titleCanceled">
+				<source>Canceled events: </source>
+				<target state="tanslated">Folgenden Termine wurden abgesagt:</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.footer">
+				<source>Check all listed events and update your commitments, please.</source>
+				<target state="tanslated">Bitte überprüfe alle aufgelisteten Veranstaltungen und aktualisiere Deine Zusagen.</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.regards">
+				<source>Your adminstration</source>
+				<target state="tanslated">Mit freundlichem Gruß
+Eurer Webserviceteam
+				</target>
+			</trans-unit>
+
+			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.senderName">
+				<source>Personal duty roster planner</source>
+				<target state="tanslated">Persönlicher Dienstplaner</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.subject">
+				<source>Do you have one or more Events tomorrow</source>
+				<target state="tanslated">Du hast morgen eine oder mehrere Veranstaltungen</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.salutation">
+				<source>Hello %s,</source>
+				<target state="tanslated">Hallo %s,</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.teaser">
+				<source>Do you have one or more Events tomorrow: </source>
+				<target state="tanslated">Du hast morgen eine oder mehrere Veranstaltungen:</target>
+			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.regards">
+				<source>Your adminstration</source>
+				<target state="tanslated">Mit freundlichem Gruß
+Eurer Webserviceteam
+				</target>
+			</trans-unit>
+
+
+			<!-- Timneout management -->
+
+			<trans-unit id="timeOutManagement.deleteTimeOut">
+				<source>Delete</source>
+				<target state="tanslated">Löschen</target>
+			</trans-unit>
+
+			<trans-unit id="timeOutManagement.list.title">
+				<source>Time out management</source>
+				<target state="tanslated">Auszeitenverwaltung</target>
+			</trans-unit>
+
+			<!-- add time list -->
+			<trans-unit id="timeOutManagement.list.from">
+				<source>From</source>
+				<target state="tanslated">Von</target>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.list.until">
+				<source>Until</source>
+				<target state="tanslated">Bis</target>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.list.reason">
+				<source>Reason</source>
+				<target state="tanslated">Grund</target>
+			</trans-unit>
+
+
+			<!-- add time out form -->
+			<trans-unit id="timeOutManagement.addTimeOut.title">
+				<source>Add a new time out</source>
+				<target state="tanslated">Neue Auszeit hinzufügen</target>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.from">
+				<source>From</source>
+				<target state="tanslated">Von</target>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.until">
+				<source>Until</source>
+				<target state="tanslated">Bis</target>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.updateCommitments">
+				<source>Updtes the comitments</source>
+				<target state="tanslated">Persönlicher Dienstplan wird aktualisiert: Alle Veranstaltungen in dem Zeitraum werden auf "Bin abwesend" gesetzt.</target>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.reason">
+				<source>Reason</source>
+				<target state="tanslated">Grund</target>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.submit">
+				<source>Add</source>
+				<target state="tanslated">Hinzufügen</target>
+			</trans-unit>
+
+
+			<trans-unit id="timeOutManagement.addTimeOut.info.savedSuccessful">
+				<source>Successful saved</source>
+				<target state="tanslated">Erfolgreich gespeichert</target>
+			</trans-unit>
+
+
+			<!-- add time out form :: errors -->
+			<trans-unit id="timeOutManagement.addTimeOut.error.notLoggedIn">
+				<source>You are not logged in.</source>
+				<target state="tanslated">Sie sind nicht eingeloggt.</target>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.error.mysteryError">
+				<source>It is an unknown error.</source>
+				<target state="tanslated">Unbekannter Fehler.</target>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.error.invalidFrom">
+				<source>The start timestamp is invalid.</source>
+				<target state="tanslated">Der Startzeitpunkt ist ungültig.</target>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.error.invalidUntil">
+				<source>The end timestamp is invalid.</source>
+				<target state="tanslated">Der Endzeitpunkt ist ungültig.</target>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.error.untilBeforeFrom">
+				<source>The end timestamp is before the start timestamp.</source>
+				<target state="tanslated">Der Endzeitpunkt ist vor dem Startzeitpunkt.</target>
+			</trans-unit>
+
+			<trans-unit id="taskForceOverview.show.localFireChief">
+				<source>Local fire chief</source>
+				<target>Ortsbrandmeister</target>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.deputyLocalFireChief">
+				<source>Deputy local fire chief</source>
+				<target>Stellvertr. Ortsbrandmeister</target>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.fireDepartmentGroupLeaders">
+				<source>Fire department group leaders</source>
+				<target>Gruppenführer</target>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.fireDepartmentGroup1">
+				<source>Fire department group 1</source>
+				<target>Dienstgruppe 1</target>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.fireDepartmentGroup2">
+				<source>Fire department group 2</source>
+				<target>Dienstgruppe 2</target>
+			</trans-unit>
+			<trans-unit id="taskForceOverview.show.withoutDigitalSignalingUnit">
+				<source>Without digital signal unit</source>
+				<target>Im Ort</target>
+			</trans-unit>
+
+			<trans-unit id="taskForceOverview.show.currentFireDepartmentGroup">
+				<source>(Active fire department group)</source>
+				<target>(Aktive Dienstgruppe)</target>
+			</trans-unit>
+
+
+			<trans-unit id="taskForceOverview.show.userCard.until">
+				<source>Until including</source>
+				<target>Bis einschließlich</target>
+			</trans-unit>
+			
+			<trans-unit id="taskForceOverview.error.notLoggedIn">
+				<source>You are not logged in.</source>
+				<target>Sie sind nicht eingeloggt.</target>
+			</trans-unit>
+
+			<trans-unit id="commitmentSettings.title">
+				<source>Setting of your personal duty roster</source>
+				<target>Einstellung - Persönlicher Dienstplan</target>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.form.applyPlanningData">
+				<source>Checked: active logout 
+				Not checked: active logon</source>
+				<target>Haken gesetzt: Aktives AB-melden
+				 Haken nicht gesetzt: Aktives AN-melden</target>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.form.applyPlanningData.hint">
+				<source>Apply the planning data in your personal duty roster if an event is added.</source>
+				<target>Wenn der Haken gesetzt und ein neuer Termin zum persönlichen Dienstplan hinzugefügt wird, wird automatisch die Plannungseinstellung für die persönliche Zusage übernommen. Wurde hingegen der Haken nicht gesetzt, dann stehen alle neuen Termine unabhängig von der Planung immer auf "Bin abwesend".  </target>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.form.infoMailWhenPersonalDutyRosterChanged">
+				<source>Sends an email if the personal duty roster is changed.</source>
+				<target>Sendet eine Benachtigungs-E-Mail, wenn der persönliche Dienstplan verändert wurde.</target>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.form.infoMailWhenPersonalDutyRosterChanged.hint">
+				<source>Info mail contains added, changed or deleted information.</source>
+				<target>Über folgende Änderungen wird man informiert: 
+				a) Es wurde ein neuer Termin hinzugefügt für den man eingeplant wurde. 
+				b) Es wurde die Planung verändert und die eigene Zusagen stimmt nicht mehr damit überein.
+				c) Ein Termin wurde abgesagt, für den man bereits eine Zugesage erteilt hat. (In diesem Fall wird die Zusage und die Planung für diesen abgesagten Termin gelöscht. Sollte der Termin wieder reaktivuert werden, wird man informiert, wenn man von der Planung betroffen ist.)</target>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.form.personalDutyEventReminder">
+				<source>Sends an email when you have an event the next day.</source>
+				<target>Sendet eine E-Mail, wenn Sie eine Veranstaltung am nächsten Tag haben.</target>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.form.submit">
+				<source>Save</source>
+				<target>Speichern</target>
+			</trans-unit>
+			<trans-unit id="commitmentSettings.show.legende">
+				<source>Legende</source>
+				<target>legende</target>
+			</trans-unit>
+
+			<trans-unit id="commitmentSettings.error.notLoggedIn">
+				<source>You are not logged in.</source>
+				<target>Sie sind nicht eingeloggt.</target>
+			</trans-unit>
+
+			<!--  public duty roster -->
+
+			<trans-unit id="dutyRoster.large.header.date">
+				<source>Date</source>
+				<target>Datum</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.large.header.event">
+				<source>Event</source>
+				<target>Veranstaltung</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.large.header.targetGroups">
+				<source>Target group</source>
+				<target>Zielgruppe</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.large.header.descriptions">
+				<source>Descriptions</source>
+				<target>Anmerkungen</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.large.event.canceled">
+				<source>⛔ Canceled</source>
+				<target>⛔ Abgesagt</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.large.link.download.iCalendar">
+				<source>📆 Download the duty roster in the iCal format</source>
+				<target>📆 Dienstplan im iCal-Format als Downalod</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.small.event.canceled">
+				<source>⛔ Canceled</source>
+				<target>⛔ Abgesagt</target>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

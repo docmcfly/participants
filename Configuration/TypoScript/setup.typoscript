@@ -1,0 +1,84 @@
+plugin.tx_participants {
+	view {
+		templateRootPaths {
+			0 = EXT:participants/Resources/Private/Templates/
+			1 = {$plugin.tx_participants.view.templateRootPath}
+		}
+
+		partialRootPaths {
+			0 = EXT:participants/Resources/Private/Partials/
+			1 = {$plugin.tx_participants.view.partialRootPath}
+		}
+
+		layoutRootPaths {
+			0 = EXT:participants/Resources/Private/Layouts/
+			1 = {$plugin.tx_participants.view.layoutRootPath}
+		}
+
+	}
+}
+
+
+tx_participants_dutyRosterICal = PAGE
+tx_participants_dutyRosterICal {
+    typeNum = 102
+    config {
+	    disableAllHeaderCode = 1
+	    xhtml_cleaning = none
+	    admPanel = 0
+	    metaCharset = utf-8
+	    additionalHeaders.10.header = Content-Type: text/calendar;charset=utf-8  
+	    additionalHeaders.20.header = Content-Disposition: inline; filename=export.ics 
+	    #additionalHeaders = Content-Type:application/calendar;charset=utf-8| Content-Disposition: inline; filename=export.ics
+	    disablePrefixComment = 1
+    }
+  10 = USER
+  10 {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run 
+    extensionName = Participants
+    pluginName = DutyRoster
+    vendorName = Cylancer
+  }
+}
+
+
+tx_participants_personalDutyRoster_ajaxConnect = PAGE
+tx_participants_personalDutyRoster_ajaxConnect {
+    typeNum = 103
+    config {
+        disableAllHeaderCode = 1
+        additionalHeaders = Content-type:application/json
+        xthml_cleaning = 0 
+        admPanel = 0 
+    }
+  10 = USER
+  10 {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run 
+    extensionName = Participants
+    pluginName = PersonalDutyRoster
+    vendorName = Cylancer
+  }
+}
+
+tx_participants_personalDutyRoster_iCal = PAGE
+tx_participants_personalDutyRoster_iCal {
+    typeNum = 104
+    config {
+	    disableAllHeaderCode = 1
+	    xhtml_cleaning = none
+	    admPanel = 0
+	    metaCharset = utf-8
+	    additionalHeaders.10.header = Content-Type: text/calendar;charset=utf-8  
+	    additionalHeaders.20.header = Content-Disposition: inline; filename=export.ics 
+	    disablePrefixComment = 1
+    }
+  10 = USER
+  10 {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run 
+    extensionName = Participants
+    pluginName = PersonalDutyRoster
+    vendorName = Cylancer
+  }
+}
+
+

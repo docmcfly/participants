@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.title
+					</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<settings.renderType>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.renderType
+							</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0">
+										<numIndex index="0">LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.renderType.small</numIndex>
+										<numIndex index="1">little</numIndex>
+									</numIndex>
+									<numIndex index="1">
+										<numIndex index="0">LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.renderType.large</numIndex>
+										<numIndex index="1">big</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</settings.renderType>
+					<settings.smallEventCount>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.smallEventCount
+							</label>
+							<config>
+								<type>input</type>
+								<eval>num</eval>
+								<default>5</default>
+							</config>
+						</TCEforms>
+					</settings.smallEventCount>
+					<!-- end of settings -->
+
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-03-07T20:32:59Z" product-name="participants">
+		<header />
+		<body>
+			<trans-unit id="plugin.name">
+				<source>Personal duty roster</source>
+			</trans-unit>
+			<trans-unit id="plugin.description">
+				<source>With this plugin you can manage event commitments.</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.title">
+				<source>Settings</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.visibleTargetGroups">
+				<source>Visible target groups</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.optionalUserHiddenTargetGroups">
+				<source>Target groups that can optionally be hidden for the user</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.dutyRosterStorageUids">
+				<source>Storage places of the duty roster </source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.planningStorageUid">
+				<source>Storage place of the duty roster planning</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.canViewMembers">
+				<source>Can view the members of event</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.canViewCurrentlyOffDuty">
+				<source>Can view the currently off duty flag</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

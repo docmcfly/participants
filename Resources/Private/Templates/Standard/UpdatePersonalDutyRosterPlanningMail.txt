@@ -1,0 +1,28 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+<f:layout name="Default"/>
+<f:section name="content"><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.salutation" arguments="{0:user.name}" />
+
+<f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.teaser" />
+<f:if condition="{inserts}">
+<f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.titleInserts" />
+<f:for each="{inserts}" as="commitment"> * <f:format.date format="d.m.Y">{commitment.event.date}</f:format.date><f:if condition="!{commitment.event.fullDay}"> <f:format.date format="H:i">{commitment.event.time}</f:format.date></f:if> :: {commitment.event.eventType.title}<f:if condition="{commitment.event.description}"> ( {commitment.event.description->f:format.stripTags()} )</f:if>
+</f:for></f:if>
+<f:if condition="{updates}">
+<f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.titleUpdates" />
+<f:for each="{updates}" as="commitment"> * <f:format.date format="d.m.Y">{commitment.event.date}</f:format.date><f:if condition="!{commitment.event.fullDay}"> <f:format.date format="H:i">{commitment.event.time}</f:format.date></f:if> :: {commitment.event.eventType.title}<f:if condition="{commitment.event.description}"> ( {commitment.event.description-> f:format.stripTags()} )</f:if>
+</f:for></f:if>
+<f:if condition="{canceled}">
+<f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.titleCanceled" />
+<f:for each="{canceled}" as="commitment"> * <f:format.date format="d.m.Y">{commitment.event.date}</f:format.date><f:if condition="!{commitment.event.fullDay}"> <f:format.date format="H:i">{commitment.event.time}</f:format.date></f:if> :: {commitment.event.eventType.title}<f:if condition="{commitment.event.description}"> ( {commitment.event.description-> f:format.stripTags()} )</f:if>
+</f:for></f:if>
+<f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.footer" />
+ 
+<f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.regards" />
+</f:section>
+</body></html>
+
+

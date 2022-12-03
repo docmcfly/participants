@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-03-18T15:36:48Z" product-name="participants">
+		<header/>
+		<body>
+			<trans-unit id="plugin.name">
+				<source>Time out management.</source>
+			</trans-unit>
+			<trans-unit id="plugin.description">
+				<source>With this plugin you can manage your private time outs.</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.title">
+				<source>Settings</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.reasons">
+				<source>Reasons</source>
+			</trans-unit>
+			 
+		</body>
+	</file>
+</xliff>
