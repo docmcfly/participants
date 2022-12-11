@@ -14,6 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'title' => 'Participants',
     'description' => 'Diese Erweiterung kümmert sich rund um das Thema Teilnahme bei der Ortsfeuerwehr Letter.
 Change log:
+3.1.2 :: Fix: The personal reminder does not remind canceled event.  
 3.1.1 :: Change: The personal reminder setting default is enabled. 
 3.1.0 :: Add: The personal roster planner has a new user event reminder function.
 3.0.6 :: Fix: PersonalDutyRoster -> change the date output format for old SAMSUNG cell phones
@@ -34,7 +35,7 @@ Change log:
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.1.1',
+    'version' => '3.1.2',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
