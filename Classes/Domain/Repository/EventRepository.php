@@ -15,7 +15,7 @@ use Cylancer\Participants\Domain\Model\Event;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2020 C. Gogolin <service@cylancer.net>
+ * (c) 2022 C. Gogolin <service@cylancer.net>
  *
  * The repository for events
  */
@@ -53,17 +53,21 @@ class EventRepository extends Repository
         $qb->select('tx_participants_domain_model_event.uid')
             ->from('tx_participants_domain_model_event')
             ->where($qb->expr()
-            ->eq('date', $qb->expr()->literal($tomorrow)))
+            ->eq('date', $qb->expr()
+            ->literal($tomorrow)))
+            ->andWhere($qb->expr()
+            ->eq('canceled', 0))
             ->orderBy('date', QueryInterface::ORDER_ASCENDING)
             ->addOrderBy('time', QueryInterface::ORDER_ASCENDING);
 
-       //  debug($qb->getSql());
+        // debug($qb->getSql());
         $s = $qb->execute();
         $return = array();
 
         while ($row = $s->fetch()) {
             $return[] = $this->findByUid($row['uid']);
         }
+        // debug($return);
         return $return;
     }
 
