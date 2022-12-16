@@ -9,6 +9,9 @@
 <body>
 	<f:layout name="Default" />
 	<f:section name="content">
+		<f:asset.script identifier="usertools_jquery-3.6.1.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.1.min.js" />
+		<f:asset.script identifier="usertools_fastSearch.js" src="EXT:participants/Resources/Public/JavaScript/Src/jumpToCurrentEvent.js" defer="defer" />
+	
 		<f:asset.css identifier="personalDutyRoster_custom_style" href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
 		<div class="dutyRoster {settings.renderType}">
 			<f:switch expression="{settings.renderType}">
@@ -41,6 +44,7 @@
 							<tr
 								class="
 						{f:if(condition:'{iterator.index % 2} == 0', then: 'evenRow')}
+						{f:if(condition='{event.current} == -1', then:'upcomingDateBefore')} 
 						{f:if(condition='{event.current} == 0', then:'upcomingDate')} 
 						{f:if(condition='{event.current} == 1', then:'upcomingDateNext')} 
 						{f:if(condition='{event.current} == 2', then:'upcomingDateNextNext')}"
