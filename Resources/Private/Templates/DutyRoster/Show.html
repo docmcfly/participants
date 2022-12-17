@@ -9,9 +9,10 @@
 <body>
 	<f:layout name="Default" />
 	<f:section name="content">
-		<f:asset.script identifier="usertools_jquery-3.6.1.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.1.min.js" />
-		<f:asset.script identifier="usertools_fastSearch.js" src="EXT:participants/Resources/Public/JavaScript/Src/jumpToCurrentEvent.js" defer="defer" />
-	
+		<f:if condition="{settings.autoScroll}">
+			<f:asset.script identifier="usertools_jquery-3.6.1.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.1.min.js" />
+			<f:asset.script identifier="usertools_fastSearch.js" src="EXT:participants/Resources/Public/JavaScript/Src/jumpToCurrentEvent.js" defer="defer" />
+		</f:if>
 		<f:asset.css identifier="personalDutyRoster_custom_style" href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
 		<div class="dutyRoster {settings.renderType}">
 			<f:switch expression="{settings.renderType}">

@@ -35,6 +35,28 @@
 				<target state="tanslated">Kann "Derzeit außer Dienst"-Marker sehen</target>
 			</trans-unit>
 
+			<trans-unit id="flexforms_general.settings.renderType">
+				<source>Render type</source>
+				<target state="tanslated">Darstellungsform</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.renderType.small">
+				<source>Small (for start page and side column)</source>
+				<target state="tanslated">Klein (für Startseiten und Seitenstreifen)</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.renderType.large">
+				<source>Large</source>
+				<target state="tanslated">Groß</target>
+			</trans-unit>
+
+			<trans-unit id="flexforms_general.settings.smallEventCount">
+				<source>Count of event on the small render type</source>
+				<target state="tanslated">Anzahl der Termine bei der kleinen Darstellungsform</target>
+			</trans-unit>
+
+			<trans-unit id="flexforms_general.settings.autoScroll">
+				<source>Automatic scrolling to the next event</source>
+				<target state="tanslated">Automatisches Scrollen zum nächsten Termin</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
