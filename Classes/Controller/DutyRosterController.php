@@ -39,23 +39,38 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array $events
      * @return array
      */
-    private function prepareEvents($events)
+    private function prepareEvents(Array $events)
     {
         $now = time();
-        $afterNow = - 1;
-        $c = 0;
+        $c = count($events);
 
-        /**
-         *
-         * @var Event $e
-         */
-        foreach ($events as $e) {
-            if ($afterNow == - 1 && $e->getDateTime()->getTimestamp() > $now) {
-                $afterNow = $c;
+        /** @var Event $firstEvent */
+        $firstEvent = $events[0];
+
+        if ($c == 0) {
+            $afterNow = - 1;
+        } else {
+            /** @var Event $firstEvent */
+            $lastEvent = $events[count($events) - 1];
+            if ($lastEvent->getDateTime()->getTimestamp() < $now) {
+                $afterNow = count($events) * (- 1);
+            } else {
+                $afterNow = - 1;
+                $c = 0;
+
+                /**
+                 *
+                 * @var Event $e
+                 */
+                foreach ($events as $e) {
+                    if ($afterNow == - 1 && $e->getDateTime()->getTimestamp() > $now) {
+                        $afterNow = $c;
+                    }
+                    $c ++;
+                }
+                $afterNow = $afterNow * (- 1);
             }
-            $c ++;
         }
-        $afterNow = $afterNow * (- 1);
         /**
          *
          * @var Event $e

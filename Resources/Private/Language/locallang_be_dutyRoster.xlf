@@ -4,40 +4,46 @@
 		<header />
 		<body>
 			<trans-unit id="plugin.name">
-				<source>Own events</source>
-				<target>Individueller Dienstplan</target>
+				<source>Duty roster</source>
 			</trans-unit>
 			<trans-unit id="plugin.description">
-				<source>With this plugin you can manage event commitments.</source>
-				<target>Mit diesem Plugin kannst Du Deine Veranstaltungszusagen verwalten.</target>
+				<source>This plug displays the duty roster.</source>
 			</trans-unit>
+
+
+
 			<trans-unit id="flexforms_general.title">
 				<source>Settings</source>
-				<target state="tanslated">Einstellungen</target>
 			</trans-unit>
 			<trans-unit id="flexforms_general.settings.hiddenTargetGroups">
 				<source>Hidden target groups</source>
-				<target state="tanslated">Unterbunde Zielgruppen</target>
 			</trans-unit>
 			<trans-unit id="flexforms_general.settings.optionalUserHiddenTargetGroups">
 				<source>Target groups that can optionally be hidden for the user</source>
-				<target state="tanslated">Für den Benutzer optional versteckbare Zielgruppen</target>
-			</trans-unit>
-			<trans-unit id="flexforms_general.settings.targetGroups">
-				<source>Parent of target groups</source>
-				<target state="tanslated">Unter welchen Knoten befinden sich die Zielgruppen?</target>
-			</trans-unit>
-			<trans-unit id="flexforms_general.settings.eventGroups">
-				<source>Parents of events</source>
-				<target state="tanslated">Unter welchen Knoten befinden sich die Veranstaltungen?</target>
 			</trans-unit>
 			<trans-unit id="flexforms_general.settings.canViewMembers">
 				<source>Can view the members of event</source>
-				<target state="tanslated">Kann die Veranstaltungsteilnehmer sehen:</target>
 			</trans-unit>
 			<trans-unit id="flexforms_general.settings.canViewCurrentlyOffDuty">
 				<source>Can view the currently off duty flag</source>
-				<target state="tanslated">Kann "Derzeit außer Dienst"-Marker sehen</target>
+			</trans-unit>
+
+			<trans-unit id="flexforms_general.settings.renderType">
+				<source>Render type</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.renderType.small">
+				<source>Small (for start page and side column)</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.renderType.large">
+				<source>Large</source>
+			</trans-unit>
+
+			<trans-unit id="flexforms_general.settings.smallEventCount">
+				<source>Count of event on the small render type</source>
+			</trans-unit>
+
+			<trans-unit id="flexforms_general.settings.autoScroll">
+				<source>Automatic scrolling to the next event</source>
 			</trans-unit>
 
 		</body>
