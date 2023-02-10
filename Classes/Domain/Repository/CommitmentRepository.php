@@ -19,7 +19,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2021 C. Gogolin <service@cylancer.net>
+ * (c) 2023 C. Gogolin <service@cylancer.net>
  */
 class CommitmentRepository extends Repository
 {
@@ -37,28 +37,27 @@ class CommitmentRepository extends Repository
     // / --------------------------------------------------------------------------------------------------------------------------------------------------
 
     /**
-     * EVENT
      *
      * @param FrontendUser $user
      * @param array $dutyRosterStrorageUids
      * @param int $planningStorageUid
      * @param array $personalDutyRosterGroups
      * @param PersonalDutyRosterGroupFilterSettings $personalDutyRosterFilterSettings
+     * @param \DateTime $startMoment
+     * @param bool $withCanceledEvents
      * @return \Cylancer\Participants\Domain\Model\Commitment[]
      */
-    public function findCurrentEventCommitments(FrontendUser $user, array $dutyRosterStrorageUids, int $planningStorageUid, array $personalDutyRosterGroups, PersonalDutyRosterGroupFilterSettings $personalDutyRosterFilterSettings, bool $withCanceledEvents = true)
+    public function findCurrentEventCommitments(FrontendUser $user, array $dutyRosterStrorageUids, int $planningStorageUid, array $personalDutyRosterGroups, PersonalDutyRosterGroupFilterSettings $personalDutyRosterFilterSettings, \DateTime $startMoment, bool $withCanceledEvents = true)
     {
         if (empty($dutyRosterStrorageUids) || empty($personalDutyRosterGroups)) {
             return array();
         }
-
         $getUid = function ($object): int {
             return $object->getUid();
         };
 
         $qb = $this->getQueryBuilder('tx_participants_domain_model_commitment');
 
-        $now = new \DateTime();
         // debug($hiddenTG);
         $qb->select('tx_participants_domain_model_commitment.uid', 'tx_participants_domain_model_event.date', 'tx_participants_domain_model_event.time')
             ->from('tx_participants_domain_model_commitment')
@@ -68,7 +67,7 @@ class CommitmentRepository extends Repository
             ->in('tx_participants_domain_model_event.pid', $dutyRosterStrorageUids)))
             ->where($qb->expr()
             ->andX($qb->expr()
-            ->gte('tx_participants_domain_model_event.date', $qb->createNamedParameter($now->format('Y-m-d'))), $qb->expr()
+            ->gte('tx_participants_domain_model_event.date', $qb->createNamedParameter($startMoment->format('Y-m-d'))), $qb->expr()
             ->eq('tx_participants_domain_model_commitment.user', $qb->createNamedParameter($user->getUid())), $qb->expr()
             ->eq('tx_participants_domain_model_commitment.pid', $planningStorageUid)))
             ->orderby('tx_participants_domain_model_event.date', 'ASC')
@@ -87,34 +86,45 @@ class CommitmentRepository extends Repository
         $return = array();
 
         while ($row = $s->fetch()) {
-            if ($now > \DateTime::createFromFormat('Y-m-d H:i', $row['date'] . ' ' . $row['time'])) {
-                // debug($row);
-                /**
-                 *
-                 * @var FrontendUserGroup $ug
-                 * @var Commitment $c
-                 */
-                $c = $this->findByUid($row['uid']);
-                $g = array_unique(array_merge(array_map($getUid, $c->getEvent()
-                    ->getUsergroups()
-                    ->toArray()), array_map($getUid, $c->getEvent()
-                    ->getEventType()
-                    ->getUsergroups()
-                    ->toArray())));
-                $canDisplayBecause = array_intersect($g, $personalDutyRosterGroups);
+            // minute-by-minute calculation
+            // /** @var \DateTime $eventStart */
+            // if(empty($row['time'])){
+            // $eventStart = \DateTime::createFromFormat('Y-m-d', $row['date']);
+            // } else {
+            // $eventStart = \DateTime::createFromFormat('Y-m-d H:i:s', $row['date'] . ' ' . $row['time']);
+            // }
+            // debug($startMoment);
+            // debug($eventStart);
 
-                $f = false;
-                foreach ($canDisplayBecause as $uid) {
-                    $existsOpt = $personalDutyRosterFilterSettings->exists($uid);
-                    if (! $existsOpt || ($existsOpt && $personalDutyRosterFilterSettings->get($uid)->getVisible())) {
-                        $f = true;
-                        break;
-                    }
-                }
-                if ($f) {
-                    $return[] = $c;
+            // /** @var \DateTime $startMoment */
+            // if ($startMoment->getTimestamp() < $eventStart->getTimestamp()) {
+            // debug($row);
+            /**
+             *
+             * @var FrontendUserGroup $ug
+             * @var Commitment $c
+             */
+            $c = $this->findByUid($row['uid']);
+            $g = array_unique(array_merge(array_map($getUid, $c->getEvent()
+                ->getUsergroups()
+                ->toArray()), array_map($getUid, $c->getEvent()
+                ->getEventType()
+                ->getUsergroups()
+                ->toArray())));
+            $canDisplayBecause = array_intersect($g, $personalDutyRosterGroups);
+
+            $f = false;
+            foreach ($canDisplayBecause as $uid) {
+                $existsOpt = $personalDutyRosterFilterSettings->exists($uid);
+                if (! $existsOpt || ($existsOpt && $personalDutyRosterFilterSettings->get($uid)->getVisible())) {
+                    $f = true;
+                    break;
                 }
             }
+            if ($f) {
+                $return[] = $c;
+            }
+            // }
         }
         return $return;
     }
@@ -310,7 +320,7 @@ class CommitmentRepository extends Repository
             ->addOrderBy('fe_users.first_name', 'ASC');
         // ->orderBy('last_name','first_name');
 
-       //  $sql = $qb->getSql();
+        // $sql = $qb->getSql();
         $users = array();
         $s = $qb->execute();
         while ($row = $s->fetch()) {
@@ -320,8 +330,8 @@ class CommitmentRepository extends Repository
                 'currently_off_duty' => $row['currently_off_duty']
             ];
         }
-      // debug($sql);
-        
+        // debug($sql);
+
         // $return['sql'] = $sql;
         // debug(json_encode($counts));
         return $users;
