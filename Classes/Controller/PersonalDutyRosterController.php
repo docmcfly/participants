@@ -137,44 +137,41 @@ class PersonalDutyRosterController extends ActionController
 
             $dutyRosterStorageUids = $this->settings[PersonalDutyRosterController::DUTY_ROSTER_STORAGE_UIDS];
             $planningStorageUid = $this->settings[PersonalDutyRosterController::PLANNING_STORAGE_UID];
-            /**
-             *
-             * @var FrontendUser $user
-             */
+
+            /** @var FrontendUser $user       */
             $user = $this->frontendUserRepository->findByUid($this->frontendUserService->getCurrentUserUid());
-            
-            $yesterday = new \DateTime();
-            $yesterday->add(\DateInterval::createFromDateString('yesterday'));
-            
-            $commitments = $this->commitmentRepository->findCurrentEventCommitments($user, $dutyRosterStorageUids, $planningStorageUid, $personalDutyRosterGroups, $personalDutyRosterFilterSettings, $yesterday);
+
+            $canViewMembers = false;
+            $allowGroup = $this->settings['canViewMembers'];
+            foreach ($user->getUserGroup() as $ug) {
+                if ($this->frontendUserService->contains($ug, $allowGroup)) {
+                    $canViewMembers = true;
+                    break;
+                }
+            }
+            $this->view->assign('canViewMembers', $canViewMembers);
+
+            $canViewCurrentlyOffDuty = false;
+            $allowGroup = $this->settings['canViewCurrentlyOffDuty'];
+            foreach ($user->getUserGroup() as $ug) {
+                if ($this->frontendUserService->contains($ug, $allowGroup)) {
+                    $canViewCurrentlyOffDuty = true;
+                    break;
+                }
+            }
+            $this->view->assign('canViewCurrentlyOffDuty', $canViewCurrentlyOffDuty);
+
+            $startMoment = new \DateTime();
+            if ($canViewMembers) {
+                $startMoment->add(\DateInterval::createFromDateString('yesterday'));
+            }
+
+            $commitments = $this->commitmentRepository->findCurrentEventCommitments($user, $dutyRosterStorageUids, $planningStorageUid, $personalDutyRosterGroups, $personalDutyRosterFilterSettings, $startMoment);
             $this->view->assign('commitments', $commitments);
             $this->view->assign('counts', $this->commitmentRepository->getEventCommitmentCounts($planningStorageUid));
             $this->view->assign('personalDutyRosterFilterSettings', $personalDutyRosterFilterSettings);
             $this->view->assign('uid', $this->configurationManager->getContentObject()->data['uid']);
             // debug($this->view);
-            $u = $this->frontendUserService->getCurrentUser();
-
-            $allowGroupFound = false;
-            $allowGroup = $this->settings['canViewCurrentlyOffDuty'];
-
-            foreach ($u->getUserGroup() as $ug) {
-                if ($this->frontendUserService->contains($ug, $allowGroup)) {
-                    $allowGroupFound = true;
-                    break;
-                }
-            }
-
-            $this->view->assign('canViewCurrentlyOffDuty', $allowGroupFound);
-
-            $allowGroupFound = false;
-            $allowGroup = $this->settings['canViewMembers'];
-            foreach ($u->getUserGroup() as $ug) {
-                if ($this->frontendUserService->contains($ug, $allowGroup)) {
-                    $allowGroupFound = true;
-                    break;
-                }
-            }
-            $this->view->assign('canViewMembers', $allowGroupFound);
         } else {
             $this->view->assign('counts', []);
         }
