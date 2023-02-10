@@ -14,6 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'title' => 'Participants',
     'description' => 'Diese Erweiterung kümmert sich rund um das Thema Teilnahme bei der Ortsfeuerwehr Letter.
 Change log:
+3.1.5 :: Fix the dropout view in the personal duty roster  
 3.1.4 :: Add: Add an backend switch for the auto scroll function.  
 3.1.3 :: Add: Auto scroll to the current event in the big duty roster list.  
 3.1.2 :: Fix: The personal reminder does not remind canceled event.  
@@ -37,7 +38,7 @@ Change log:
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.1.4',
+    'version' => '3.1.5',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
