@@ -196,13 +196,20 @@
 									</f:else>
 								</f:if></td>
 							<td style="border: 0">
-								<div class="progress">
-									<div class="progress-bar {progressColor}" id="progressbar_{commitment.event.uid}" role="progressbar" style="width: {counts.{commitment.event.uid"
-										aria-valuenow="{counts.{commitment.event.uid}.presentPercent}" aria-valuemin="0" aria-valuemax="{counts.{commitment.event.uid}.presentDefaultPercent}"
-									>{counts.{commitment.event.uid}.displayPercent}%</div>
-									<div class="progress-bar {progressOverloadColor}" id="overProgressbar_{commitment.event.uid}" role="progressbar"
-										style="width: {counts.{commitment.event.uid" aria-valuenow="{counts.{commitment.event.uid}.presentOverPercent}" aria-valuemin="0" aria-valuemax="100"
-									></div>
+								<div class="progress"><div class="progress-bar {progressColor}" 
+								     id="progressbar_{commitment.event.uid}" 
+								     role="progressbar" 
+								     style="width:{counts.{commitment.event.uid}.presentPercent}%" 
+										 aria-valuenow="{counts.{commitment.event.uid}.presentPercent}" 
+										 aria-valuemin="0" 
+										 aria-valuemax="{counts.{commitment.event.uid}.presentDefaultPercent}">{counts.{commitment.event.uid}.displayPercent}%</div>
+								<div class="progress-bar {progressOverloadColor}" 
+								     id="overProgressbar_{commitment.event.uid}" 
+								     role="progressbar" 
+								     style="width:{counts.{commitment.event.uid}.presentOverPercent}%" 
+								     aria-valuenow="{counts.{commitment.event.uid}.presentOverPercent}" 
+								     aria-valuemin="0" 
+								     aria-valuemax="100"></div>
 								</div> <f:translate key="personalDutyRoster.list.members" />: <span id="presentCount_{commitment.event.uid}">{counts.{commitment.event.uid}.presentCount}</span>
 								( {counts.{commitment.event.uid}.presentDefaultCount} ) <f:if condition="{canViewMembers}">
 									<f:form style="display:inline" absolute="true" action="getMembers" name="commitment" hiddenFieldClassName="d-none" object="{commitment}"
@@ -309,19 +316,18 @@
 										ml.append('<ul><li><f:translate key="personalDutyRoster.list.members.nobody" /></li></ul>')
 									}
 									var d =  r['dropouts']           
-									if(d != null && d.length > 0) {
-									
+									if(d != null && Object.keys(d).length > 0) {
 										var content = '<strong><f:translate key="personalDutyRoster.list.dropouts" /></strong><ul>'
-										for( i=0; i < d.length; i++) {
-												  content += '<li>'
-												  content += d[i]['first_name']+' '+d[i]['last_name'] 
-												  <f:if condition="{canViewCurrentlyOffDuty}">
-												  	if( d[i]['currently_off_duty'] == 1 ) {
-												  		content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
-												  	}	
-												  </f:if>
-												  content += '</li>'
-										}
+											Object.values(d).forEach( value => {
+												content += '<li>'
+												content += value['first_name']+' '+value['last_name'] 
+												<f:if condition="{canViewCurrentlyOffDuty}">
+													if( value['currently_off_duty'] == 1 ) {
+												 		content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
+												 	}	
+												</f:if>
+												content += '</li>'
+											})
 										content += '</ul>'
 										ml.append(content)
 									} 
