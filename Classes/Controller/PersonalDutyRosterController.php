@@ -123,7 +123,6 @@ class PersonalDutyRosterController extends ActionController
      */
     public function showAction(): void
     {
-        
         if ($this->frontendUserService->isLogged()) {
             $this->prepareSettings($this->settings);
             // debug($this->settings);
@@ -143,8 +142,11 @@ class PersonalDutyRosterController extends ActionController
              * @var FrontendUser $user
              */
             $user = $this->frontendUserRepository->findByUid($this->frontendUserService->getCurrentUserUid());
-
-            $commitments = $this->commitmentRepository->findCurrentEventCommitments($user, $dutyRosterStorageUids, $planningStorageUid, $personalDutyRosterGroups, $personalDutyRosterFilterSettings);
+            
+            $yesterday = new \DateTime();
+            $yesterday->add(\DateInterval::createFromDateString('yesterday'));
+            
+            $commitments = $this->commitmentRepository->findCurrentEventCommitments($user, $dutyRosterStorageUids, $planningStorageUid, $personalDutyRosterGroups, $personalDutyRosterFilterSettings, $yesterday);
             $this->view->assign('commitments', $commitments);
             $this->view->assign('counts', $this->commitmentRepository->getEventCommitmentCounts($planningStorageUid));
             $this->view->assign('personalDutyRosterFilterSettings', $personalDutyRosterFilterSettings);
@@ -154,7 +156,7 @@ class PersonalDutyRosterController extends ActionController
 
             $allowGroupFound = false;
             $allowGroup = $this->settings['canViewCurrentlyOffDuty'];
-            
+
             foreach ($u->getUserGroup() as $ug) {
                 if ($this->frontendUserService->contains($ug, $allowGroup)) {
                     $allowGroupFound = true;
@@ -291,7 +293,6 @@ class PersonalDutyRosterController extends ActionController
         } else {
             $return['members'] = [];
         }
-
         return json_encode($return);
     }
 
@@ -432,7 +433,7 @@ class PersonalDutyRosterController extends ActionController
 
             // debug($hiddenTargetGroups);
             // debug($this->getTargetGroups($settings));
-            return $this->commitmentRepository->findCurrentEventCommitments($this->frontendUserService->getCurrentUser(), $dutyRosterStorageUids, $planningStorageUid, $personalDutyRosterGroups, $personalDutyRosterFilterSettings, false);
+            return $this->commitmentRepository->findCurrentEventCommitments($this->frontendUserService->getCurrentUser(), $dutyRosterStorageUids, $planningStorageUid, $personalDutyRosterGroups, $personalDutyRosterFilterSettings, new \DateTime(), false);
         } else {
             throw new \Exception('You ar not logged in');
         }
