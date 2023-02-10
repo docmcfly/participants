@@ -8,6 +8,7 @@ $EM_CONF[$_EXTKEY] = [
     'title' => 'Participants',
     'description' => 'Diese Erweiterung kümmert sich rund um das Thema Teilnahme bei der Ortsfeuerwehr Letter.
 Change log:
+3.1.7 :: Change: Icons
 3.1.6 :: Add: PersonalDutyRoster -> Events from the previous day are still displayed
 3.1.5 :: Fix: PersonalDutyRoster -> fix the progess bars.
 3.1.4 :: Add: Add an backend switch for the auto scroll function.  
@@ -33,7 +34,7 @@ Change log:
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.1.6',
+    'version' => '3.1.7',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
