@@ -49,10 +49,10 @@ return [
         'title' => [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.title',
             'config' => [
-                'type' => 'input',
-            ],
+                'type' => 'input'
+            ]
         ],
-        
+
         'sys_language_uid' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
@@ -132,7 +132,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'eval' => 'datetime',
+                'eval' => 'datetime'
             ]
         ],
         'tstamp' => [
@@ -140,10 +140,10 @@ return [
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'eval' => 'datetime',
+                'eval' => 'datetime'
             ]
         ],
-        
+
         'event_type' => [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.eventType',
             'config' => [
@@ -211,12 +211,10 @@ return [
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                 'dbType' => 'time',
-              //  'format' => 'time',
+                'dbType' => 'time',
                 'eval' => 'time',
-                'default' =>  1900, // , // 19:00h
+                'default' => DateTime::createFromFormat("Y-m-d H:i:s", "1970-01-01 19:00:00")->getTimestamp(), // 68400 <=> 19:00h
                 'mode' => 'useOrOverridePlaceholder'
-                
             ]
         ],
 
@@ -242,7 +240,7 @@ return [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.showPublicDescription',
             'config' => [
                 'type' => 'check',
-                'renderType' => 'checkboxToggle',
+                'renderType' => 'checkboxToggle'
             ]
         ],
         'public_description' => [
@@ -284,6 +282,5 @@ return [
             ]
         ]
     ]
-   
-    ];
+];
 
