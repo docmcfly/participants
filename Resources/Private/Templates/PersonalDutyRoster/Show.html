@@ -14,7 +14,7 @@
 	<f:section name="content">
 		<f:asset.css identifier="personalDutyRoster_bootstrap-toggle.min.css" href="EXT:participants/Resources/Public/Css/bootstrap-toggle.min.css" />
 		<f:asset.css identifier="personalDutyRoster_custom_style" href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
-		<f:asset.script identifier="personalDutyRoster_jquery-3.6.1.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.1.min.js" />
+		<f:asset.script identifier="personalDutyRoster_jquery-3.6.3.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.3.min.js" />
 		<f:asset.script identifier="personalDutyRoster_bootstrap-toggle.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/bootstrap-toggle.min.js"
 			defer="true"
 		/>
@@ -22,7 +22,7 @@
 			<div class="accordion" id="accordionExample">
 				<div class="card">
 					<div class="card-header" id="headingOne">
-						<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						<button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 							<h5>
 								<f:translate key="personalDutyRoster.list.filterSettings.title" />
 							</h5>
@@ -32,8 +32,7 @@
 						<div class="card-body">
 							<div class="form-group">
 								<f:form action="setPersonalDutyRosterFilter" class="form" method="POST" object="{personalDutyRosterFilterSettings}"
-									objectName="personalDutyRosterFilterSettings"
-								>
+									objectName="personalDutyRosterFilterSettings">
 									<div class="row">
 										<f:for each="{personalDutyRosterFilterSettings.settings}" as="set" iteration="iter">
 											<div class="form-check col">
