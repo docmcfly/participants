@@ -1,6 +1,7 @@
 <?php
 namespace Cylancer\Participants\Task;
 
+use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider;
 use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
 use TYPO3\CMS\Scheduler\Task\Enumeration\Action;

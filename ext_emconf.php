@@ -6,8 +6,31 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Participants',
-    'description' => 'Diese Erweiterung kümmert sich rund um das Thema Teilnahme bei der Ortsfeuerwehr Letter.
-Change log:
+    'description' => 'This extension takes care of all aspects of participation.',
+    'category' => 'plugin',
+    'author' => 'C. Gogolin',
+    'author_email' => 'service@cylancer.net',
+    'state' => 'beta',
+    'uploadfolder' => 0,
+    'createDirs' => '',
+    'clearCacheOnLoad' => 1,
+    'version' => '3.2.0',
+    'constraints' => [
+        'depends' => [
+            'typo3' => '11.5.0-11.5.99',
+            'bootstrap_package' => '11.0.2-13.9.99',
+            'usertools' => '2.0.0-2.9.99'
+        ],
+        'conflicts' => [],
+        'suggests' => [],
+    ],
+];
+
+/**
+ * Change log: 
+ * 
+
+3.2.0 :: Update: Bootstrap dependencies to version 13.0.* / Update jQuery 
 3.1.8 :: Change: PersonalDutyRoster -> Events from the previous day are still displayed only for "can members see" user
 3.1.7 :: Change: Icons
 3.1.6 :: Add: PersonalDutyRoster -> Events from the previous day are still displayed
@@ -27,22 +50,6 @@ Change log:
 2.0.3 :: Fix: Add missing translation of personal duty roster frontend plugin.
 2.0.2 :: Fix: Remove dubug outputs. 
 2.0.1 :: Fix: Duty roster planning task form: the front end user groups are save wrong.
-2.0.0 :: Vollständiger Umbau der Eventstruktur. Diese Basiert nicht mehr auf der "news"-Erweiterung',
-    'category' => 'plugin',
-    'author' => 'C. Gogolin',
-    'author_email' => 'service@cylancer.net',
-    'state' => 'beta',
-    'uploadfolder' => 0,
-    'createDirs' => '',
-    'clearCacheOnLoad' => 1,
-    'version' => '3.1.8',
-    'constraints' => [
-        'depends' => [
-            'typo3' => '11.5.0-11.5.99',
-            'bootstrap_package' => '11.0.2-12.9.99',
-            'usertools' => '2.0.0-2.9.99'
-        ],
-        'conflicts' => [],
-        'suggests' => [],
-    ],
-];
+2.0.0 :: Vollständiger Umbau der Eventstruktur. Diese Basiert nicht mehr auf der "news"-Erweiterung
+
+**/
