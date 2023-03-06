@@ -14,7 +14,7 @@
 	<f:section name="content">
 		<f:asset.css identifier="personalDutyRoster_bootstrap-toggle.min.css" href="EXT:participants/Resources/Public/Css/bootstrap-toggle.min.css" />
 		<f:asset.css identifier="personalDutyRoster_custom_style" href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
-		<f:asset.script identifier="personalDutyRoster_jquery-3.6.3.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.3.min.js" />
+		<f:asset.script identifier="personalDutyRoster_jquery-3.6.3-min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.3-min.js" />
 		<f:asset.script identifier="personalDutyRoster_bootstrap-toggle.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/bootstrap-toggle.min.js"
 			defer="true"
 		/>
@@ -215,7 +215,7 @@
 										arguments="{commitment:commitment, id=uid}" id="member_list_{commitment.event.uid}" pageType="103" enctype="multipart/form-data"
 									>
 										<button id="getMemberBtn_{commitment.event.uid}" class="getMemberBtn text-primary lnkBtn" type="button" data-toggle="collapse"
-											data-target="#members_list_{commitment.event.uid}" aria-expanded="true" aria-controls="members_list_{commitment.event.uid}"
+											data-target="#members_list_{commitment.event.uid}" data-bs-toggle="collapse" data-bs-target="#members_list_{commitment.event.uid}" aria-expanded="true" aria-controls="members_list_{commitment.event.uid}"
 											onclick="getMembersAjaxSubmit({commitment.event.uid})"
 										>
 											&nbsp; :: &nbsp;
@@ -231,8 +231,8 @@
 								<td style="border: 0">
 									<div id="members_list_{commitment.event.uid}" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
 										<div class="card-body spinner-border members-spinner" role="status">
-											<span class="sr-only">Loading...</span>
 										</div>
+										<span class="sr-only">Loading...</span>
 									</div>
 								</td>
 							</tr>
@@ -282,7 +282,7 @@
 			
 			function getMembersAjaxSubmit(id, refresh = false) {
 				var ml = $('#members_list_' + id)
-				if (refresh | (!ml.hasClass('show') && ml.hasClass('collapse'))) {
+				if (refresh | (ml.hasClass('collapsing'))) {
 					var form = $('#member_list_' + id);
 					var u = form.attr('action');
 					var service = {
