@@ -14,11 +14,11 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.2.0',
+    'version' => '3.2.2',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
-            'bootstrap_package' => '11.0.2-13.9.99',
+            'bootstrap_package' => '13.0.1-13.0.99',
             'usertools' => '2.0.0-2.9.99'
         ],
         'conflicts' => [],
@@ -29,7 +29,8 @@ $EM_CONF[$_EXTKEY] = [
 /**
  * Change log: 
  * 
-
+3.2.2 :: Fix: PersonalDutyRoster collapsing members list
+3.2.1 :: Fix: PersonalDutyRoster broken jquery link
 3.2.0 :: Update: Bootstrap dependencies to version 13.0.* / Update jQuery 
 3.1.8 :: Change: PersonalDutyRoster -> Events from the previous day are still displayed only for "can members see" user
 3.1.7 :: Change: Icons
