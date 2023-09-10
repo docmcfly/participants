@@ -236,7 +236,7 @@ class PersonalDutyRosterController extends ActionController
      * @param Commitment $commitment
      * @return void
      */
-    public function setPresentAction(Commitment $commitment): String
+    public function setPresentAction(Commitment $commitment): string
     {
         $return = array();
         if ($commitment->getUser()->getUid() == $this->frontendUserService->getCurrentUserUid() && $this->request->hasArgument('id')) {
@@ -268,10 +268,10 @@ class PersonalDutyRosterController extends ActionController
     /**
      *
      * @param Commitment $commitment
-     * @param String $id
-     * @return String
+     * @param string $id
+     * @return string
      */
-    public function getMembersAction(Commitment $commitment): String
+    public function getMembersAction(Commitment $commitment): string
     {
         $return = array();
 
@@ -448,12 +448,12 @@ class PersonalDutyRosterController extends ActionController
 
     /**
      *
-     * @param String $value
+     * @param string $value
      * @return array
      */
-    private function toIntArray(String $value): array
+    private function toIntArray(string $value): array
     {
-        return \TYPO3\CMS\Core\Utility\GeneralUtility::intExplode(',', $value);
+        return GeneralUtility::intExplode(',', $value);
         ;
     }
 }

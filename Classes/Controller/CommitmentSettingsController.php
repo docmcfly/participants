@@ -52,6 +52,7 @@ class CommitmentSettingsController extends \TYPO3\CMS\Extbase\Mvc\Controller\Act
             $s->setInfoMailWhenPersonalDutyRosterChanged($u->getInfoMailWhenPersonalDutyRosterChanged());
             $s->setPersonalDutyEventReminder($u->getPersonalDutyEventReminder());
             $this->view->assign('commitmentSettings', $s);
+            $this->view->assign('settings', $this->settings);
         }
     }
 

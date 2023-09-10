@@ -29,7 +29,7 @@ class CommitmentRepository extends Repository
      * @param string $table
      * @return QueryBuilder
      */
-    protected function getQueryBuilder(String $table): QueryBuilder
+    protected function getQueryBuilder(string $table): QueryBuilder
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
     }
@@ -250,11 +250,11 @@ class CommitmentRepository extends Repository
 
     /**
      *
-     * @param String $storageUids
+     * @param string $storageUids
      * @param int $eventUid
      * @return array
      */
-    public function getEventCancels(String $storageUids, int $eventUid = null): array
+    public function getEventCancels(string $storageUids, int $eventUid = null): array
     {
         $qb = $this->getQueryBuilder('tx_participants_domain_model_commitment');
         $pagesTerm = '';

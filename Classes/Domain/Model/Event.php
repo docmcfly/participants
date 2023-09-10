@@ -37,7 +37,7 @@ class Event extends AbstractEntity
 
     /**
      *
-     * @var String
+     * @var string
      */
     protected $description = true;
 
@@ -49,7 +49,7 @@ class Event extends AbstractEntity
 
     /**
      *
-     * @var String
+     * @var string
      */
     protected $publicDescription = true;
 
@@ -73,13 +73,13 @@ class Event extends AbstractEntity
 
     /**
      *
-     * @var String
+     * @var string
      */
     protected $date = '0000-00-00';
 
     /**
      *
-     * @var String
+     * @var string
      */
     protected $time = '00:00';
 
@@ -270,19 +270,19 @@ class Event extends AbstractEntity
 
     /**
      *
-     * @return String
+     * @return string
      */
-    public function getDescription(): String
+    public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
      *
-     * @param String $description
+     * @param string $description
      * @return void
      */
-    public function setDescription(String $description): void
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
@@ -606,7 +606,7 @@ class Event extends AbstractEntity
      *
      * @return string
      */
-    public function getPublicDescription(): String
+    public function getPublicDescription(): string
     {
         return $this->publicDescription;
     }

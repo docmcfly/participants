@@ -14,21 +14,21 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class TimeOut extends AbstractEntity
 {
 
-    /**  @var String */
+    /**  @var string */
     protected $from = null;
 
-    /** @var String */
+    /** @var string */
     protected $until = null;
 
     /**  @var FrontendUser */
     protected $user = null;
 
-    /** @var String  */
+    /** @var string  */
     protected $reason = '';
 
     /**
      *
-     * @return String from
+     * @return string from
      */
     public function getFrom()
     {
@@ -38,11 +38,10 @@ class TimeOut extends AbstractEntity
     /**
      * Sets the from date
      *
-     * @param
-     *            String from
+     * @param            string from
      * @return void
      */
-    public function setFrom(String $from)
+    public function setFrom(string $from)
     {
         $this->from = $from;
     }
@@ -50,7 +49,7 @@ class TimeOut extends AbstractEntity
     /**
      * Returns the until date
      *
-     * @return String until
+     * @return string until
      */
     public function getUntil()
     {
@@ -61,10 +60,10 @@ class TimeOut extends AbstractEntity
      * Sets the until date
      *
      * @param
-     *            String until
+     *            string until
      * @return void
      */
-    public function setUntil(String $until)
+    public function setUntil(string $until)
     {
         $this->until = $until;
     }
@@ -93,9 +92,9 @@ class TimeOut extends AbstractEntity
     /**
      * Returns the time out reason
      *
-     * @return String reason
+     * @return string reason
      */
-    public function getReason(): String
+    public function getReason(): string
     {
         return $this->reason;
     }
@@ -103,11 +102,10 @@ class TimeOut extends AbstractEntity
     /**
      * Sets the time out reason
      *
-     * @param
-     *            String reason
+     * @param  string reason
      * @return void
      */
-    public function setReason(String $reason): void
+    public function setReason(string $reason): void
     {
         $this->reason = $reason;
     }

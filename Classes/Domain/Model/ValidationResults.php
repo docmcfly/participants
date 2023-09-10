@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 namespace Cylancer\Participants\Domain\Model;
 
 /**
@@ -49,33 +49,33 @@ class ValidationResults
      */
     public function hasErrors()
     {
-        return ! empty($this->errors);
+        return !empty($this->errors);
     }
 
     /**
      *
      * @return bool
      */
-    public function getHasErrors()
+    public function getHasErrors(): bool
     {
-        return ! empty($this->errors);
+        return !empty($this->errors);
     }
 
     /**
      *
-     * @return array of srings
+     * @return  bool
      */
-    public function hasInfos()
+    public function hasInfos(): bool
     {
-        return ! empty($this->infos);
+        return !empty($this->infos);
     }
 
     /**
      *
-     * @param String $errorKey
+     * @param string $errorKey
      * @param array $arguments
      */
-    public function addInfo(String $infoKey, array $arguments = []): void
+    public function addInfo(string $infoKey, array $arguments = []): void
     {
         $keySplit = explode('.', $infoKey, 2);
         $this->infos['info.' . $infoKey]['arguments'] = $arguments;
@@ -84,10 +84,10 @@ class ValidationResults
 
     /**
      *
-     * @param String $errorKey
+     * @param string $errorKey
      * @param array $arguments
      */
-    public function addError(String $errorKey, array $arguments = []): void
+    public function addError(string $errorKey, array $arguments = []): void
     {
         $keySplit = explode('.', $errorKey, 2);
         $this->errors['error.' . $errorKey]['arguments'] = $arguments;
@@ -96,8 +96,7 @@ class ValidationResults
 
     /**
      *
-     * @param
-     *            array
+     * @param array
      */
     public function addInfos(array $infos)
     {
@@ -108,8 +107,7 @@ class ValidationResults
 
     /**
      *
-     * @param
-     *            array
+     * @param array
      */
     public function addErrors(array $errors)
     {

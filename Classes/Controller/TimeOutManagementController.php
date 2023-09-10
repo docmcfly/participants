@@ -77,7 +77,7 @@ class TimeOutManagementController extends ActionController
             $tmp = explode("\n", str_replace("\r", "\n", str_replace("\r\n", "\n", $this->settings[TimeOutManagementController::REASONS])));
             $reasons = array();
             foreach ($tmp as &$value) {
-                if (! empty($value)) {
+                if (!empty($value)) {
                     $reasons[$value] = $value;
                 }
             }
@@ -113,11 +113,11 @@ class TimeOutManagementController extends ActionController
      *            AddTimeOut addTimeOut
      * @return Object
      */
-    public function createAction(AddTimeOut $addTimeOut = null): Object
+    public function createAction(AddTimeOut $addTimeOut = null): object
     {
         /** @var ValidationResults $validationResults **/
         $validationResults = $this->validate($addTimeOut);
-        if (! $validationResults->hasErrors()) {
+        if (!$validationResults->hasErrors()) {
             $timeOut = new TimeOut();
             $timeOut->setFrom($this->transformDate($addTimeOut->getFrom()));
             $timeOut->setUntil($this->transformDate($addTimeOut->getUntil()));
@@ -145,11 +145,10 @@ class TimeOutManagementController extends ActionController
     /**
      * transform from dd.mm.yyyy to yyyy-mm-dd
      *
-     * @param
-     *            String germanDate
-     * @return String
+     * @param string germanDate
+     * @return string
      */
-    private function transformDate(String $germanDate): String
+    private function transformDate(string $germanDate): string
     {
         return \DateTime::createFromFormat('!' . TimeOutManagementController::GERMAN_DATE_FORMAT, $germanDate)->format(TimeOutManagementController::STANDARD_DATE_FORMAT);
     }
@@ -184,7 +183,7 @@ class TimeOutManagementController extends ActionController
                     $validationResults->addError('invalidUntil');
                 }
             }
-            if (! $validationResults->hasErrors() && $from->getTimestamp() > $until->getTimestamp()) {
+            if (!$validationResults->hasErrors() && $from->getTimestamp() > $until->getTimestamp()) {
                 $validationResults->addError('untilBeforeFrom');
             }
         }
@@ -196,8 +195,8 @@ class TimeOutManagementController extends ActionController
     {
         if ($this->_validationResults == null) {
             $this->_validationResults = ($this->request->hasArgument(TimeOutManagementController::VALIDATIOPN_RESULTS)) ? //
-            $this->request->getArgument(TimeOutManagementController::VALIDATIOPN_RESULTS) : //
-            new ValidationResults();
+                $this->request->getArgument(TimeOutManagementController::VALIDATIOPN_RESULTS) : //
+                new ValidationResults();
         }
         return $this->_validationResults;
     }

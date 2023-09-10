@@ -52,6 +52,10 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
 
     public $enableReminder = '';
 
+    const REMINDER_TARGET_URL = 'reminderTargetUrl';
+
+    public $reminderTargetUrl = '';
+
     // ------------------------------------------------------
     // debug switch
     const DISABLE_PERSISTENCE_MANAGER = false;
@@ -216,8 +220,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                 ->toArray()));
         }
         /**
-         * 1.
-         * iterate over all user groups
+         * 1. iterate over all user groups
          * 2. get the path of the user group to the root (over the subgroups)
          * 3. has the event groups and the user group path an intersect: return true...
          */
@@ -246,6 +249,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
             }
         }
         foreach ($reminderUsers as $frontendUserUid => $data) {
+            $data['reminderTargetUrl'] = $this->reminderTargetUrl;
             $frontendUser = $data['user'];
             $recipient = [
                 $frontendUser->getEmail() => $frontendUser->getFirstName() . ' ' . $frontendUser->getLastName()
@@ -428,22 +432,26 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         ' / planning storage uid: ' . $this->planningStorageUid . //
         ' / frontend user storage uids: ' . $this->feUserStorageUids . //
         ' / frontend user group storage uids: ' . $this->feUsergroupStorageUids . //
-        ' / specified user uids:' . $this->specifiedUserUids;
+        ' / specified user uids:' . $this->specifiedUserUids . //
+        ' / enable reminder:' . $this->enableReminder . //
+        ' / reminder target url:' . $this->reminderTargetUrl;
     }
 
     /**
      *
-     * @param String $key
+     * @param string $key
      * @throws \Exception
-     * @return number|String
+     * @return number|string
      */
-    public function get(String $key)
+    public function get(string $key)
     {
         switch ($key) {
             case PersonalDutyRosterPlanningTask::RESET_USERS:
                 return $this->resetUser;
             case PersonalDutyRosterPlanningTask::ENABLE_REMINDER:
                 return $this->enableReminder;
+            case PersonalDutyRosterPlanningTask::REMINDER_TARGET_URL:
+                return $this->reminderTargetUrl;
             case PersonalDutyRosterPlanningTask::SPECIFIED_USER_UIDS:
                 return $this->specifiedUserUids;
             case PersonalDutyRosterPlanningTask::DUTY_ROSTER_STORAGE_UIDS:
@@ -461,11 +469,11 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
 
     /**
      *
-     * @param String $key
-     * @param String|number $value
+     * @param string $key
+     * @param string|number $value
      * @throws \Exception
      */
-    public function set(String $key, $value)
+    public function set(string $key, $value)
     {
         switch ($key) {
             case PersonalDutyRosterPlanningTask::DUTY_ROSTER_STORAGE_UIDS:
@@ -488,6 +496,9 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                 break;
             case PersonalDutyRosterPlanningTask::ENABLE_REMINDER:
                 $this->enableReminder = $value;
+                break;
+            case PersonalDutyRosterPlanningTask::REMINDER_TARGET_URL:
+                $this->reminderTargetUrl = $value;
                 break;
             default:
                 throw new \Exception("Unknown key: $key");

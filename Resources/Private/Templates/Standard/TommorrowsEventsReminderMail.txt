@@ -9,6 +9,11 @@
 <f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.reminderMail.teaser" />
 <f:for each="{events}" as="event"> * <f:format.date format="d.m.Y">{event.date}</f:format.date><f:if condition="!{event.fullDay}"> <f:format.date format="H:i">{event.time}</f:format.date></f:if> :: {event.eventType.title}<f:if condition="{event.description}"> ( {event.description-> f:format.stripTags()} )</f:if>
 </f:for>
+<f:if condition="{reminderTargetUrl}">
+<f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.reminderMail.seeReminderTargetUrl" />
+
+{reminderTargetUrl}
+</f:if>
 <f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.reminderMail.footer" />
  
 <f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.reminderMail.regards" />

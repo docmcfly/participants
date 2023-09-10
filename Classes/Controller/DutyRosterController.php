@@ -44,12 +44,12 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $now = time();
         $c = count($events);
 
-        /** @var Event $firstEvent */
-        $firstEvent = $events[0];
-
         if ($c == 0) {
             $afterNow = - 1;
         } else {
+            /** @var Event $firstEvent */
+            $firstEvent = $events[0];
+
             /** @var Event $firstEvent */
             $lastEvent = $events[count($events) - 1];
             if ($lastEvent->getDateTime()->getTimestamp() < $now) {
@@ -84,21 +84,21 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
     /**
      *
-     * @param String $table
+     * @param string $table
      * @return QueryBuilder
      */
-    private function getQueryBuilder(String $table): QueryBuilder
+    private function getQueryBuilder(string $table): QueryBuilder
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
     }
 
     /**
      *
-     * @param String $id
+     * @param string $id
      * @throws \Exception
      * @return array
      */
-    private function getStorageUid(String $id): array
+    private function getStorageUid(string $id): array
     {
         $qb = $this->getQueryBuilder('tt_content');
         $s = $qb->select('list_type', 'pages', 'pi_flexform')
@@ -106,12 +106,12 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             ->where($qb->expr()
             ->eq('uid', $qb->createNamedParameter($id)))
             ->execute();
-        if ($row = $s->fetch()) {
+        if ($row = $s->fetchAssociative()) {
             $contentElement = $row;
         } else {
             throw new \Exception("Content element $id found.");
         }
-        if ($row = $s->fetch()) {
+        if ($row = $s->fetchAssociative()) {
             throw new \Exception("Two content elements with $id found? Database corrupt?");
         }
         if ($contentElement['list_type'] == DutyRosterController::LIST_TYPE) {
@@ -142,10 +142,10 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
     /**
      *
-     * @param String $id
+     * @param string $id
      * @return void
      */
-    public function downloadIcsAction(String $id)
+    public function downloadIcsAction(string $id)
     {
         $normalizedParams = $this->request->getAttribute('normalizedParams');
         $baseUri = $normalizedParams->getSiteUrl();

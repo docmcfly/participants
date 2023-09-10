@@ -26,13 +26,13 @@ class EventType extends AbstractEntity
 
     /**
      *
-     * @var String
+     * @var string
      */
     protected $title = true;
 
     /**
      *
-     * @var String
+     * @var string
      */
     protected $description = true;
 
@@ -112,7 +112,7 @@ class EventType extends AbstractEntity
 
     /**
      *
-     * @return String
+     * @return string
      */
     public function getTitle()
     {
@@ -121,16 +121,16 @@ class EventType extends AbstractEntity
 
     /**
      *
-     * @param String $s
+     * @param string $s
      */
-    public function setTitle(String $s)
+    public function setTitle(string $s)
     {
         $this->title = $s;
     }
 
     /**
      *
-     * @return String
+     * @return string
      */
     public function getDescription()
     {
@@ -139,9 +139,9 @@ class EventType extends AbstractEntity
 
     /**
      *
-     * @param String $s
+     * @param string $s
      */
-    public function setDescription(String $s)
+    public function setDescription(string $s)
     {
         $this->description = $s;
     }

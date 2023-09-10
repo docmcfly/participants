@@ -20,11 +20,11 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
      * @param array $taskInfo
      * @param PersonalDutyRosterPlanningTask|null $task
      * @param SchedulerModuleController $schedulerModule
-     * @param String $key
+     * @param string $key
      * @param array $additionalFields
      * @return void
      */
-    private function initBooleanAddtionalField(array &$taskInfo, $task, SchedulerModuleController $schedulerModule, String $key, array &$additionalFields)
+    private function initBooleanAddtionalField(array &$taskInfo, $task, SchedulerModuleController $schedulerModule, string $key, array &$additionalFields)
     {
         $currentSchedulerModuleAction = $schedulerModule->getCurrentAction();
 
@@ -59,11 +59,11 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
      * @param array $taskInfo
      * @param PersonalDutyRosterPlanningTask|null $task
      * @param SchedulerModuleController $schedulerModule
-     * @param String $key
+     * @param string $key
      * @param array $additionalFields
      * @return void
      */
-    private function initStringAddtionalField(array &$taskInfo, $task, SchedulerModuleController $schedulerModule, String $key, array &$additionalFields)
+    private function initStringAddtionalField(array &$taskInfo, $task, SchedulerModuleController $schedulerModule, string $key, array &$additionalFields)
     {
         $currentSchedulerModuleAction = $schedulerModule->getCurrentAction();
 
@@ -97,11 +97,11 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
      * @param array $taskInfo
      * @param PersonalDutyRosterPlanningTask|null $task
      * @param SchedulerModuleController $schedulerModule
-     * @param String $key
+     * @param string $key
      * @param array $additionalFields
      * @return void
      */
-    private function initIntegerAddtionalField(array &$taskInfo, $task, SchedulerModuleController $schedulerModule, String $key, array &$additionalFields)
+    private function initIntegerAddtionalField(array &$taskInfo, $task, SchedulerModuleController $schedulerModule, string $key, array &$additionalFields)
     {
         $currentSchedulerModuleAction = $schedulerModule->getCurrentAction();
 
@@ -135,11 +135,11 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
      * @param array $taskInfo
      * @param PersonalDutyRosterPlanningTask|null $task
      * @param SchedulerModuleController $schedulerModule
-     * @param String $key
+     * @param string $key
      * @param array $additionalFields
      * @return void
      */
-    private function initTextAddtionalField(array &$taskInfo, $task, SchedulerModuleController $schedulerModule, String $key, array &$additionalFields)
+    private function initTextAddtionalField(array &$taskInfo, $task, SchedulerModuleController $schedulerModule, string $key, array &$additionalFields)
     {
         $currentSchedulerModuleAction = $schedulerModule->getCurrentAction();
 
@@ -170,6 +170,45 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
     }
 
     /**
+     *
+     * @param array $taskInfo
+     * @param PersonalDutyRosterPlanningTask|null $task
+     * @param SchedulerModuleController $schedulerModule
+     * @param string $key
+     * @param array $additionalFields
+     * @return void
+     */
+    private function initUrlAddtionalField(array &$taskInfo, $task, SchedulerModuleController $schedulerModule, string $key, array &$additionalFields)
+    {
+        $currentSchedulerModuleAction = $schedulerModule->getCurrentAction();
+        
+        // Initialize extra field value
+        if (empty($taskInfo[$key])) {
+            if ($currentSchedulerModuleAction->equals(Action::ADD)) {
+                // In case of new task and if field is empty, set default sleep time
+                $taskInfo[$key] = '';
+            } elseif ($currentSchedulerModuleAction->equals(Action::EDIT)) {
+                // In case of edit, set to internal value if no data was submitted already
+                $taskInfo[$key] = $task->get($key);
+            } else {
+                // Otherwise set an empty value, as it will not be used anyway
+                $taskInfo[$key] = '';
+            }
+        }
+        
+        // Write the code for the field
+        $fieldID = 'task_' . $key;
+        $fieldCode = '<input type="url" class="form-control" name="tx_scheduler[' . $key . ']" id="' . $fieldID . '" value="' . $taskInfo[$key] . '" >';
+        $additionalFields[$fieldID] = [
+            'code' => $fieldCode,
+            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.' . $key,
+            'cshKey' => '_MOD_system_txschedulerM1',
+            'cshLabel' => $fieldID
+        ];
+    }
+    
+    
+    /**
      * This method is used to define new fields for adding or editing a task
      * In this case, it adds a sleep time field
      *
@@ -198,7 +237,9 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         $this->initBooleanAddtionalField($taskInfo, $task, $schedulerModule, PersonalDutyRosterPlanningTask::RESET_USERS, $additionalFields);
 
         $this->initBooleanAddtionalField($taskInfo, $task, $schedulerModule, PersonalDutyRosterPlanningTask::ENABLE_REMINDER, $additionalFields);
-
+        
+        $this->initUrlAddtionalField($taskInfo, $task, $schedulerModule, PersonalDutyRosterPlanningTask::REMINDER_TARGET_URL, $additionalFields);
+        
         // debug($additionalFields);
         return $additionalFields;
     }
@@ -207,10 +248,10 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
      *
      * @param array $submittedData
      * @param SchedulerModuleController $schedulerModule
-     * @param String $key
+     * @param string $key
      * @return boolean
      */
-    private function validatePagesAdditionalField(array &$submittedData, SchedulerModuleController $schedulerModule, String $key)
+    private function validatePagesAdditionalField(array &$submittedData, SchedulerModuleController $schedulerModule, string $key)
     {
         $result = true;
         $pages = GeneralUtility::intExplode(',', $submittedData[$key]);
@@ -242,10 +283,10 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
      *
      * @param array $submittedData
      * @param SchedulerModuleController $schedulerModule
-     * @param String $key
+     * @param string $key
      * @return boolean
      */
-    private function validateUsersAdditionalField(array &$submittedData, SchedulerModuleController $schedulerModule, String $key, bool $emptyAllowed = false)
+    private function validateUsersAdditionalField(array &$submittedData, SchedulerModuleController $schedulerModule, string $key, bool $emptyAllowed = false)
     {
         if ($emptyAllowed && trim($submittedData[$key]) == '') {
             return true;
@@ -267,10 +308,10 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
      *
      * @param array $submittedData
      * @param SchedulerModuleController $schedulerModule
-     * @param String $key
+     * @param string $key
      * @return boolean
      */
-    private function validatePageAdditionalField(array &$submittedData, SchedulerModuleController $schedulerModule, String $key)
+    private function validatePageAdditionalField(array &$submittedData, SchedulerModuleController $schedulerModule, string $key)
     {
         $result = true;
         if (! $this->validatePage($submittedData[$key])) {
@@ -293,10 +334,10 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
      *
      * @param array $submittedData
      * @param SchedulerModuleController $schedulerModule
-     * @param String $key
+     * @param string $key
      * @return boolean
      */
-    private function validateBooleanAdditionalField(array &$submittedData, SchedulerModuleController $schedulerModule, String $key)
+    private function validateBooleanAdditionalField(array &$submittedData, SchedulerModuleController $schedulerModule, string $key)
     {
         $result = true;
         if (! ($submittedData[$key] === '0' || $submittedData[$key] === '1')) {
@@ -308,6 +349,28 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         return $result;
     }
 
+    /**
+     *
+     * @param array $submittedData
+     * @param SchedulerModuleController $schedulerModule
+     * @param string $key
+     * @return boolean
+     */
+    private function validateUrlAdditionalField(array &$submittedData, SchedulerModuleController $schedulerModule, string $key)
+    {
+        $url = trim($submittedData[$key]);
+        if(strlen($url) == 0 ) {
+            return true; 
+        }
+        if( !(is_string($url) && strlen($url) > 5 && filter_var($url, FILTER_VALIDATE_URL))) {
+            $this->addMessage(str_replace('%1', $submittedData[$key], $this->getLanguageService()
+                ->sL('LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.error.invalidUrl.' . $key)), FlashMessage::ERROR);
+            return false;
+        }
+        return true; 
+    }
+    
+    
     /**
      * This method checks any additional data that is relevant to the specific task
      * If the task class is not relevant, the method is expected to return TRUE
@@ -328,6 +391,7 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         $result &= $this->validateUsersAdditionalField($submittedData, $schedulerModule, PersonalDutyRosterPlanningTask::SPECIFIED_USER_UIDS, true);
         $result &= $this->validateBooleanAdditionalField($submittedData, $schedulerModule, PersonalDutyRosterPlanningTask::RESET_USERS);
         $result &= $this->validateBooleanAdditionalField($submittedData, $schedulerModule, PersonalDutyRosterPlanningTask::ENABLE_REMINDER);
+        $result &= $this->validateUrlAdditionalField($submittedData, $schedulerModule, PersonalDutyRosterPlanningTask::REMINDER_TARGET_URL);
         return $result;
     }
 
@@ -335,10 +399,10 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
      *
      * @param array $submittedData
      * @param AbstractTask $task
-     * @param String $key
+     * @param string $key
      * @return void
      */
-    public function saveAdditionalField(array $submittedData, AbstractTask $task, String $key)
+    public function saveAdditionalField(array $submittedData, AbstractTask $task, string $key)
     {
         /**
          *
@@ -365,6 +429,7 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         $this->saveAdditionalField($submittedData, $task, PersonalDutyRosterPlanningTask::SPECIFIED_USER_UIDS);
         $this->saveAdditionalField($submittedData, $task, PersonalDutyRosterPlanningTask::RESET_USERS);
         $this->saveAdditionalField($submittedData, $task, PersonalDutyRosterPlanningTask::ENABLE_REMINDER);
+        $this->saveAdditionalField($submittedData, $task, PersonalDutyRosterPlanningTask::REMINDER_TARGET_URL);
     }
 
     /**

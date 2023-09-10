@@ -27,11 +27,13 @@
 				<f:translate key="commitmentSettings.title" />
 			</h4>
 			<f:form action="save" name="commitmentSettings" object="{commitmentSettings}" enctype="multipart/form-data">
-				<div class="form-check">
-					<f:form.checkbox id="applyPlanningData" property="applyPlanningData" value="someValue" class="form-check-input" />
-					&nbsp;&nbsp;&nbsp; <label for="applyPlanningData"><f:format.nl2br><f:translate key="commitmentSettings.form.applyPlanningData" /></f:format.nl2br></label>
-					<details><f:format.nl2br><f:translate key="commitmentSettings.form.applyPlanningData.hint" /></f:format.nl2br></details>
-				</div>
+				<f:if condition="{settings.automaticApplyCommitments}">
+					 <div class="form-check">
+						<f:form.checkbox id="applyPlanningData" property="applyPlanningData" value="someValue" class="form-check-input" />
+						&nbsp;&nbsp;&nbsp; <label for="applyPlanningData"><f:format.nl2br><f:translate key="commitmentSettings.form.applyPlanningData" /></f:format.nl2br></label>
+						<details><f:format.nl2br><f:translate key="commitmentSettings.form.applyPlanningData.hint" /></f:format.nl2br></details>
+					</div> 
+				</f:if>
 				<div class="form-check">
 					<f:form.checkbox id="infoMailWhenPersonalDutyRosterChanged" property="infoMailWhenPersonalDutyRosterChanged" value="someValue" class="form-check-input" />
 					&nbsp;&nbsp;&nbsp; <label for="infoMailWhenPersonalDutyRosterChanged"><f:format.nl2br><f:translate key="commitmentSettings.form.infoMailWhenPersonalDutyRosterChanged" /></f:format.nl2br></label>

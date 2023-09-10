@@ -34,7 +34,7 @@ class EventRepository extends Repository
      * @param string $table
      * @return QueryBuilder
      */
-    protected function getQueryBuilder(String $table): QueryBuilder
+    protected function getQueryBuilder(string $table): QueryBuilder
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
     }

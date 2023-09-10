@@ -30,7 +30,7 @@ CREATE TABLE fe_users (
    hidden_target_groups int (11) UNSIGNED DEFAULT '0' NOT NULL,
    hidden_personal_duty_roster_groups int (11) UNSIGNED DEFAULT '0' NOT NULL,
    tx_extbase_type VARCHAR (255) DEFAULT '' NOT NULL,
-   apply_planning_data SMALLINT (5) UNSIGNED DEFAULT '1' NOT NULL,
+   apply_planning_data SMALLINT (5) UNSIGNED DEFAULT '0' NOT NULL,
    info_mail_when_personal_duty_roster_changed SMALLINT (5) UNSIGNED DEFAULT '1' NOT NULL,
    personal_duty_event_reminder SMALLINT (5) UNSIGNED DEFAULT '1' NOT NULL,
 );
@@ -147,7 +147,7 @@ CREATE TABLE tx_participants_domain_model_event (
    public SMALLINT (5) UNSIGNED DEFAULT '2' NOT NULL,
    full_day SMALLINT (5) UNSIGNED DEFAULT '0' NOT NULL,
    date VARCHAR(10) DEFAULT '0000-00-00' NOT NULL,	
-   time VARCHAR(10) DEFAULT '19:00:00' NOT NULL,	
+   time VARCHAR(10) DEFAULT '19:00:00',	
    duration SMALLINT (5) UNSIGNED DEFAULT '0' NOT NULL,
 	    	
    PRIMARY KEY (uid),
