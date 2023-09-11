@@ -128,7 +128,7 @@
 						</f:if>
 					</f:variable>
 					<tr>
-						<td><f:form absolute="true" action="setPresent" name="commitment" object="{commitment}" arguments="{commitment:commitment, id:uid}"
+						<td style="border: 0"><f:form absolute="true" action="setPresent" name="commitment" object="{commitment}" arguments="{commitment:commitment, id:uid}"
 								id="event_{commitment.event.uid}" pageType="103" enctype="multipart/form-data"
 							>
 								<f:form.checkbox id="checkbox_{commitment.event.uid}" additionalAttributes="{onchange:'presentAjaxSubmit({commitment.event.uid})'}" property="present"
@@ -143,7 +143,7 @@
 									disabled="{f:if(condition:'({commitment.isNotChangable} || {commitment.event.canceled}',then:'disabled')}"
 								/>
 							</f:form></td>
-						<td>
+						<td style="border: 0">
 							<div class="container">
 								<div class="row">
 									<div class="col-">
@@ -184,12 +184,12 @@
 						<tr>
 							<td style="border: 0"><f:if condition="{commitment.presentDefault}">
 									<f:then>
-										<div class="badge badge-pill badge-success" style="display: block">
+										<div class="badge bg-success" style="display: block">
 											<f:translate key="personalDutyRoster.list.scheduled" />
 										</div>
 									</f:then>
 									<f:else>
-										<div class="badge badge-pill badge-light" style="display: block">
+										<div class="badge bg-light text-dark" style="display: block">
 											<f:translate key="personalDutyRoster.list.notScheduled" />
 										</div>
 									</f:else>
@@ -225,18 +225,18 @@
 								</f:if>
 							</td>
 						</tr>
-						<f:if condition="{canViewMembers}">
-							<tr>
-								<td style="border: 0"></td>
-								<td style="border: 0">
+						<tr>
+							<td></td>
+							<td>
+								<f:if condition="{canViewMembers}">
 									<div id="members_list_{commitment.event.uid}" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
 										<div class="card-body spinner-border members-spinner" role="status">
 										</div>
 										<span class="sr-only">Loading...</span>
 									</div>
-								</td>
-							</tr>
-						</f:if>
+								</f:if>
+							</td>
+						</tr>
 					</f:if>
 				</f:for>
 			</tbody>

@@ -10,7 +10,7 @@
 	<f:layout name="Default" />
 	<f:section name="content">
 		<f:if condition="{settings.autoScroll}">
-			<f:asset.script identifier="dutyRoster_jquery-3.6.3.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.3.min.js" />
+			<f:asset.script identifier="dutyRoster_jquery-3.6.3-min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.3-min.js" />
 			<f:asset.script identifier="dutyRoster_fastSearch.js" src="EXT:participants/Resources/Public/JavaScript/Src/jumpToCurrentEvent.js" defer="defer" />
 		</f:if>
 		<f:asset.css identifier="personalDutyRoster_custom_style" href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
@@ -39,6 +39,7 @@
 											<f:translate key="dutyRoster.large.header.descriptions" />
 										</h4>
 									</div>
+								</div>
 							</th>
 						</tr>
 						<f:for each="{events}" as="event" iteration="iterator">
@@ -108,11 +109,11 @@
 					<f:for each="{events}" as="event" iteration="iterator">
 						<div class="row" style="margin-left: 0; margin-right: 0;">
 							<!-- date -->
-							<div class="col-">
+							<div class="col-2">
 								<time datetime="{f:format.date(date:event.date, format:'Y-m-d')}"> <f:format.date format="d.m">{event.date}</f:format.date> </time>
 							</div>
 							<!-- category -->
-							<div class="col-">
+							<div class="col-10">
 								&nbsp; <span class="label label-info"><span class=" {f:if(condition:event.canceled, then:'canceled')}"
 									title="{f:if(condition:event.canceled, then:'{f:translate(key:\'dutyRoster.small.event.canceled\')}')}"
 								>{event.eventType.title}</span> <f:if condition="{f:count(subject:event.visiblePublicUsergroups)} > 0">
@@ -124,7 +125,6 @@
 											</f:for>
 										</ul>
 									</f:if> </span>
-								<div class="col-"></div>
 							</div>
 						</div>
 						<!-- row -->

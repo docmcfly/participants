@@ -27,7 +27,7 @@ class EmailSendService implements SingletonInterface
      *            recipient of the email in the format array('recipient@domain.tld' => 'Recipient Name')
      * @param array $sender
      *            sender of the email in the format array('sender@domain.tld' => 'Sender Name')
-     * @param String $replyTo
+     * @param string $replyTo
      *            if $replyTo is not empty then sender name will be the replyTo name, the sender email remains and the replyTo attribute is set. 
      * @param string $subject
      *            subject of the email
@@ -46,7 +46,7 @@ class EmailSendService implements SingletonInterface
      *            'size' : file size ]
      * @return boolean TRUE on success, otherwise false
      */
-    public function sendTemplateEmail(array $recipient, array $sender, array $replyTo = [] , String $subject, String $templateName, String $extensionName, array $variables = array(), $attachments = array())
+    public function sendTemplateEmail(array $recipient, array $sender, array $replyTo = [] , string $subject, string $templateName, string $extensionName, array $variables = array(), $attachments = array())
     {
         // debug($recipient);
         // debug($sender);

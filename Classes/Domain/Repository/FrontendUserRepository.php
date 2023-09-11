@@ -38,10 +38,10 @@ class FrontendUserRepository extends Repository
 
     /**
      *
-     * @param String $userGroups
+     * @param string $userGroups
      * @return QueryResultInterface|array
      */
-    public function findByUserGroups(String $userGroups = '', bool $orderByName = true)
+    public function findByUserGroups(string $userGroups = '', bool $orderByName = true)
     {
         if (empty(trim($userGroups))) {
             return [];

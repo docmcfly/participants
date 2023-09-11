@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
 	<file source-language="en" datatype="plaintext" original="messages" date="2020-03-18T15:36:48Z" product-name="participants">
-		<header/>
+		<header />
 		<body>
 			<trans-unit id="plugin.name">
 				<source>Setting for the commitment settings</source>
@@ -10,6 +10,16 @@
 			<trans-unit id="plugin.description">
 				<source>WWith this plugin, settings regarding the individual duty roster can be made.</source>
 				<target>Mit diesem Plugin können Einstellung bzgl. des persönlichen Dienstplans vorgenommen werden.</target>
+			</trans-unit>
+
+
+			<trans-unit id="flexforms_general.title">
+				<source>Settings</source>
+				<target state="tanslated">Einstellungen</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.automaticApplyCommitments">
+				<source>Enable function automatic apply commitments</source>
+				<target state="tanslated">Einschalten der Funktion: Automatisches Zusagen</target>
 			</trans-unit>
 		</body>
 	</file>

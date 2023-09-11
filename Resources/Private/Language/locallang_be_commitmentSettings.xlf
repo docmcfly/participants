@@ -9,6 +9,14 @@
 			<trans-unit id="plugin.description">
 				<source>WWith this plugin, settings regarding the individual duty roster can be made.</source>
 			</trans-unit>
+			
+			<trans-unit id="flexforms_general.title">
+				<source>Settings</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.automaticApplyCommitments">
+				<source>Enable function automatic apply commitments</source>
+			</trans-unit>
+			 
 		</body>
 	</file>
 </xliff>

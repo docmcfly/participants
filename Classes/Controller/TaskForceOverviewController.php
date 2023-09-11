@@ -69,9 +69,10 @@ class TaskForceOverviewController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
     /** @var FrontendUserGroupRepository */
     private $frontendUserGroupRepository = null;
 
-    public function __construct(FrontendUserService $frontendUserService, TimeOutRepository $timeOutRepository, CommitmentRepository $commitmentRepository, //
-    FrontendUserRepository $frontendUserRepository, FrontendUserGroupRepository $frontendUserGroupRepository)
-    {
+    public function __construct(
+        FrontendUserService $frontendUserService, TimeOutRepository $timeOutRepository, CommitmentRepository $commitmentRepository, //
+        FrontendUserRepository $frontendUserRepository, FrontendUserGroupRepository $frontendUserGroupRepository
+    ) {
         $this->frontendUserService = $frontendUserService;
         $this->timeOutRepository = $timeOutRepository;
         $this->commitmentRepository = $commitmentRepository;
@@ -180,12 +181,12 @@ class TaskForceOverviewController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 
     /**
      *
-     * @param String $until
-     * @return boolean
+     * @param string $until
+     * @return bool
      */
-    private static function isInTheFuture(String $until): bool
+    private static function isInTheFuture(?string $until): bool
     {
-        return \DateTime::createFromFormat('Y-m-d', $until)->getTimestamp() > time();
+        return $until == null ? false : \DateTime::createFromFormat('Y-m-d', $until)->getTimestamp() > time();
     }
 
     private static function getUids(array $array): array
@@ -205,7 +206,7 @@ class TaskForceOverviewController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
         $return = array();
         /** @var FrontendUser $u */
         foreach ($users as $u) {
-            if (! $u->getCurrentlyOffDuty() && ! in_array($u->getUid(), $userUids)) {
+            if (!$u->getCurrentlyOffDuty() && !in_array($u->getUid(), $userUids)) {
                 $return[] = $u;
             }
         }

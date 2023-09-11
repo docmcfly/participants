@@ -10,6 +10,10 @@
 
 	<div><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.reminderMail.teaser" /></div>
 	<ul><f:for each="{events}" as="event"><li><f:format.date format="d.m.Y">{event.date}</f:format.date><f:if condition="!{event.fullDay}"> <f:format.date format="H:i">{event.time}</f:format.date></f:if> :: <strong>{event.eventType.title}</strong><f:if condition="{event.description}"> ( <f:format.htmlentitiesDecode>{event.description}</f:format.htmlentitiesDecode> )</f:if></li></f:for></ul>
+	<f:if condition="{reminderTargetUrl}">
+	<p><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.reminderMail.seeReminderTargetUrl" /></p>
+	<p><a href="{reminderTargetUrl}">{reminderTargetUrl}</a></p>
+	</f:if>
 	<div><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.reminderMail.footer" /></div> 
 	<div><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.reminderMail.regards" /></div> 
 </f:section></body></html>  

@@ -213,8 +213,8 @@ return [
                 'renderType' => 'inputDateTime',
                 'dbType' => 'time',
                 'eval' => 'time',
-                'default' => DateTime::createFromFormat("Y-m-d H:i:s", "1970-01-01 19:00:00")->getTimestamp(), // 68400 <=> 19:00h
-                'mode' => 'useOrOverridePlaceholder'
+                'default' =>  DateTime::createFromFormat("Y-m-d H:i:s", "1970-01-01 19:00:00")->getTimestamp(), // 68400 <=> 19:00h
+              //   'mode' => 'useOrOverridePlaceholder'
             ]
         ],
 

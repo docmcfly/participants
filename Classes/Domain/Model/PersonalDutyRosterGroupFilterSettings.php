@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 class PersonalDutyRosterGroupFilterSettings
 {
     
-    public function __set(String $name ,  $value): void{
+    public function __set(string $name ,  $value): void{
         if($name === 'settings'){
             $persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
             $objectManager = GeneralUtility::makeInstance(ObjectManager::class);

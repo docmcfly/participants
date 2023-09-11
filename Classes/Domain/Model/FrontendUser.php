@@ -89,7 +89,7 @@ class FrontendUser extends AbstractEntity
     /** @var boolean   */
     protected $personalDutyEventReminder = false;
 
-    /** @var String */
+    /** @var string */
     protected $currentlyOffDutyUntil = null;
 
     /**
@@ -133,7 +133,7 @@ class FrontendUser extends AbstractEntity
     /**
      * Returns the until date
      *
-     * @return String
+     * @return string
      */
     public function getCurrentlyOffDutyUntil()
     {
@@ -143,10 +143,10 @@ class FrontendUser extends AbstractEntity
     /**
      * Sets the until date
      *
-     * @param String $currentlyOffDutyUntil
+     * @param string $currentlyOffDutyUntil
      * @return void
      */
-    public function setCurrentlyOffDutyUntil(String $currentlyOffDutyUntil): void
+    public function setCurrentlyOffDutyUntil(string $currentlyOffDutyUntil): void
     {
         $this->currentlyOffDutyUntil = $currentlyOffDutyUntil;
     }
@@ -220,7 +220,7 @@ class FrontendUser extends AbstractEntity
      *
      * @param string $username
      */
-    public function setUsername(String $username): void
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }
@@ -230,7 +230,7 @@ class FrontendUser extends AbstractEntity
      *
      * @return string
      */
-    public function getUsername(): String
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -250,7 +250,7 @@ class FrontendUser extends AbstractEntity
      *
      * @return string
      */
-    public function getName(): String
+    public function getName(): string
     {
         return $this->name;
     }
@@ -300,7 +300,7 @@ class FrontendUser extends AbstractEntity
      *
      * @param string $password
      */
-    public function setPassword(String $password): String
+    public function setPassword(string $password): string
     {
         $this->password = $password;
     }
@@ -310,7 +310,7 @@ class FrontendUser extends AbstractEntity
      *
      * @return string
      */
-    public function getPassword(): String
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -320,7 +320,7 @@ class FrontendUser extends AbstractEntity
      *
      * @param string $email
      */
-    public function setEmail(String $email): void
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -330,7 +330,7 @@ class FrontendUser extends AbstractEntity
      *
      * @return string
      */
-    public function getEmail(): ?String
+    public function getEmail(): ?string
     {
         return $this->email;
     }
