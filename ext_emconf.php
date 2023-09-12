@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.3.0',
+    'version' => '3.3.1',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
@@ -29,6 +29,7 @@ $EM_CONF[$_EXTKEY] = [
 /**
  * Change log: 
  * 
+3.3.1   :: Fix: Update the usertools dependency.
 3.3.0   :: Fix: Repair the plugin configuration / registry.
 3.2.10  :: Fix: Fix the exception if no events exists in the futrue.  
 3.2.9   :: Fix: Make the plannig status visible.   
