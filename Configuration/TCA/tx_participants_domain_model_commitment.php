@@ -72,9 +72,11 @@ return [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.present',
             'config' => [
                 'type' => 'check',
+                'renderType' => 'checkboxToggle',
                 'items' => [
-                    '1' => [
-                        '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
+                    [
+                        0 => '',
+                        1 => '',
                     ]
                 ],
                 'default' => 0,
@@ -84,10 +86,12 @@ return [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.present_default',
             'config' => [
                 'type' => 'check',
-                'readOnly' => true, 
+                'readOnly' => true,
+                'renderType' => 'checkboxToggle',
                 'items' => [
-                    '1' => [
-                        '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
+                    [
+                        0 => '',
+                        1 => '',
                     ]
                 ],
                 'default' => 0,
@@ -96,7 +100,7 @@ return [
         'event' => [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.event',
             'config' => [
-                'readOnly' => true, 
+                'readOnly' => true,
                 'type' => 'select',
                 'dbType' => 'event',
                 'renderType' => 'selectSingle',
@@ -115,6 +119,6 @@ return [
                 'maxitems' => 1,
             ],
         ],
-    
+
     ],
 ];

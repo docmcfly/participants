@@ -6,7 +6,7 @@ return [
         'title' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.title',
         'label' => 'title',
         'label_userFunc' => \Cylancer\Participants\Domain\TCA\EventTca::class . '->computeTitle',
-        'sortby' => 'date',
+        'sortby' => 'begin_date',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
@@ -20,9 +20,9 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
             'type' => 'type',
-            'date' => 'date',
+            'begin_date' => 'begin_date',
             'full_day' => 'full_day',
-            'time' => 'time',
+            'begin_time' => 'begin_time',
             'duration' => 'duration',
             'usergroups' => 'usergroups',
             'public' => 'public',
@@ -37,12 +37,14 @@ return [
         'iconfile' => 'EXT:participants/Resources/Public/Icons/tx_participants_domain_model_event_type.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'l10n_parent, l10n_diffsource, hidden, canceled, event_type, date, full_day, time, ' . //
-        'duration, usergroups, show_public_usergroups, public_usergroups, description, public, public_description, show_public_description '
+        'showRecordFieldList' => ' l10n_parent, l10n_diffsource, hidden, canceled, event_type, begin_date, full_day, begin_time, ' . //
+            'duration, usergroups, show_public_usergroups, public_usergroups, description, public, public_description, show_public_description '
     ],
     'types' => [
         '1' => [
-            'showitem' => ' l10n_parent, l10n_diffsource, hidden, canceled, event_type, public, date, full_day, time, duration,' . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabGroupSettings, usergroups, show_public_usergroups, public_usergroups, ' . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabDescription, description, show_public_description, public_description '
+            'showitem' => ' l10n_parent, l10n_diffsource, hidden, canceled, event_type, public, begin_date, full_day, begin_time, duration,'
+                . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabGroupSettings, usergroups, show_public_usergroups, public_usergroups, '
+                . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabDescription, description, show_public_description, public_description '
         ]
     ],
     'columns' => [
@@ -63,7 +65,7 @@ return [
                 'items' => [
                     [
                         'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        - 1,
+                        -1,
                         'flags-multiple'
                     ]
                 ],
@@ -185,15 +187,14 @@ return [
             ]
         ],
 
-        'date' => [
-            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.date',
+        'begin_date' => [
+            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.beginDate',
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'format' => 'date',
-                'dbType' => 'date',
+//                'format' => 'date',
                 'eval' => 'date',
-                'default' => time()
+                'default' => intdiv(time() , (86400)) * 86400
             ]
         ],
 
@@ -206,15 +207,13 @@ return [
             ]
         ],
 
-        'time' => [
-            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.time',
+        'begin_time' => [
+            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.beginTime',
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'dbType' => 'time',
                 'eval' => 'time',
-                'default' =>  DateTime::createFromFormat("Y-m-d H:i:s", "1970-01-01 19:00:00")->getTimestamp(), // 68400 <=> 19:00h
-              //   'mode' => 'useOrOverridePlaceholder'
+                'default' => 68400 // <=> 19:00h
             ]
         ],
 
@@ -283,4 +282,3 @@ return [
         ]
     ]
 ];
-

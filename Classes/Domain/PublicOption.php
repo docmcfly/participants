@@ -7,10 +7,12 @@ namespace Cylancer\Participants\Domain;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2022 C. Gogolin <service@cylancer.net>
+ * (c) 2023 C. Gogolin <service@cylancer.net>
  */
 abstract class PublicOption
 {
+
+    const ALL = -1;
 
     const INTERNAL = 0;
 

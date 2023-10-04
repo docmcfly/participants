@@ -27,8 +27,8 @@ END:VTIMEZONE
 CREATED:<f:format.date format="Ymd" >{event.crdate}</f:format.date>T<f:format.date format="His" >{event.crdate}</f:format.date>Z
 DTSTAMP:<f:format.date format="Ymd" >{event.tstamp}</f:format.date>T<f:format.date format="His" >{event.tstamp}</f:format.date>Z
 UID:dutyRoster-{event.uid}@{domain}
-DTSTART;<f:if condition="{event.allDay}"><f:then>VALUE=DATE</f:then><f:else>TZID=Europe/Berlin</f:else></f:if>:<f:format.date format="%Y%m%d" >{event.date}</f:format.date><f:if condition="!{event.allDay}"><f:format.date format="T%H%M%S" >{event.time}</f:format.date></f:if>
-DTEND;<f:if condition="{event.allDay}"><f:then>VALUE=DATE</f:then><f:else>TZID=Europe/Berlin</f:else></f:if>:<f:if condition="{event.allDay}"><f:then><f:format.date format="%Y%m%d" base="{event.date}"> +1 day</f:format.date></f:then><f:else><f:format.date format="%Y%m%dT%H%M%S" base="{event.dateTime}"> +{event.duration} hours</f:format.date></f:else></f:if>
+DTSTART;<f:if condition="{event.fullDay}"><f:then>VALUE=DATE</f:then><f:else>TZID=Europe/Berlin</f:else></f:if>:<f:if condition="{event.fullDay}"><f:then><f:format.date format="%Y%m%d" >{event.beginTimestamp}</f:format.date></f:then><f:else><f:format.date format="%Y%m%dT%H%M%S" >{event.beginTimestamp}</f:format.date></f:else></f:if>
+DTEND;<f:if condition="{event.fullDay}"><f:then>VALUE=DATE</f:then><f:else>TZID=Europe/Berlin</f:else></f:if>:<f:if condition="{event.fullDay}"><f:then><f:format.date format="%Y%m%d" base="{event.beginDateUTC}"> +1 day</f:format.date></f:then><f:else><f:format.date format="%Y%m%dT%H%M%S" base="{event.beginTimestamp}">+{event.duration} hour</f:format.date></f:else></f:if>
 SUMMARY:🚒 {event.eventType.title -> f:format.htmlspecialchars()}
 DESCRIPTION:<f:for each="{event.visiblePublicUsergroups}" as="ug"  iteration="iter">{ug.title}<f:if condition="!{iter.isLast}">, </f:if></f:for><f:if condition="{event.description}"> ( {event.description -> f:format.stripTags()} )</f:if>
 END:VEVENT

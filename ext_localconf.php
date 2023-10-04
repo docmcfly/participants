@@ -4,6 +4,7 @@ use Cylancer\Participants\Controller\TimeOutManagementController;
 use Cylancer\Participants\Controller\TaskForceOverviewController;
 use Cylancer\Participants\Controller\DutyRosterController;
 use Cylancer\Participants\Controller\PersonalDutyRosterController;
+use Cylancer\Participants\Upgrades\BeginTimeConverterWizard;
 
 defined('TYPO3_MODE') || die('Access denied.');
 
@@ -35,11 +36,11 @@ call_user_func(function () {
         ]);
     
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('Cylancer.Participants', 'DutyRoster', [
-        DutyRosterController::class => 'show, downloadIcs'
+        DutyRosterController::class => 'show, downloadIcs, reasonsForPrevention'
     ],
         // non-cacheable actions
         [
-            DutyRosterController::class => 'show, downloadIcs'
+            DutyRosterController::class => 'show, downloadIcs, reasonsForPrevention'
         ]);
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('Cylancer.Participants', 'PersonalDutyRoster', [
         PersonalDutyRosterController::class => 'show, setPresent, setPersonalDutyRosterFilter, downloadAllVisibleCalendarEntries, downloadAllPromisedCalendarEntries, downloadAllPromisedVisibleCalendarEntries, getMembers'
@@ -129,3 +130,4 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Cylancer\Partic
 ];
 
 
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['participants_beginTimeConverterWizard'] = BeginTimeConverterWizard::class;

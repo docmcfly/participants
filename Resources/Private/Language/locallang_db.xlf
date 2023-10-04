@@ -133,14 +133,14 @@
 				<source>Website user groups (alternative for the public view)</source>
 			</trans-unit>
 
-			<trans-unit id="tx_participants_domain_model_event.date">
+			<trans-unit id="tx_participants_domain_model_event.beginDate">
 				<source>Date</source>
 			</trans-unit>
 			<trans-unit id="tx_participants_domain_model_event.fullDay">
 				<source>Full day</source>
 			</trans-unit>
-			<trans-unit id="tx_participants_domain_model_event.time">
-				<source>Time</source>
+			<trans-unit id="tx_participants_domain_model_event.beginTime">
+				<source>Begin time</source>
 			</trans-unit>
 			<trans-unit id="tx_participants_domain_model_event.duration">
 				<source>Duration in hours</source>
