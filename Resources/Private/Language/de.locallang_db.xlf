@@ -167,7 +167,7 @@
 				<target state="tanslated">Website - Benutzergruppen (Alternative für die öffentliche Anzeige)</target>
 			</trans-unit>
 
-			<trans-unit id="tx_participants_domain_model_event.beginDate">
+			<trans-unit id="tx_participants_domain_model_event.date">
 				<source>Date</source>
 				<target state="tanslated">Datum</target>
 			</trans-unit>
@@ -175,9 +175,9 @@
 				<source>Full day</source>
 				<target state="tanslated">Ganztägig</target>
 			</trans-unit>
-			<trans-unit id="tx_participants_domain_model_event.beginTime">
-				<source>Begin time</source>
-				<target state="tanslated">Start-Zeit</target>
+			<trans-unit id="tx_participants_domain_model_event.time">
+				<source>Time</source>
+				<target state="tanslated">Uhrzeit</target>
 			</trans-unit>
 			<trans-unit id="tx_participants_domain_model_event.duration">
 				<source>Duration in hours</source>

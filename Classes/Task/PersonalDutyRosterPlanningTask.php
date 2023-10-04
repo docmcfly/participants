@@ -267,7 +267,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         $this->initialize();
 
         if ($this->validate()) {
-            $now = time();
+            $now = new \DateTime();
 
             // --------------------------
             // statistic values
@@ -311,7 +311,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                     $c = $this->commitmentRepository->findByUid($uids['commitment']);
                     $e = $this->eventRepository->findByUid(intval($uids['event']));
 
-                    if ($e != null && $e->getBeginTimeStamp() > $now) {
+                    if ($e != null && $e->getDatetime() > $now) {
 
                         $d = $u->getCurrentlyOffDuty() ? false : $this->calculatePlanningPresent($u, $e);
                         // debug($ds);
@@ -353,7 +353,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                          * @var Commitment $c
                          */
                         $c = GeneralUtility::makeInstance(Commitment::class);
-                        if ($e->getBeginTimeStamp() > $now) {
+                        if ($e->getDateTime() > $now) {
                             $c->setEvent($e);
                             $c->setUser($u);
 
@@ -428,7 +428,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
      */
     public function getAdditionalInformation()
     {
-        return 'Duty roster storage uids:' . $this->dutyRosterStorageUids . //
+        return 'Duty roster stroarge uids:' . $this->dutyRosterStorageUids . //
         ' / planning storage uid: ' . $this->planningStorageUid . //
         ' / frontend user storage uids: ' . $this->feUserStorageUids . //
         ' / frontend user group storage uids: ' . $this->feUsergroupStorageUids . //

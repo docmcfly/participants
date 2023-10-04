@@ -28,7 +28,7 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
     /**
      *
-     * @var EventRepository eventRepository
+     * @var EventRepository
      */
     private $eventRepository;
 
@@ -55,7 +55,7 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
             /** @var Event $firstEvent */
             $lastEvent = $events[count($events) - 1];
-            if ($lastEvent->getBeginTimeStamp() < $now) {
+            if ($lastEvent->getDateTime()->getTimestamp() < $now) {
                 $afterNow = count($events) * (-1);
             } else {
                 $afterNow = -1;
@@ -66,7 +66,7 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                  * @var Event $e
                  */
                 foreach ($events as $e) {
-                    if ($afterNow == -1 && $e->getBeginTimeStamp() > $now) {
+                    if ($afterNow == -1 && $e->getDateTime()->getTimestamp() > $now) {
                         $afterNow = $c;
                     }
                     $c++;
@@ -175,7 +175,7 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $visibility = $this->getEventVisiblity($parsedBody);
 
             if ($from != null && $until != null) {
-                return json_encode($this->eventRepository->findEventsAt($this->getStorageUid($id), $from, $until + (24 * 3600), $visibility));
+                return json_encode($this->eventRepository->findEventsAt($this->getStorageUid($id), $from, $until, $visibility));
             }
         }
 
@@ -208,16 +208,15 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     }
 
 
-    private function getValidDate(string $rawDate): string
+    private function getValidDate(string $rawDate): ?\DateTime
     {
         if (preg_match(DutyRosterController::DATE_PATTERN, $rawDate)) {
             $date = date_parse_from_format('Y-m-d', $rawDate);
             if (!isset($date['errors']) || count($date['errors']) == 0) {
                 $dt = new \DateTime();
-                $dt->setTimezone(new \DateTimeZone('Europe/Berlin'));
                 $dt->setTime(0, 0, 0, 0);
                 $dt->setDate($date['year'], $date['month'], $date['day']);
-                return $dt->getTimestamp();
+                return $dt;
             }
         }
         return null;

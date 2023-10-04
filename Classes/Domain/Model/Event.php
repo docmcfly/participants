@@ -10,12 +10,11 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2023 C. Gogolin <service@cylancer.net>
+ * (c) 2022 C. Gogolin <service@cylancer.net>
  */
 class Event extends AbstractEntity
 {
-    
- 
+
     /**
      *
      * @var ObjectStorage<FrontendUserGroup>
@@ -74,15 +73,15 @@ class Event extends AbstractEntity
 
     /**
      *
-     * @var int
+     * @var string
      */
-    protected $beginDate = 0 ;
+    protected $date = '0000-00-00';
 
     /**
      *
-     * @var int
+     * @var string
      */
-    protected $beginTime = 68400; // 19:00
+    protected $time = '00:00';
 
     /**
      *
@@ -146,7 +145,6 @@ class Event extends AbstractEntity
 
         // Do not remove the next line: It would break the functionality
         $this->initStorageObjects();
-       
     }
 
     /**
@@ -327,70 +325,42 @@ class Event extends AbstractEntity
         $this->fullDay = $fullDay;
     }
 
-
-
-
     /**
-     *
-     * @return int
-     */
-    public function getBeginDate(): int
-    {
-        return $this->beginDate;
-    }
-
-    /**
-     *
-     * @param int $beginDate
-     * @return void
-     */
-    public function setBeginDate(\DateTime $beginDate): void
-    {
-        $this->beginDate = $beginDate;
-    }
-
-     /**
      *
      * @return \DateTime
      */
-    public function getBeginDateUTC(): \DateTime
-        {
-            $return = new  \DateTime();
-            $return->setTimestamp($this->beginDate);
-            $return->setTimezone(new \DateTimeZone ('UTC'));
-        return $return;
+    public function getDate(): \DateTime
+    {
+        return \DateTime::createFromFormat('Y-m-d', $this->date);
     }
-
 
     /**
      *
-     * @return int
+     * @param \DateTime $date
+     * @return void
      */
-    public function getBeginTime(): int
-        {
-        return $this->beginTime;
+    public function setDate(\DateTime $date): void
+    {
+        $this->date = $date->format('Y-m-d');
     }
 
     /**
      *
      * @return \DateTime
      */
-    public function getBeginTimeUTC(): \DateTime
-        {
-            $return = new  \DateTime();
-            $return->setTimestamp($this->beginTime);
-            $return->setTimezone(new \DateTimeZone ('UTC'));
-        return $return;
+    public function getTime(): \DateTime
+    {
+        return \DateTime::createFromFormat('H:i:s', $this->time);
     }
 
     /**
      *
-     * @param int $time
+     * @param \DateTime $time
      * @return void
      */
-    public function setTime(int $beginTime): void
+    public function setTime(\DateTime $time): void
     {
-        $this->beginTime = $beginTime;
+        $this->time = $time->format('H:i:s');
     }
 
     /**
@@ -414,13 +384,12 @@ class Event extends AbstractEntity
 
     /**
      *
-     * @return int
+     * @return \DateTime
      */
-    public function getBeginTimestamp(): int
+    public function getDateTime(): \DateTime
     {
-        return $this->getFullDay() ? $this->getBeginDate() : $this->getBeginDate() + $this->getBeginTime(); 
+        return $this->getFullDay() ? \DateTime::createFromFormat('Y-m-d', $this->date)->setTime(0, 0) : \DateTime::createFromFormat('Y-m-d H:i:s', $this->date . ' ' . $this->time);
     }
-
 
     /**
      *

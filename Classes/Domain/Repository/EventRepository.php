@@ -47,24 +47,24 @@ class EventRepository extends Repository
     {
         $tmp = new \DateTime();
         $tmp->modify('+1 day');
-        $tmp->setTimestamp('UTC');
-        $tomorrow = $tmp->getTimestamp();
+        $tomorrow = $tmp->format('Y-m-d');
 
         $qb = $this->getQueryBuilder('tx_participants_domain_model_event');
         $qb->select('tx_participants_domain_model_event.uid')
             ->from('tx_participants_domain_model_event')
             ->where($qb->expr()
-                ->eq('begin_date', $qb->createNamedParameter($tomorrow)))
+                ->eq('date', $qb->expr()
+                    ->literal($tomorrow)))
             ->andWhere($qb->expr()
                 ->eq('canceled', 0))
-            ->orderBy('begin_date', QueryInterface::ORDER_ASCENDING)
-            ->addOrderBy('begin_time', QueryInterface::ORDER_ASCENDING);
+            ->orderBy('date', QueryInterface::ORDER_ASCENDING)
+            ->addOrderBy('time', QueryInterface::ORDER_ASCENDING);
 
         // debug($qb->getSql());
         $s = $qb->execute();
         $return = array();
 
-        while ($row = $s->fetchAssociative()) {
+        while ($row = $s->fetch()) {
             $return[] = $this->findByUid($row['uid']);
         }
         // debug($return);
@@ -84,8 +84,8 @@ class EventRepository extends Repository
                         ->andX($qb->expr()
                             ->eq('tx_participants_domain_model_event.public', PublicOption::INHERITED), $qb->expr()
                                 ->eq('tx_participants_domain_model_eventtype.public', PublicOption::PUBLIC ))))
-            ->orderBy('begin_date', QueryInterface::ORDER_ASCENDING)
-            ->addOrderBy('begin_time', QueryInterface::ORDER_ASCENDING);
+            ->orderBy('date', QueryInterface::ORDER_ASCENDING)
+            ->addOrderBy('time', QueryInterface::ORDER_ASCENDING);
 
         if ($storageUids == null) {
             $qb->andWhere($qb->expr()
@@ -107,20 +107,21 @@ class EventRepository extends Repository
         }
         if ($startWithToday) {
             $qb->andWhere($qb->expr()
-                ->gte('tx_participants_domain_model_event.begin_date', time()));
+                ->gte('tx_participants_domain_model_event.date', $qb->createNamedParameter(date('Y-m-d'))));
         }
         // debug($qb->getSql());
         $s = $qb->execute();
         $return = array();
 
-        while ($row = $s->fetchAssociative()) {
+        while ($row = $s->fetch()) {
             $return[] = $this->findByUid($row['uid']);
         }
         return $return;
     }
 
 
-    public function findEventsAt(array $storageUids, int $from, int $until, int $visibility, int $limit = EventRepository::UNLIMITED, bool $inclusiveCanceledEvents = false): array
+
+    public function findEventsAt(array $storageUids, \DateTime $from, \DateTime $until, int $visibility, int $limit = EventRepository::UNLIMITED, bool $inclusiveCanceledEvents = false): array
     {
         $qb = $this->getQueryBuilder('tx_participants_domain_model_event');
 
@@ -146,12 +147,12 @@ class EventRepository extends Repository
                 ->eq('tx_participants_domain_model_event.event_type', $qb->quoteIdentifier('tx_participants_domain_model_eventtype.uid')))
             ->where(
                 $qb->expr()->andX(
-                    $qb->expr()->gte('begin_date', $qb->createNamedParameter($from)),
-                    $qb->expr()->lt('begin_date', $qb->createNamedParameter($until))
+                    $qb->expr()->gte('date', $qb->createNamedParameter($from->format('Y-m-d'))),
+                    $qb->expr()->lte('date', $qb->createNamedParameter($until->format('Y-m-d')))
                 )
             )
-            ->orderBy('begin_date', QueryInterface::ORDER_ASCENDING)
-            ->addOrderBy('begin_date', QueryInterface::ORDER_ASCENDING);
+            ->orderBy('date', QueryInterface::ORDER_ASCENDING)
+            ->addOrderBy('time', QueryInterface::ORDER_ASCENDING);
         if ($visibilityRule != null) {
             $qb->andWhere($visibilityRule);
         }
@@ -178,10 +179,10 @@ class EventRepository extends Repository
         $s = $qb->execute();
         $return = [];
         if (1 == 0) { // add debug infos
-            $debug = []; 
+            $debug = [];
             $debug['sql'] = $qb->getSql();
-            $debug['from'] = $from;
-            $debug['until'] = $until;
+            $debug['from'] = $from->format('Y-m-d');
+            $debug['until'] = $until->format('Y-m-d');
             $return['debug'] = $debug;
         }
         $data = [];
@@ -189,24 +190,13 @@ class EventRepository extends Repository
             /** @var Event $e */
             $e = $this->findByUid($row['uid']);
             $tmp = [];
-            $tmp['description'] = htmlspecialchars($e->getEventType()->getTitle() .' ('.self::formatDateUTC( $e->getBeginDate(), 'd.m.Y').')');
-            $tmp['title'] =  htmlspecialchars($e->getEventType()->getTitle());
-            $tmp['begin_date'] =  htmlspecialchars(self::formatDateUTC( $e->getBeginDate(), 'd.m.Y'));
+            $tmp['description'] = htmlspecialchars($e->getEventType()->getTitle() . ' (' . $e->getDate()->format('d.m.Y') . ')');
+            $tmp['title'] = htmlspecialchars($e->getEventType()->getTitle());
+            $tmp['begin_date'] = htmlspecialchars($e->getDate()->format('d.m.Y'));
             $data[] = $tmp;
         }
         $return['data'] = $data;
         return $return;
-    }
-
-
-
-    private static function formatDateUTC(int $timestamp, string $format): string {
-        $date = new \DateTime();
-        $date->setTimestamp($timestamp);
-        $date->setTimezone(new \DateTimeZone('UTC'));
-        return $date->format($format); 
-
-
     }
 
 }

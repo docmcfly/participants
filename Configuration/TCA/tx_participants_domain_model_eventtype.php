@@ -25,11 +25,11 @@ return [
         'iconfile' => 'EXT:participants/Resources/Public/Icons/tx_participants_domain_model_event_type.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => ' l10n_parent, l10n_diffsource, hidden, title, description, public'
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description, public'
     ],
     'types' => [
         '1' => [
-            'showitem' => ' l10n_parent, l10n_diffsource, hidden, title, public, description, usergroups, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'
+            'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, public, description, usergroups, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'
         ]
     ],
     'columns' => [

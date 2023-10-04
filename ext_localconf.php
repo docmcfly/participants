@@ -4,52 +4,71 @@ use Cylancer\Participants\Controller\TimeOutManagementController;
 use Cylancer\Participants\Controller\TaskForceOverviewController;
 use Cylancer\Participants\Controller\DutyRosterController;
 use Cylancer\Participants\Controller\PersonalDutyRosterController;
-use Cylancer\Participants\Upgrades\BeginTimeConverterWizard;
 
 defined('TYPO3_MODE') || die('Access denied.');
 
 call_user_func(function () {
 
-    
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('Cylancer.Participants', 'CommitmentSettings', [
-        CommitmentSettingsController::class => 'show, save'
-    ],
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'Cylancer.Participants',
+        'CommitmentSettings',
+        [
+            CommitmentSettingsController::class => 'show, save'
+        ],
         // non-cacheable actions
         [
             CommitmentSettingsController::class => 'show,save'
-        ]);
-    
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('Cylancer.Participants', 'TimeOutManagement', [
-        TimeOutManagementController::class => 'list,delete, create'
-    ], 
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'Cylancer.Participants',
+        'TimeOutManagement',
+        [
+            TimeOutManagementController::class => 'list,delete, create'
+        ],
         // non-cacheable actions
         [
             TimeOutManagementController::class => 'list,delete, create'
-        ]);
-    
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('Cylancer.Participants', 'TaskForceOverview', [
-        TaskForceOverviewController::class => 'show'
-    ],
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'Cylancer.Participants',
+        'TaskForceOverview',
+        [
+            TaskForceOverviewController::class => 'show'
+        ],
         // non-cacheable actions
         [
             TaskForceOverviewController::class => 'show'
-        ]);
-    
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('Cylancer.Participants', 'DutyRoster', [
-        DutyRosterController::class => 'show, downloadIcs, reasonsForPrevention'
-    ],
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'Cylancer.Participants',
+        'DutyRoster',
+        [
+            DutyRosterController::class => 'show, downloadIcs, reasonsForPrevention'
+        ],
         // non-cacheable actions
         [
             DutyRosterController::class => 'show, downloadIcs, reasonsForPrevention'
-        ]);
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('Cylancer.Participants', 'PersonalDutyRoster', [
-        PersonalDutyRosterController::class => 'show, setPresent, setPersonalDutyRosterFilter, downloadAllVisibleCalendarEntries, downloadAllPromisedCalendarEntries, downloadAllPromisedVisibleCalendarEntries, getMembers'
-    ],
+        ]
+    );
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'Cylancer.Participants',
+        'PersonalDutyRoster',
+        [
+            PersonalDutyRosterController::class => 'show, setPresent, setPersonalDutyRosterFilter, downloadAllVisibleCalendarEntries, downloadAllPromisedCalendarEntries, downloadAllPromisedVisibleCalendarEntries, getMembers'
+        ],
         // non-cacheable actions
         [
             PersonalDutyRosterController::class => 'show, setPresent, setPersonalDutyRosterFilter, downloadAllVisibleCalendarEntries, downloadAllPromisedCalendarEntries, downloadAllPromisedVisibleCalendarEntries, getMembers'
-        ]);
-    
+        ]
+    );
+
     // wizards
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('mod {
             wizards.newContentElement.wizardItems.plugins {
@@ -119,7 +138,7 @@ call_user_func(function () {
     $iconRegistry->registerIcon('participants-plugin-personaldutyroster', \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class, [
         'source' => 'EXT:participants/Resources/Public/Icons/user_plugin_personalDutyRoster.svg'
     ]);
-    
+
 });
 
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Cylancer\Participants\Task\PersonalDutyRosterPlanningTask::class] = [
@@ -128,6 +147,3 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Cylancer\Partic
     'description' => 'LLL:EXT:usertools/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.description',
     'additionalFields' => \Cylancer\Participants\Task\PersonalDutyRosterPlanningAdditionalFieldProvider::class
 ];
-
-
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['participants_beginTimeConverterWizard'] = BeginTimeConverterWizard::class;

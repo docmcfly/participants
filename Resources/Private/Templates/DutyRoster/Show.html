@@ -51,10 +51,10 @@
 						{f:if(condition='{event.current} == 1', then:'upcomingDateNext')} 
 						{f:if(condition='{event.current} == 2', then:'upcomingDateNextNext')}"
 							>
-								<td><span class="date"><time
-											datetime="{f:if(condition:event.fullDay,then:'{f:format.date(date:event.beginDateUTC, format:\'Y-m-d\')}', else:'{f:format.date(date:event.beginTimestamp, format:\'Y-m-d H:i\')}')}"
-										> <f:format.date format="d.m.Y">{event.beginDateUTC}</f:format.date> <f:if condition="!{event.fullDay}">
-											<f:format.date format="H:i">{event.beginTimeUTC}</f:format.date><f:format.date format="d.m.Y H:i:s">{event.beginTimestampUTC}</f:format.date>
+								<td><span class="date"> <time
+											datetime="{f:if(condition:event.fullDay,then:'{f:format.date(date:event.dateTime, format:\'Y-m-d\')}', else:'{f:format.date(date:event.dateTime, format:\'Y-m-d H:i\')}')}"
+										> <f:format.date format="d.m.Y">{event.date}</f:format.date> <f:if condition="!{event.fullDay}">
+											<f:format.date format="H:i">{event.time}</f:format.date>
 										</f:if></time>
 								</span></td>
 								<td>
@@ -110,7 +110,7 @@
 						<div class="row" style="margin-left: 0; margin-right: 0;">
 							<!-- date -->
 							<div class="col-2">
-								<time datetime="{f:format.date(date:event.beginTimeTimestamp, format:'Y-m-d H:i')}"> <f:format.date format="d.m">{event.beginDate}</f:format.date> </time>
+								<time datetime="{f:format.date(date:event.date, format:'Y-m-d')}"> <f:format.date format="d.m">{event.date}</f:format.date> </time>
 							</div>
 							<!-- category -->
 							<div class="col-10">
