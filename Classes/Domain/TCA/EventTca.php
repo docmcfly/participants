@@ -44,13 +44,25 @@ class EventTca
         $record = BackendUtility::getRecord($parameters['table'], $parameters['row']['uid']);
         if ($record != null) {
             if($record['full_day']) {
-                $parameters['title'] = $typeTitle . ' (' . date('d.m.Y', $record['begin_date']) . ')';
+                $parameters['title'] = $typeTitle . ' (' .self::formatDateUTC($record['begin_date'], 'd.m.Y') . ')';
             } else {
-                $parameters['title'] = $typeTitle . ' (' . date('d.m.Y H:i', $record['begin_date'] + $record['begin_time'] ) . ')';
+                $parameters['title'] = $typeTitle . ' (' .self::formatDateUTC(  $record['begin_date'] + $record['begin_time'] , 'd.m.Y H:i') . ')';
             }
             
         } else {
             $parameters['title'] = $typeTitle;
         }
     }
+
+
+    private static function formatDateUTC(int $timestamp, string $format): string {
+        $date = new \DateTime();
+        $date->setTimestamp($timestamp);
+        $date->setTimezone(new \DateTimeZone('UTC'));
+        return $date->format($format); 
+
+
+    }
+
+
 }

@@ -42,16 +42,21 @@ final class BeginTimeConverterWizard implements UpgradeWizardInterface
         /** @var QueryBuilder $target */
         $target = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_participants_domain_model_event');
         $target->update('tx_participants_domain_model_event');
+        $dateTime  = new \DateTime();
+        $dateTime->setTimezone(new \DateTimeZone('GMT'));
+        
 
         while ($row = $sourceStatement->fetchAssociative()) {
             $target->where($target->expr()->eq('uid', $row['uid']));
             $tmp = explode(':',$row['time']);
-            $ut = intval($tmp[0]) * 3600 + intval($tmp[1]) * 60 + intval($tmp[2]);
-            $target->set('begin_time', $ut);
-
-            
-            $target->set('begin_date', strtotime($row['date']));
-            $target->set('begin_time', $ut);
+            $dateTime->setTimestamp(0);
+            $dateTime->setTime(intval($tmp[0]), intval($tmp[1]), intval($tmp[2]));
+            $target->set('begin_time', $dateTime->getTimestamp());
+           
+            $tmp = explode('-',$row['date']);
+            $dateTime->setTimestamp(0);
+            $dateTime->setDate(intval($tmp[0]), intval($tmp[1]), intval($tmp[2]));
+            $target->set('begin_date',  $dateTime->getTimestamp());
 
             $target->execute();
         }

@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.4.0',
+    'version' => '3.4.1',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
@@ -29,6 +29,7 @@ $EM_CONF[$_EXTKEY] = [
 /**
  * Change log: 
  * 
+3.4.1   :: Fix: Fix the timzone handling in the converter wizzard.
 3.4.0   :: Add: Add an reasons for prevention service (interface for the lending extension connection).
 3.3.2   :: Fix: Event begin time and begin date stored as integer.
 3.3.1   :: Fix: Update the usertools dependency.
