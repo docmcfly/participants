@@ -37,8 +37,9 @@ return [
         'iconfile' => 'EXT:participants/Resources/Public/Icons/tx_participants_domain_model_event_type.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'l10n_parent, l10n_diffsource, hidden, canceled, event_type, date, full_day, time, ' . //
-            'duration, usergroups, show_public_usergroups, public_usergroups, description, public, public_description, show_public_description '
+        'showRecordFieldList' => 'l10n_parent, l10n_diffsource, hidden, canceled, event_type, date, full_day, time, '
+            . 'duration, usergroups, show_public_usergroups, public_usergroups, description, public, public_description, '
+            . 'show_public_description '
     ],
     'types' => [
         '1' => [
