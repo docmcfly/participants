@@ -58,7 +58,8 @@ class Commitment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @return void
      */
     protected function initStorageObjects()
-    {}
+    {
+    }
 
     /**
      * Returns the user
@@ -169,8 +170,6 @@ class Commitment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function getIsNotChangable(): bool
     {
-        return $this->getEvent()
-            ->getDateTime()
-            ->getTimestamp() < time();
+        return $this->getEvent()->getBeginTimeStamp() < time();
     }
 }

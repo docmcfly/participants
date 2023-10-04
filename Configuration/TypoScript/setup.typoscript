@@ -15,13 +15,108 @@ plugin.tx_participants {
 			1 = {$plugin.tx_participants.view.layoutRootPath}
 		}
 
+    settings {
+      # default items per page for asynchronous requests
+      defaultItemsPerPage = 12
+      personalDutyRosterTypeNum = 196
+      personalDutyRoster{
+        # JSON format
+        ajax{ 
+          pageType = 103
+        }
+        # iCal format
+        iCal { 
+          pageType = 104
+        }      
+      } 
+      dutyRoster{
+        # JSON format
+        ajax{ 
+          pageType = 105
+        }
+        # iCal format
+        iCal { 
+          pageType = 102
+        }      
+      } 
+    }
 	}
 }
 
 
+
+tx_participants_personalDutyRoster_ajaxConnect = PAGE
+tx_participants_personalDutyRoster_ajaxConnect {
+   typeNum < plugin.tx_participants.view.settings.personalDutyRoster.ajax.pageType
+
+   10 = USER
+   10 {
+       userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run 
+       extensionName = Participants
+       pluginName = PersonalDutyRoster
+      vendorName = Cylancer
+    }
+  
+    config {
+      disableAllHeaderCode = 1
+      additionalHeaders = Content-type:application/json
+      xhtml_cleaning = 0
+      admPanel = 0
+      debug = 0
+      no_cache = 1
+   }
+}
+ 
+
+tx_participants_personalDutyRoster_iCal = PAGE
+tx_participants_personalDutyRoster_iCal {
+    typeNum < plugin.tx_participants.view.settings.personalDutyRoster.iCal.pageType
+
+    config {
+	    disableAllHeaderCode = 1
+	    xhtml_cleaning = none
+	    admPanel = 0
+	    metaCharset = utf-8
+	    additionalHeaders.10.header = Content-Type: text/calendar;charset=utf-8  
+	    additionalHeaders.20.header = Content-Disposition: inline; filename=export.txt
+	    disablePrefixComment = 1
+    }
+  10 = USER
+  10 {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run 
+    extensionName = Participants
+    pluginName = PersonalDutyRoster
+    vendorName = Cylancer
+  }
+}
+
+
+
+
+tx_participants_dutyRoster_ajaxConnect = PAGE
+tx_participants_dutyRoster_ajaxConnect {
+    typeNum < plugin.tx_participants.view.settings.dutyRoster.ajax.pageType
+    config {
+        disableAllHeaderCode = 1
+        additionalHeaders = Content-type:application/json
+        xthml_cleaning = 0 
+        admPanel = 0 
+        debug = 0
+        no_cache = 1
+    }
+  10 = USER
+  10 {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run 
+    extensionName = Participants
+    pluginName = DutyRoster
+    vendorName = Cylancer
+  }
+}
+
 tx_participants_dutyRosterICal = PAGE
 tx_participants_dutyRosterICal {
-    typeNum = 102
+  typeNum < plugin.tx_participants.view.settings.dutyRoster.iCal.pageType 
+  
     config {
 	    disableAllHeaderCode = 1
 	    xhtml_cleaning = none
@@ -40,45 +135,3 @@ tx_participants_dutyRosterICal {
     vendorName = Cylancer
   }
 }
-
-
-tx_participants_personalDutyRoster_ajaxConnect = PAGE
-tx_participants_personalDutyRoster_ajaxConnect {
-    typeNum = 103
-    config {
-        disableAllHeaderCode = 1
-        additionalHeaders = Content-type:application/json
-        xthml_cleaning = 0 
-        admPanel = 0 
-    }
-  10 = USER
-  10 {
-    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run 
-    extensionName = Participants
-    pluginName = PersonalDutyRoster
-    vendorName = Cylancer
-  }
-}
-
-tx_participants_personalDutyRoster_iCal = PAGE
-tx_participants_personalDutyRoster_iCal {
-    typeNum = 104
-    config {
-	    disableAllHeaderCode = 1
-	    xhtml_cleaning = none
-	    admPanel = 0
-	    metaCharset = utf-8
-	    additionalHeaders.10.header = Content-Type: text/calendar;charset=utf-8  
-	    additionalHeaders.20.header = Content-Disposition: inline; filename=export.ics 
-	    disablePrefixComment = 1
-    }
-  10 = USER
-  10 {
-    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run 
-    extensionName = Participants
-    pluginName = PersonalDutyRoster
-    vendorName = Cylancer
-  }
-}
-
-

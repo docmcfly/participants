@@ -67,11 +67,11 @@ class CommitmentRepository extends Repository
             ->in('tx_participants_domain_model_event.pid', $dutyRosterStrorageUids)))
             ->where($qb->expr()
             ->andX($qb->expr()
-            ->gte('tx_participants_domain_model_event.date', $qb->createNamedParameter($startMoment->format('Y-m-d'))), $qb->expr()
+            ->gte('tx_participants_domain_model_event.begin_date', $qb->createNamedParameter($startMoment->getTimestamp())), $qb->expr()
             ->eq('tx_participants_domain_model_commitment.user', $qb->createNamedParameter($user->getUid())), $qb->expr()
             ->eq('tx_participants_domain_model_commitment.pid', $planningStorageUid)))
-            ->orderby('tx_participants_domain_model_event.date', 'ASC')
-            ->addOrderby('tx_participants_domain_model_event.time', 'ASC')
+            ->orderby('tx_participants_domain_model_event.begin_date', 'ASC')
+            ->addOrderby('tx_participants_domain_model_event.begin_time', 'ASC')
             ->groupBy('tx_participants_domain_model_commitment.uid');
 
         if (! $withCanceledEvents) {
@@ -141,6 +141,7 @@ class CommitmentRepository extends Repository
     {
         $yesterday = new \DateTime();
         $yesterday->sub(new \DateInterval('P1D'));
+        $yesterday->setTimezone(new \DateTimeZone('UTC'));
 
         $qb = $this->getQueryBuilder('tx_participants_domain_model_event');
         $qb->select('tx_participants_domain_model_event.uid', 'tx_participants_domain_model_commitment.pid')
@@ -155,7 +156,7 @@ class CommitmentRepository extends Repository
             ->andWhere($qb->expr()
             ->in('tx_participants_domain_model_event.pid', $eventStorageUids))
             ->andWhere($qb->expr()
-            ->gt('tx_participants_domain_model_event.date', $yesterday->format('y-m-d')));
+            ->gt('tx_participants_domain_model_event.begin_date', $yesterday->getTimestamp()));
 
         // debug($qb->getSQL());
         $s = $qb->execute();
