@@ -47,18 +47,18 @@ class EventRepository extends Repository
     {
         $tmp = new \DateTime();
         $tmp->modify('+1 day');
-        $tomorrow = $tmp->format('Y-m-d');
+        $tmp->setTimestamp('UTC');
+        $tomorrow = $tmp->getTimestamp();
 
         $qb = $this->getQueryBuilder('tx_participants_domain_model_event');
         $qb->select('tx_participants_domain_model_event.uid')
             ->from('tx_participants_domain_model_event')
             ->where($qb->expr()
-                ->eq('date', $qb->expr()
-                    ->literal($tomorrow)))
+                ->eq('begin_date', $qb->createNamedParameter($tomorrow)))
             ->andWhere($qb->expr()
                 ->eq('canceled', 0))
-            ->orderBy('date', QueryInterface::ORDER_ASCENDING)
-            ->addOrderBy('time', QueryInterface::ORDER_ASCENDING);
+            ->orderBy('begin_date', QueryInterface::ORDER_ASCENDING)
+            ->addOrderBy('begin_time', QueryInterface::ORDER_ASCENDING);
 
         // debug($qb->getSql());
         $s = $qb->execute();
@@ -150,8 +150,8 @@ class EventRepository extends Repository
                     $qb->expr()->lt('begin_date', $qb->createNamedParameter($until))
                 )
             )
-            ->orderBy('date', QueryInterface::ORDER_ASCENDING)
-            ->addOrderBy('time', QueryInterface::ORDER_ASCENDING);
+            ->orderBy('begin_date', QueryInterface::ORDER_ASCENDING)
+            ->addOrderBy('begin_date', QueryInterface::ORDER_ASCENDING);
         if ($visibilityRule != null) {
             $qb->andWhere($visibilityRule);
         }
@@ -189,13 +189,24 @@ class EventRepository extends Repository
             /** @var Event $e */
             $e = $this->findByUid($row['uid']);
             $tmp = [];
-            $tmp['description'] = htmlspecialchars($e->getEventType()->getTitle() .' ('.date('d.m.Y', $e->getBeginDate()).')');
+            $tmp['description'] = htmlspecialchars($e->getEventType()->getTitle() .' ('.self::formatDateUTC( $e->getBeginDate(), 'd.m.Y').')');
             $tmp['title'] =  htmlspecialchars($e->getEventType()->getTitle());
-            $tmp['date'] =  htmlspecialchars(date('d.m.Y', $e->getBeginDate()));
+            $tmp['begin_date'] =  htmlspecialchars(self::formatDateUTC( $e->getBeginDate(), 'd.m.Y'));
             $data[] = $tmp;
         }
         $return['data'] = $data;
         return $return;
+    }
+
+
+
+    private static function formatDateUTC(int $timestamp, string $format): string {
+        $date = new \DateTime();
+        $date->setTimestamp($timestamp);
+        $date->setTimezone(new \DateTimeZone('UTC'));
+        return $date->format($format); 
+
+
     }
 
 }
