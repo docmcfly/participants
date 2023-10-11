@@ -6,7 +6,7 @@ return [
         'title' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.title',
         'label' => 'title',
         'label_userFunc' => \Cylancer\Participants\Domain\TCA\EventTca::class . '->computeTitle',
-        'sortby' => 'date',
+        'default_sortby' => 'date ASC, time ASC',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
