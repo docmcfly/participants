@@ -63,9 +63,14 @@ class PersonalDutyRosterController extends ActionController
     /** @var PersistenceManager */
     private $persistenceManager = null;
 
-    public function __construct(FrontendUserService $frontendUserService, CommitmentRepository $commitmentRepository, FrontendUserRepository $frontendUserRepository, //
-    FrontendUserGroupRepository $frontendUserGroupRepository, PersistenceManager $persistenceManager)
-    {
+    public function __construct(
+        FrontendUserService $frontendUserService,
+        CommitmentRepository $commitmentRepository,
+        FrontendUserRepository $frontendUserRepository,
+        //
+        FrontendUserGroupRepository $frontendUserGroupRepository,
+        PersistenceManager $persistenceManager
+    ) {
         $this->frontendUserService = $frontendUserService;
         $this->commitmentRepository = $commitmentRepository;
         $this->frontendUserRepository = $frontendUserRepository;
@@ -106,7 +111,7 @@ class PersonalDutyRosterController extends ActionController
             }
             // add new settings (hidden groups)
             foreach ($personalDutyRosterFilterSettings->getSettings() as $entry) {
-                if (! $entry->getVisible()) {
+                if (!$entry->getVisible()) {
                     $u->addHiddenPersonalDutyRosterGroups($entry->getFrontendUserGroup());
                 }
             }
@@ -131,7 +136,7 @@ class PersonalDutyRosterController extends ActionController
              * @var PersonalDutyRosterGroupFilterSettings $personalDutyRosterFilterSettings
              * @var array $personalDutyRosterGroups
              */
-            list ($personalDutyRosterGroups, $personalDutyRosterFilterSettings) = $this->getPersonalDutyRosterFilterSettings();
+            list($personalDutyRosterGroups, $personalDutyRosterFilterSettings) = $this->getPersonalDutyRosterFilterSettings();
             // debug($personalDutyRosterGroups);
             // debug($personalDutyRosterFilterSettings);
 
@@ -180,7 +185,7 @@ class PersonalDutyRosterController extends ActionController
     /**
      * The view contains a iCal list.
      *
-     * @param Integer $id
+     * @param int $id
      * @return void
      */
     public function downloadAllVisibleCalendarEntriesAction(int $id): void
@@ -192,7 +197,7 @@ class PersonalDutyRosterController extends ActionController
     /**
      * The view contains a iCal list.
      *
-     * @param Integer $id
+     * @param int $id
      * @return void
      */
     public function downloadAllPromisedVisibleCalendarEntriesAction(int $id): void
@@ -214,7 +219,7 @@ class PersonalDutyRosterController extends ActionController
     /**
      * The view contains a iCal list.
      *
-     * @param Integer $id
+     * @param int $id
      * @return void
      */
     public function downloadAllPromisedCalendarEntriesAction(int $id): void
@@ -243,7 +248,7 @@ class PersonalDutyRosterController extends ActionController
             $eventUid = $commitment->getEvent()->getUid();
             $return['$eventUid'] = $eventUid;
             $return['present'] = $commitment->getPresent();
-            if (! $commitment->_isNew() && $commitment->_isDirty('present')) {
+            if (!$commitment->_isNew() && $commitment->_isDirty('present')) {
                 $settings = $this->getPreparedSettings(intval($this->request->getArgument('id')));
                 $this->commitmentRepository->update($commitment);
                 $this->persistenceManager->persistAll();
@@ -329,7 +334,7 @@ class PersonalDutyRosterController extends ActionController
             $s = $qb->select('list_type', 'pi_flexform')
                 ->from('tt_content')
                 ->where($qb->expr()
-                ->eq('uid', $qb->createNamedParameter($id)))
+                    ->eq('uid', $qb->createNamedParameter($id)))
                 ->execute();
             // debug($qb->getSql());
             if ($row = $s->fetch()) {
@@ -394,11 +399,11 @@ class PersonalDutyRosterController extends ActionController
          * @var PersonalDutyRosterGroupFilterSettings $personalDutyRosterFilterSettings
          */
         $personalDutyRosterFilterSettings = $this->objectManager->get(PersonalDutyRosterGroupFilterSettings::class);
-        if (! $ignoreCurrentUserSettings) {
+        if (!$ignoreCurrentUserSettings) {
             foreach ($optionalHiddenPersonalDutyRosterGroups as $optionalGroups) {
                 if (in_array($optionalGroups, $personalDutyRosterGroups)) {
                     $ug = $this->frontendUserGroupRepository->findByUid($optionalGroups);
-                    $personalDutyRosterFilterSettings->add($ug, ! array_key_exists($ug->getUid(), $userHiddenDutyRosterGroups));
+                    $personalDutyRosterFilterSettings->add($ug, !array_key_exists($ug->getUid(), $userHiddenDutyRosterGroups));
                 }
             }
         }
@@ -426,7 +431,7 @@ class PersonalDutyRosterController extends ActionController
             $planningStorageUid = $this->settings[PersonalDutyRosterController::PLANNING_STORAGE_UID];
             $dutyRosterStorageUids = $this->settings[PersonalDutyRosterController::DUTY_ROSTER_STORAGE_UIDS];
 
-            list ($personalDutyRosterGroups, $personalDutyRosterFilterSettings) = $this->getPersonalDutyRosterFilterSettings($personalDutyRosterGroups, $optionalHiddenPersonalDutyRosterGroups, $ignoreCurrentUserSettings);
+            list($personalDutyRosterGroups, $personalDutyRosterFilterSettings) = $this->getPersonalDutyRosterFilterSettings($personalDutyRosterGroups, $optionalHiddenPersonalDutyRosterGroups, $ignoreCurrentUserSettings);
 
             // debug($hiddenTargetGroups);
             // debug($this->getTargetGroups($settings));

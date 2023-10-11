@@ -1,4 +1,5 @@
 <?php
+use Cylancer\Participants\Domain\PresentState;
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment',
@@ -11,6 +12,7 @@ return [
         'transOrigPointerField' => 'l10n_parent',
         'transOrigDiffSourceField' => 'l10n_diffsource',
         'enablecolumns' => [
+            'present' => 'present',
         ],
         'searchFields' => '',
         'iconfile' => 'EXT:participants/Resources/Public/Icons/tx_participants_domain_model_commitment.gif'
@@ -19,7 +21,9 @@ return [
         'showRecordFieldList' => ' l10n_parent, l10n_diffsource, present, present_default, event, user',
     ],
     'types' => [
-        '1' => ['showitem' => ' l10n_parent, l10n_diffsource, present, present_default, event, user'],
+        '1' => [
+            'showitem' => ' l10n_parent, l10n_diffsource, present, present_default, event, user'
+        ],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -48,7 +52,7 @@ return [
                 'renderType' => 'selectSingle',
                 'default' => 0,
                 'items' => [
-                    ['', 0],
+                    [ '', 0 ],
                 ],
                 'foreign_table' => 'tx_participants_domain_model_commitment',
                 'foreign_table_where' => 'AND {#tx_participants_domain_model_commitment}.{#pid}=###CURRENT_PID### AND {#tx_participants_domain_model_commitment}.{#sys_language_uid} IN (-1,0)',
@@ -70,33 +74,33 @@ return [
 
         'present' => [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.present',
+            
             'config' => [
-                'type' => 'check',
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'readOnly' => false,
                 'items' => [
-                    '1' => [
-                        '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
-                    ]
+                    [ 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.present.option.unknown', PresentState::UNKNOWN ],
+                    [ 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.present.option.notPresent', PresentState::NOT_PRESENT ],
+                    [ 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.present.option.present', PresentState::PRESENT ],
                 ],
-                'default' => 0,
+                'default' => PresentState::UNKNOWN,
+                'size' => 3,
             ]
         ],
         'present_default' => [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.present_default',
             'config' => [
                 'type' => 'check',
-                'readOnly' => true, 
-                'items' => [
-                    '1' => [
-                        '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
-                    ]
-                ],
+                'readOnly' => false,
+                'renderType' => 'checkboxToggle',
                 'default' => 0,
             ]
         ],
         'event' => [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.event',
             'config' => [
-                'readOnly' => true, 
+                'readOnly' => true,
                 'type' => 'select',
                 'dbType' => 'event',
                 'renderType' => 'selectSingle',
@@ -115,6 +119,6 @@ return [
                 'maxitems' => 1,
             ],
         ],
-    
+
     ],
 ];

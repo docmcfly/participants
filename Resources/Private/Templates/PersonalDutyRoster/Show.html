@@ -1,45 +1,58 @@
-<!DOCTYPE html PUBLIC "-//WC//DTD XHTML . Strict//EN"
-	"http://www.w.org/TR/xhtml/DTD/xhtml-strict.dtd">
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:c="http://typo3.org/ns/Cylancer/Participants/ViewHelpers"
-	data-namespace-typo3-fluid="true" xmlns="http://www.w.org//xhtml" xml:lang="en" lang="en"
->
+<!DOCTYPE html PUBLIC "-//WC//DTD XHTML . Strict//EN" "http://www.w.org/TR/xhtml/DTD/xhtml-strict.dtd">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:c="http://typo3.org/ns/Cylancer/Participants/ViewHelpers" data-namespace-typo3-fluid="true"
+	xmlns="http://www.w.org//xhtml" xml:lang="en" lang="en">
+
 <head>
-<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 </head>
+
 <body>
 	<f:layout name="Default" />
-	This Template is responsible for creating a table of domain objects. If you modify this template, do not forget to change the overwrite settings in
-	/Configuration/ExtensionBuilder/settings.yaml: Resources: Private: Templates: List.html: keep Otherwise your changes will be overwritten the next time you save
+	This Template is responsible for creating a table of domain objects. If you modify this template, do not forget to
+	change the overwrite settings in
+	/Configuration/ExtensionBuilder/settings.yaml: Resources: Private: Templates: List.html: keep Otherwise your changes
+	will be overwritten the next time you save
 	the extension in the extension builder
 	<f:section name="content">
-		<f:asset.css identifier="personalDutyRoster_bootstrap-toggle.min.css" href="EXT:participants/Resources/Public/Css/bootstrap-toggle.min.css" />
-		<f:asset.css identifier="personalDutyRoster_custom_style" href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
-		<f:asset.script identifier="personalDutyRoster_jquery-3.6.3-min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.3-min.js" />
-		<f:asset.script identifier="personalDutyRoster_bootstrap-toggle.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/bootstrap-toggle.min.js"
-			defer="true"
-		/>
+		<f:asset.css identifier="personalDutyRoster_bootstrap-toggle.min.css"
+			href="EXT:participants/Resources/Public/Css/bootstrap-toggle.min.css" />
+		<f:asset.css identifier="personalDutyRoster_custom_style"
+			href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
+		<f:asset.script identifier="personalDutyRoster_jquery-3.6.3-min.js"
+			src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.3-min.js" />
+		<f:asset.script identifier="personalDutyRoster_bootstrap-toggle.min.js"
+			src="EXT:participants/Resources/Public/JavaScript/Dist/bootstrap-toggle.min.js" defer="true" />
 		<f:if condition="{personalDutyRosterFilterSettings.usable()}">
 			<div class="accordion" id="accordionExample">
 				<div class="card">
 					<div class="card-header" id="headingOne">
-						<button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						<button class="btn btn-link" type="button" data-bs-toggle="collapse"
+							data-bs-target="#collapseOne" data-toggle="collapse" data-target="#collapseOne"
+							aria-expanded="true" aria-controls="collapseOne">
 							<h5>
 								<f:translate key="personalDutyRoster.list.filterSettings.title" />
 							</h5>
 						</button>
 					</div>
-					<div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+					<div id="collapseOne" class="collapse " aria-labelledby="headingOne"
+						data-parent="#accordionExample">
 						<div class="card-body">
 							<div class="form-group">
-								<f:form action="setPersonalDutyRosterFilter" class="form" method="POST" object="{personalDutyRosterFilterSettings}"
+								<f:form action="setPersonalDutyRosterFilter" class="form" method="POST"
+									object="{personalDutyRosterFilterSettings}"
 									objectName="personalDutyRosterFilterSettings">
 									<div class="row">
-										<f:for each="{personalDutyRosterFilterSettings.settings}" as="set" iteration="iter">
+										<f:for each="{personalDutyRosterFilterSettings.settings}" as="set"
+											iteration="iter">
 											<div class="form-check col">
 												<div class="checkbox">
-													<label for="visibilities.{set.frontendUserGroup.uid}" style="width: 15rem;"> <f:form.checkbox
-															property="settings.{set.frontendUserGroup.uid}.{visible}" value="1" checked="{set.visible}"
-														/> {set.frontendUserGroup.title}
+													<label for="visibilities.{set.frontendUserGroup.uid}"
+														style="width: 15rem;">
+														<f:form.checkbox
+															property="settings.{set.frontendUserGroup.uid}.{visible}"
+															value="1" checked="{set.visible}" />
+														{set.frontendUserGroup.title}
 													</label>
 												</div>
 											</div>
@@ -47,7 +60,8 @@
 									</div>
 									<div class="row">
 										<div class="col" style="text-align: right;">
-											<f:form.submit value="{f:translate(key:'personalDutyRoster.list.filterSettings.submit')}">
+											<f:form.submit
+												value="{f:translate(key:'personalDutyRoster.list.filterSettings.submit')}">
 												<f:translate key="personalDutyRoster.list.filterSettings.submit" />
 											</f:form.submit>
 										</div>
@@ -66,25 +80,28 @@
 							<div class="col-2">
 								<f:link.action
 									title="{f:translate(key:'personalDutyRoster.list.download.visibleCalendarEntries')}{paragraph -> f:format.htmlentitiesDecode(encoding: 'utf-8')}{f:translate(key:'personalDutyRoster.list.download.calendarEntriesFileHelp')}"
-									class="btn btn-outline-primary" pageType="104" action="downloadAllVisibleCalendarEntries" arguments="{id:uid}"
-								>
-									<f:translate key="personalDutyRoster.list.download.visibleCalendarEntries.symbols" />
+									class="btn btn-outline-primary" pageType="104"
+									action="downloadAllVisibleCalendarEntries" arguments="{id:uid}">
+									<f:translate
+										key="personalDutyRoster.list.download.visibleCalendarEntries.symbols" />
 								</f:link.action>
 							</div>
 							<div class="col-2">
 								<f:link.action
 									title="{f:translate(key:'personalDutyRoster.list.download.visiblePromisedCalendarEntries')}{paragraph -> f:format.htmlentitiesDecode(encoding: 'utf-8')}{f:translate(key:'personalDutyRoster.list.download.calendarEntriesFileHelp')}"
-									class="btn btn-outline-primary" pageType="104" action="downloadAllPromisedVisibleCalendarEntries" arguments="{id:uid}"
-								>
-									<f:translate key="personalDutyRoster.list.download.visiblePromisedCalendarEntries.symbols" />
+									class="btn btn-outline-primary" pageType="104"
+									action="downloadAllPromisedVisibleCalendarEntries" arguments="{id:uid}">
+									<f:translate
+										key="personalDutyRoster.list.download.visiblePromisedCalendarEntries.symbols" />
 								</f:link.action>
 							</div>
 							<div class="col-2">
 								<f:link.action
 									title="{f:translate(key:'personalDutyRoster.list.download.promisedCalendarEntries')}{paragraph -> f:format.htmlentitiesDecode(encoding: 'utf-8')}{f:translate(key:'personalDutyRoster.list.download.calendarEntriesFileHelp')}"
-									class="btn btn-outline-primary" pageType="104" action="downloadAllPromisedCalendarEntries" arguments="{id:uid}"
-								>
-									<f:translate key="personalDutyRoster.list.download.promisedCalendarEntries.symbols" />
+									class="btn btn-outline-primary" pageType="104"
+									action="downloadAllPromisedCalendarEntries" arguments="{id:uid}">
+									<f:translate
+										key="personalDutyRoster.list.download.promisedCalendarEntries.symbols" />
 								</f:link.action>
 							</div>
 						</div>
@@ -98,19 +115,25 @@
 		<table class="tx_participants table">
 			<thead>
 				<tr>
-					<th scope="col"><h4>
+					<th scope="col">
+						<h4>
 							<f:translate key="personalDutyRoster.list.present" />
-						</h4></th>
-					<th scope="col"><h4>
+						</h4>
+					</th>
+					<th scope="col">
+						<h4>
 							<f:translate key="personalDutyRoster.list.event" />
-						</h4></th>
+						</h4>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
 				<f:for each="{commitments}" as="commitment">
-					<f:variable name="presentDefaultCount">{counts.{commitment.event.uid}.presentDefaultCount}</f:variable>
+					<f:variable name="presentDefaultCount">{counts.{commitment.event.uid}.presentDefaultCount}
+					</f:variable>
 					<f:variable name="progressColor">bg-success</f:variable>
-					<f:variable name="progressOverloadColor">{f:if(condition:'{presentDefaultCount} == 0', then:'bg-success', else: 'bg-primary')}</f:variable>
+					<f:variable name="progressOverloadColor">{f:if(condition:'{presentDefaultCount} == 0',
+						then:'bg-success', else: 'bg-primary')}</f:variable>
 					<f:variable name="dataOnStyle">
 						<f:if condition="{commitment.isNotChangable}">tooLate</f:if>
 						<f:if condition="{commitment.event.canceled}">canceled</f:if>
@@ -128,21 +151,42 @@
 						</f:if>
 					</f:variable>
 					<tr>
-						<td style="border: 0"><f:form absolute="true" action="setPresent" name="commitment" object="{commitment}" arguments="{commitment:commitment, id:uid}"
-								id="event_{commitment.event.uid}" pageType="103" enctype="multipart/form-data"
-							>
-								<f:form.checkbox id="checkbox_{commitment.event.uid}" additionalAttributes="{onchange:'presentAjaxSubmit({commitment.event.uid})'}" property="present"
-									value="1" style="display:none"
-									data="{toggle:'toggle', 
-													 on:'{dataOn}' ,
-													 off:'{dataOff}',
-													 onstyle: '{dataOnStyle}',
-													 offstyle:'{dataOffStyle}'
-													 }"
-									checked="{f:if(condition:commitment.event.canceled,then:false, else:commitment.present)}"
-									disabled="{f:if(condition:'({commitment.isNotChangable} || {commitment.event.canceled}',then:'disabled')}"
-								/>
-							</f:form></td>
+						<td style="border: 0">
+							<f:form absolute="true" action="setPresent" name="commitment" object="{commitment}"
+								arguments="{commitment:commitment, id:uid}" id="event_{commitment.event.uid}" pageType="103"
+								enctype="multipart/form-data">
+								<div class="d-flex justify-content-between align-items-center">
+									<f:form.radio property="present" class="btn-check " id="event_{commitment.event.uid}_radioNotPresent"
+										value="1"
+										disabled="{f:if(condition:'({commitment.isNotChangable} || {commitment.event.canceled}',then:'disabled')}"
+										additionalAttributes="{onchange:'presentAjaxSubmit({commitment.event.uid})'}" />
+									<label style="width:49%" class="btn btn-outline-success" for="event_{commitment.event.uid}_radioNotPresent"
+										title="{f:translate(key:'personalDutyRoster.list.in')}">{f:translate(key:'personalDutyRoster.list.inSymbol')}</label>
+						
+									<f:form.radio property="present" class="btn-check " id="event_{commitment.event.uid}_radioPresent" value="0"
+										disabled="{f:if(condition:'{commitment.isNotChangable} || {commitment.event.canceled}',then:'disabled')}"
+										additionalAttributes="{onchange:'presentAjaxSubmit({commitment.event.uid})'}" />
+									<label style="width:49%"  class="btn btn-outline-primary " for="event_{commitment.event.uid}_radioPresent"
+										title="{f:translate(key:'personalDutyRoster.list.absent')}">{f:translate(key:'personalDutyRoster.list.absentSymbol')}</label>
+								</div>
+								<div class="btn btn-outline-dark mt-1 w-100" id="event_{commitment.event.uid}_radioDescription">
+									<f:switch expression="{commitment.present}">
+										<f:case value="-1">
+											<f:translate key="personalDutyRoster.list.unknownSymbol" />&nbsp;
+											<f:translate key="personalDutyRoster.list.unknown" />
+										</f:case>
+										<f:case value="0">
+											<f:translate key="personalDutyRoster.list.absentSymbol" />&nbsp;
+											<f:translate key="personalDutyRoster.list.absent" />
+										</f:case>
+										<f:case value="1">
+											<f:translate key="personalDutyRoster.list.inSymbol" />&nbsp;
+											<f:translate key="personalDutyRoster.list.in" />
+										</f:case>
+									</f:switch>
+								</div>
+							</f:form>
+						</td>
 						<td style="border: 0">
 							<div class="container">
 								<div class="row">
@@ -158,7 +202,8 @@
 										</f:if>
 									</div>
 									<div class="col-sm ">
-										<span class="label-info eventName strong {f:if(condition:commitment.event.canceled,then:'canceled')}">{commitment.event.eventType.title}</span>
+										<span
+											class="label-info eventName strong {f:if(condition:commitment.event.canceled,then:'canceled')}">{commitment.event.eventType.title}</span>
 										<div>
 											<f:if condition="{commitment.event.canceled}">
 												<f:translate key="personalDutyRoster.list.event.canceled" />
@@ -182,7 +227,8 @@
 					</tr>
 					<f:if condition="!{commitment.event.canceled}">
 						<tr>
-							<td style="border: 0"><f:if condition="{commitment.presentDefault}">
+							<td style="border: 0">
+								<f:if condition="{commitment.presentDefault}">
 									<f:then>
 										<div class="badge bg-success" style="display: block">
 											<f:translate key="personalDutyRoster.list.scheduled" />
@@ -193,31 +239,37 @@
 											<f:translate key="personalDutyRoster.list.notScheduled" />
 										</div>
 									</f:else>
-								</f:if></td>
+								</f:if>
+							</td>
 							<td style="border: 0">
-								<div class="progress"><div class="progress-bar {progressColor}" 
-								     id="progressbar_{commitment.event.uid}" 
-								     role="progressbar" 
-								     style="width:{counts.{commitment.event.uid}.presentPercent}%" 
-										 aria-valuenow="{counts.{commitment.event.uid}.presentPercent}" 
-										 aria-valuemin="0" 
-										 aria-valuemax="{counts.{commitment.event.uid}.presentDefaultPercent}">{counts.{commitment.event.uid}.displayPercent}%</div>
-								<div class="progress-bar {progressOverloadColor}" 
-								     id="overProgressbar_{commitment.event.uid}" 
-								     role="progressbar" 
-								     style="width:{counts.{commitment.event.uid}.presentOverPercent}%" 
-								     aria-valuenow="{counts.{commitment.event.uid}.presentOverPercent}" 
-								     aria-valuemin="0" 
-								     aria-valuemax="100"></div>
-								</div> <f:translate key="personalDutyRoster.list.members" />: <span id="presentCount_{commitment.event.uid}">{counts.{commitment.event.uid}.presentCount}</span>
-								( {counts.{commitment.event.uid}.presentDefaultCount} ) <f:if condition="{canViewMembers}">
-									<f:form style="display:inline" absolute="true" action="getMembers" name="commitment" hiddenFieldClassName="d-none" object="{commitment}"
-										arguments="{commitment:commitment, id=uid}" id="member_list_{commitment.event.uid}" pageType="103" enctype="multipart/form-data"
-									>
-										<button id="getMemberBtn_{commitment.event.uid}" class="getMemberBtn text-primary lnkBtn" type="button" data-toggle="collapse"
-											data-target="#members_list_{commitment.event.uid}" data-bs-toggle="collapse" data-bs-target="#members_list_{commitment.event.uid}" aria-expanded="true" aria-controls="members_list_{commitment.event.uid}"
-											onclick="getMembersAjaxSubmit({commitment.event.uid})"
-										>
+								<div class="progress">
+									<div class="progress-bar {progressColor}" id="progressbar_{commitment.event.uid}"
+										role="progressbar" style="width:{counts.{commitment.event.uid}.presentPercent}%"
+										aria-valuenow="{counts.{commitment.event.uid}.presentPercent}" aria-valuemin="0"
+										aria-valuemax="{counts.{commitment.event.uid}.presentDefaultPercent}">
+										{counts.{commitment.event.uid}.displayPercent}%</div>
+									<div class="progress-bar {progressOverloadColor}"
+										id="overProgressbar_{commitment.event.uid}" role="progressbar"
+										style="width:{counts.{commitment.event.uid}.presentOverPercent}%"
+										aria-valuenow="{counts.{commitment.event.uid}.presentOverPercent}"
+										aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<f:translate key="personalDutyRoster.list.members" />: <span
+									id="presentCount_{commitment.event.uid}">{counts.{commitment.event.uid}.presentCount}</span>
+								( {counts.{commitment.event.uid}.presentDefaultCount} ) <f:if
+									condition="{canViewMembers}">
+									<f:form style="display:inline" absolute="true" action="getMembers" name="commitment"
+										hiddenFieldClassName="d-none" object="{commitment}"
+										arguments="{commitment:commitment, id=uid}"
+										id="member_list_{commitment.event.uid}" pageType="103"
+										enctype="multipart/form-data">
+										<button id="getMemberBtn_{commitment.event.uid}"
+											class="getMemberBtn text-primary lnkBtn" type="button"
+											data-toggle="collapse" data-target="#members_list_{commitment.event.uid}"
+											data-bs-toggle="collapse"
+											data-bs-target="#members_list_{commitment.event.uid}" aria-expanded="true"
+											aria-controls="members_list_{commitment.event.uid}"
+											onclick="getMembersAjaxSubmit({commitment.event.uid})">
 											&nbsp; :: &nbsp;
 											<f:translate key="personalDutyRoster.list.listOfMembers" />
 										</button>
@@ -229,7 +281,8 @@
 							<td></td>
 							<td>
 								<f:if condition="{canViewMembers}">
-									<div id="members_list_{commitment.event.uid}" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+									<div id="members_list_{commitment.event.uid}" class="collapse "
+										aria-labelledby="headingOne" data-parent="#accordionExample">
 										<div class="card-body spinner-border members-spinner" role="status">
 										</div>
 										<span class="sr-only">Loading...</span>
@@ -241,21 +294,28 @@
 				</f:for>
 			</tbody>
 		</table>
+
+		<f:format.raw>
+            <script defer="defer">
+                let personalDutyRosterListUnknownDescription = '{f:translate(key:"personalDutyRoster.list.unknownSymbol")}&nbsp;{f:translate(key:"personalDutyRoster.list.unknown")}'
+                let personalDutyRosterListInDescription = '{f:translate(key:"personalDutyRoster.list.inSymbol")}&nbsp;{f:translate(key:"personalDutyRoster.list.in")}'
+                let personalDutyRosterListAbsentDescription = '{f:translate(key:"personalDutyRoster.list.absentSymbol")}&nbsp;{f:translate(key:"personalDutyRoster.list.absent")}'
+            </script>
+        </f:format.raw>
 		<script defer>
-			
-			
+
+
 			function presentAjaxSubmit(id) {
 				var form = $('#event_' + id);
 				var u = form.attr('action');
-				var cb = $('#checkbox_' + id)[0]
 				var service = {
-					ajaxCall : function(data) {
+					ajaxCall: function (data) {
 						$.ajax({
-							method : "POST",
-							url : u,
-							cache : false,
-							data : form.serialize(),
-							success : function(response) {
+							method: "POST",
+							url: u,
+							cache: false,
+							data: form.serialize(),
+							success: function (response) {
 								var r = JSON.parse(response)
 								var p = $('#progressbar_' + id)
 								p.html(r['counts']['displayPercent'] + '%')
@@ -263,13 +323,21 @@
 								var o = $('#overProgressbar_' + id)
 								o.css('width', r['counts']['presentOverPercent'] + '%')
 								$('#presentCount_' + id).html(r['counts']['presentCount'])
-								var c = $('#checkbox_' + id)
-								c[0].checked = true
-								c.prop('checked', r['present'])
-								getMembersAjaxSubmit(id, true)
+								let description = '???'
+								switch($("input[name='tx_participants_personaldutyroster[commitment][present]']:checked").val()){
+									case "0" : description = personalDutyRosterListAbsentDescription
+									break;
+									case "1" : description = personalDutyRosterListInDescription
+									break;
+									case "-1" : description = personalDutyRosterListUnknownDescription
+									break;
+								}
 								
+								$("#event_"+id+"_radioDescription").html(description)
+								getMembersAjaxSubmit( id, true)
+
 							},
-							error : function(jqXHR, textStatus, errorThrow) {
+							error: function (jqXHR, textStatus, errorThrow) {
 								console.log(jqXHR.responseText)
 							}
 						});
@@ -277,66 +345,65 @@
 				};
 				service.ajaxCall(form);
 
-				
+
 			}
-			
+
 			function getMembersAjaxSubmit(id, refresh = false) {
 				var ml = $('#members_list_' + id)
 				if (refresh | (ml.hasClass('collapsing'))) {
 					var form = $('#member_list_' + id);
 					var u = form.attr('action');
 					var service = {
-						ajaxCall : function(data) {
+						ajaxCall: function (data) {
 							$.ajax({
-								method : "POST",
-								url : u,
-								cache : false,
-								data : form.serialize(),
-								success : function(response) {
+								method: "POST",
+								url: u,
+								cache: false,
+								data: form.serialize(),
+								success: function (response) {
 									var r = JSON.parse(response)
 									var ml = $('#members_list_' + id).first()
-								    ml.empty()
+									ml.empty()
 									var m = r['members']
-									if(m != null) {
+									if (m != null) {
 										var content = '<ul>'
-										Object.values(m).forEach( value => {
+										Object.values(m).forEach(value => {
 											content += '<li>'
-											content += value['first_name']+' '+value['last_name'] 
-											<f:if condition="{canViewCurrentlyOffDuty}">
-												if( value['currently_off_duty'] == 1 ) {
-											 		content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
-											 	}	
-											</f:if>
+											content += value['first_name'] + ' ' + value['last_name']
+												<f:if condition = "{canViewCurrentlyOffDuty}" >
+												if (value['currently_off_duty'] == 1) {
+													content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
+												}	
+												</f:if>
 											content += '</li>'
 										})
 										content += '</ul>'
 										ml.append(content)
 									} else {
-										ml.append('<ul><li><f:translate key="personalDutyRoster.list.members.nobody" /></li></ul>')
+									ml.append('<ul><li><f:translate key="personalDutyRoster.list.members.nobody" /></li></ul>')
 									}
-									var d =  r['dropouts']           
-									if(d != null && Object.keys(d).length > 0) {
+									var d = r['dropouts']
+									if (d != null && Object.keys(d).length > 0) {
 										var content = '<strong><f:translate key="personalDutyRoster.list.dropouts" /></strong><ul>'
-											Object.values(d).forEach( value => {
-												content += '<li>'
-												content += value['first_name']+' '+value['last_name'] 
-												<f:if condition="{canViewCurrentlyOffDuty}">
-													if( value['currently_off_duty'] == 1 ) {
-												 		content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
-												 	}	
+										Object.values(d).forEach(value => {
+											content += '<li>'
+											content += value['first_name'] + ' ' + value['last_name']
+												<f:if condition = "{canViewCurrentlyOffDuty}" >
+													if (value['currently_off_duty'] == 1) {
+														content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
+													}	
 												</f:if>
 												content += '</li>'
-											})
+										})
 										content += '</ul>'
 										ml.append(content)
 									} 
-									
 								},
-								error : function(jqXHR, textStatus, errorThrow) {
+								error: function(jqXHR, textStatus, errorThrow) {
 									var ml = $('#members_list_' + id).first()
 									ml.empty()
 									ml.text = 'Loading error...'
-									
+
 								}
 							});
 						}
@@ -344,8 +411,9 @@
 					service.ajaxCall(form);
 				}
 			}
-			
+
 		</script>
 	</f:section>
 </body>
+
 </html>

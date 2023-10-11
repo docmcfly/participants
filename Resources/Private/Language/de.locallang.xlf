@@ -58,13 +58,29 @@
 				<source>Not scheduled.</source>
 				<target state="tanslated">Nicht eingeplant</target>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.unknown">
+				<source>Not yet set.</source>
+				<target state="tanslated">Noch nicht festgelegt.</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.unknownSymbol">
+				<source>❓</source>
+				<target state="tanslated">❓</target>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.in">
 				<source>I am involved</source>
 				<target state="tanslated">Bin dabei</target>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.inSymbol">
+				<source>✓</source>
+				<target state="tanslated">✓</target>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.absent">
 				<source>I am absend</source>
 				<target state="tanslated">Bin abwesend</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.absentSymbol">
+				<source>∅</source>
+				<target state="tanslated">∅</target>
 			</trans-unit>
 
 			<trans-unit id="personalDutyRoster.list.download.visibleCalendarEntries.symbols">
