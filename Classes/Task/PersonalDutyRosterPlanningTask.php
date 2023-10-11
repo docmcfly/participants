@@ -1,6 +1,7 @@
 <?php
 namespace Cylancer\Participants\Task;
 
+use Cylancer\Participants\Domain\PresentState;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
@@ -211,13 +212,16 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
     {
 
         /** @var FrontendUserGroup $ug   */
-        if (! array_key_exists($event->getUid(), $this->eventGroupAssociation)) {
+        if (!array_key_exists($event->getUid(), $this->eventGroupAssociation)) {
 
-            $this->eventGroupAssociation[$event->getUid()] = array_merge( //
-            array_map('\Cylancer\Participants\Service\FrontendUserService::getUid', $event->getUsergroups()->toArray()), //
-            array_map('\Cylancer\Participants\Service\FrontendUserService::getUid', $event->getEventType()
-                ->getUsergroups()
-                ->toArray()));
+            $this->eventGroupAssociation[$event->getUid()] = array_merge(
+                //
+                array_map('\Cylancer\Participants\Service\FrontendUserService::getUid', $event->getUsergroups()->toArray()),
+                //
+                array_map('\Cylancer\Participants\Service\FrontendUserService::getUid', $event->getEventType()
+                    ->getUsergroups()
+                    ->toArray())
+            );
         }
         /**
          * 1. iterate over all user groups
@@ -225,7 +229,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
          * 3. has the event groups and the user group path an intersect: return true...
          */
         foreach ($user->getUsergroup() as $ug) {
-            if (! empty(array_intersect($this->frontendUserGroupStructure[$ug->getUid()], $this->eventGroupAssociation[$event->getUid()]))) {
+            if (!empty(array_intersect($this->frontendUserGroupStructure[$ug->getUid()], $this->eventGroupAssociation[$event->getUid()]))) {
                 return true;
             }
         }
@@ -293,7 +297,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
             /** @var Event $e */
 
             foreach ($users as $u) {
-                $userCount ++;
+                $userCount++;
                 // $pages = $this->getPages();
                 $inserts = array();
                 $updates = array();
@@ -301,7 +305,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
 
                 // update
                 foreach ($this->commitmentRepository->findExistsFutureCommitments($u->getUid(), $this->planningStorageUid, $this->dutyRosterStorageUids) as $uids) {
-                    $loadedData ++;
+                    $loadedData++;
                     // debug($uids);
                     $createdCount = 0;
                     /**
@@ -313,27 +317,30 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
 
                     if ($e != null && $e->getDatetime() > $now) {
 
-                        $d = $u->getCurrentlyOffDuty() ? false : $this->calculatePlanningPresent($u, $e);
+                        $planningPresent = $u->getCurrentlyOffDuty() ? false : $this->calculatePlanningPresent($u, $e);
+
                         // debug($ds);
                         if ($e->getHidden() || $e->getDeleted()) {
-                            if ($c->getPresent()) {
+                            if ($c->getPresent() !== PresentState::NOT_PRESENT) {
                                 $canceled[] = $c;
                             }
-                            $canceledCount ++;
+                            $canceledCount++;
                             $c->setEvent($e); // <-- for the template
-                            $c->setPresent(false);
+                            $c->setPresent(PresentState::NOT_PRESENT);
                             $c->setPresentDefault(false);
                             if (PersonalDutyRosterPlanningTask::DISABLE_PERSISTENCE_MANAGER) {
                                 debug($c, "CANCELED:");
                             }
                             $this->commitmentRepository->update($c);
-                        } else if ($this->resetUser || $c->getPresentDefault() != $d) {
-                            $updatedCount ++;
-                            if ($c->getPresent() xor $d) {
+                        } else if ($this->resetUser || $c->getPresentDefault() != $planningPresent) {
+                            $updatedCount++;
+                            if (($c->getPresent() !== PresentState::NOT_PRESENT) xor $planningPresent) {
                                 $updates[] = $c;
                             }
-                            $c->setPresentDefault($d);
-                            $c->setPresent($u->getApplyPlanningData() ? $d : false);
+                            $c->setPresentDefault($planningPresent);
+                            $c->setPresent($u->getApplyPlanningData()
+                                ? ($planningPresent ? PresentState::PRESENT : PresentState::NOT_PRESENT)
+                                : PresentState::NOT_PRESENT);
 
                             if (PersonalDutyRosterPlanningTask::DISABLE_PERSISTENCE_MANAGER) {
                                 debug($c, "UPDATE:");
@@ -347,7 +354,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                 foreach ($this->commitmentRepository->findMissingCommitmentsOf($u->getUid(), $this->planningStorageUid, $this->dutyRosterStorageUids) as $eventUid) {
                     $e = $this->eventRepository->findByUid($eventUid);
                     if ($e != null) {
-                        $createdCount ++;
+                        $createdCount++;
                         /**
                          *
                          * @var Commitment $c
@@ -357,10 +364,11 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                             $c->setEvent($e);
                             $c->setUser($u);
 
-                            $d = $u->getCurrentlyOffDuty() ? false : $this->calculatePlanningPresent($u, $e);
-
-                            $c->setPresent($u->getApplyPlanningData() ? $d : false);
-                            $c->setPresentDefault($d);
+                            $planningPresent = $u->getCurrentlyOffDuty() ? false : $this->calculatePlanningPresent($u, $e);
+                            $c->setPresent($u->getApplyPlanningData()
+                                ? ($planningPresent ? PresentState::PRESENT : PresentState::NOT_PRESENT)
+                                : PresentState::NOT_PRESENT);
+                            $c->setPresentDefault($planningPresent);
                             $c->setPid($this->planningStorageUid);
                             if (PersonalDutyRosterPlanningTask::DISABLE_PERSISTENCE_MANAGER) {
                                 debug($c, "CREATE");
@@ -378,7 +386,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                 }
             }
 
-            if (! PersonalDutyRosterPlanningTask::DISABLE_PERSISTENCE_MANAGER) {
+            if (!PersonalDutyRosterPlanningTask::DISABLE_PERSISTENCE_MANAGER) {
                 $this->persistenceManager->persistAll();
             }
 
@@ -395,7 +403,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         // debug($inserts, 'I');
         // debug($updates, 'U');
         // debug($canceled, 'C');
-        if (filter_var($user->getEmail(), FILTER_VALIDATE_EMAIL) && (! empty($inserts) || ! empty($updates) || ! empty($canceled))) {
+        if (filter_var($user->getEmail(), FILTER_VALIDATE_EMAIL) && (!empty($inserts) || !empty($updates) || !empty($canceled))) {
             $recipient = [
                 $user->getEmail() => $user->getFirstName() . ' ' . $user->getLastName()
             ];
@@ -407,13 +415,13 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
             $data = [
                 'user' => $user
             ];
-            if (! empty($inserts)) {
+            if (!empty($inserts)) {
                 $data['inserts'] = $inserts;
             }
-            if (! empty($updates)) {
+            if (!empty($updates)) {
                 $data['updates'] = $updates;
             }
-            if (! empty($canceled)) {
+            if (!empty($canceled)) {
                 $data['canceled'] = $canceled;
             }
 
@@ -429,12 +437,12 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
     public function getAdditionalInformation()
     {
         return 'Duty roster stroarge uids:' . $this->dutyRosterStorageUids . //
-        ' / planning storage uid: ' . $this->planningStorageUid . //
-        ' / frontend user storage uids: ' . $this->feUserStorageUids . //
-        ' / frontend user group storage uids: ' . $this->feUsergroupStorageUids . //
-        ' / specified user uids:' . $this->specifiedUserUids . //
-        ' / enable reminder:' . $this->enableReminder . //
-        ' / reminder target url:' . $this->reminderTargetUrl;
+            ' / planning storage uid: ' . $this->planningStorageUid . //
+            ' / frontend user storage uids: ' . $this->feUserStorageUids . //
+            ' / frontend user group storage uids: ' . $this->feUsergroupStorageUids . //
+            ' / specified user uids:' . $this->specifiedUserUids . //
+            ' / enable reminder:' . $this->enableReminder . //
+            ' / reminder target url:' . $this->reminderTargetUrl;
     }
 
     /**
@@ -505,5 +513,3 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         }
     }
 }
-
-
