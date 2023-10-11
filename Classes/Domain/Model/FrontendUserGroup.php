@@ -30,13 +30,6 @@ class FrontendUserGroup extends AbstractEntity
      */
     protected $subgroup;
 
-
-    /**
-     *
-     * @var string
-     */
-    protected $accronym = '';
-
     /**
      * Constructs a new Frontend User Group
      */
@@ -44,6 +37,13 @@ class FrontendUserGroup extends AbstractEntity
     {
         $this->subgroup = new ObjectStorage();
     }
+
+    /**
+     *
+     * @var string
+     */
+    protected $accronym = '';
+
 
     /**
      * Sets the title value
@@ -110,11 +110,12 @@ class FrontendUserGroup extends AbstractEntity
         return $this->subgroup;
     }
 
-	/**
-	 * 
-	 * @return string
-	 */
-	public function getAccronym() {
-		return $this->accronym;
-	}
+    /**
+     * 
+     * @return string
+     */
+    public function getAccronym()
+    {
+        return $this->accronym;
+    }
 }

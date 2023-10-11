@@ -14,12 +14,12 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.4.0',
+    'version' => '3.5.0',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
             'bootstrap_package' => '13.0.1-13.0.99',
-            'usertools' => '2.3.0-2.9.99'
+            'usertools' => '2.0.0-2.9.99'
         ],
         'conflicts' => [],
         'suggests' => [],
@@ -29,6 +29,9 @@ $EM_CONF[$_EXTKEY] = [
 /**
  * Change log: 
  * 
+3.5.1   :: Fix : Fix the event sorting. 
+3.5.0   :: Undo : Remove the trying of time as integer in the database. (don't use 3.4.* !)
+3.4.1   :: Fix: Fix the timzone handling in the converter wizzard.
 3.4.0   :: Add: Add an reasons for prevention service (interface for the lending extension connection).
 3.3.2   :: Fix: Event begin time and begin date stored as integer.
 3.3.1   :: Fix: Update the usertools dependency.

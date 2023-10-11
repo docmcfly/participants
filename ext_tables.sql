@@ -146,10 +146,8 @@ CREATE TABLE tx_participants_domain_model_event (
    
    public SMALLINT (5) UNSIGNED DEFAULT '2' NOT NULL,
    full_day SMALLINT (5) UNSIGNED DEFAULT '0' NOT NULL,
-   date VARCHAR(10) DEFAULT '0000-00-00' NOT NULL,	
-   time VARCHAR(10) DEFAULT '19:00:00',	
-   begin_date int (10) DEFAULT 0 NOT NULL,	
-   begin_time int (10) DEFAULT 0 NOT NULL,	
+   date date DEFAULT '2000-01-01' NOT NULL,	
+   time time DEFAULT '19:00:00',	
    duration SMALLINT (5) UNSIGNED DEFAULT '0' NOT NULL,
 	    	
    PRIMARY KEY (uid),

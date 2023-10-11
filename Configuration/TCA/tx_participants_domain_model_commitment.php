@@ -16,10 +16,10 @@ return [
         'iconfile' => 'EXT:participants/Resources/Public/Icons/tx_participants_domain_model_commitment.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, present, present_default, event, user',
+        'showRecordFieldList' => ' l10n_parent, l10n_diffsource, present, present_default, event, user',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, present, present_default, event, user'],
+        '1' => ['showitem' => ' l10n_parent, l10n_diffsource, present, present_default, event, user'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -72,11 +72,9 @@ return [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.present',
             'config' => [
                 'type' => 'check',
-                'renderType' => 'checkboxToggle',
                 'items' => [
-                    [
-                        0 => '',
-                        1 => '',
+                    '1' => [
+                        '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
                     ]
                 ],
                 'default' => 0,
@@ -86,12 +84,10 @@ return [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.present_default',
             'config' => [
                 'type' => 'check',
-                'readOnly' => true,
-                'renderType' => 'checkboxToggle',
+                'readOnly' => true, 
                 'items' => [
-                    [
-                        0 => '',
-                        1 => '',
+                    '1' => [
+                        '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
                     ]
                 ],
                 'default' => 0,
@@ -100,7 +96,7 @@ return [
         'event' => [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.event',
             'config' => [
-                'readOnly' => true,
+                'readOnly' => true, 
                 'type' => 'select',
                 'dbType' => 'event',
                 'renderType' => 'selectSingle',
@@ -119,6 +115,6 @@ return [
                 'maxitems' => 1,
             ],
         ],
-
+    
     ],
 ];

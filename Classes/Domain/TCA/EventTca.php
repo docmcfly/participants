@@ -11,7 +11,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2023 C. Gogolin <service@cylancer.net>
+ * (c) 2022 C. Gogolin <service@cylancer.net>
  *
  * This class contains a tca configuration function.
  * 
@@ -43,14 +43,20 @@ class EventTca
         }
         $record = BackendUtility::getRecord($parameters['table'], $parameters['row']['uid']);
         if ($record != null) {
-            if($record['full_day']) {
-                $parameters['title'] = $typeTitle . ' (' . date('d.m.Y', $record['begin_date']) . ')';
+            if ($record['full_day']) {
+                $parameters['title'] = $typeTitle . ' (' . self::formatDate($record['date']) . ')';
             } else {
-                $parameters['title'] = $typeTitle . ' (' . date('d.m.Y H:i', $record['begin_date'] + $record['begin_time'] ) . ')';
+                $parameters['title'] = $typeTitle . ' (' . self::formatDate($record['date']) . ' ' . $record['time'] . ')';
             }
-            
         } else {
             $parameters['title'] = $typeTitle;
         }
     }
+
+    private static function formatDate(string $sqlDate): string
+    {
+        $e = explode('-', $sqlDate);
+        return $e[2] . '.' . $e[1] . '.' . $e[0];
+    }
+
 }
