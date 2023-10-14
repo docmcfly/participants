@@ -85,7 +85,6 @@ return [
                     [ 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_commitment.present.option.present', PresentState::PRESENT ],
                 ],
                 'default' => PresentState::UNKNOWN,
-                'size' => 3,
             ]
         ],
         'present_default' => [

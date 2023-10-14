@@ -128,48 +128,40 @@
 				</tr>
 			</thead>
 			<tbody>
+				<f:if condition="{f:count(subject:commitments)} > 0">
+					<f:then>
 				<f:for each="{commitments}" as="commitment">
 					<f:variable name="presentDefaultCount">{counts.{commitment.event.uid}.presentDefaultCount}
 					</f:variable>
 					<f:variable name="progressColor">bg-success</f:variable>
 					<f:variable name="progressOverloadColor">{f:if(condition:'{presentDefaultCount} == 0',
 						then:'bg-success', else: 'bg-primary')}</f:variable>
-					<f:variable name="dataOnStyle">
-						<f:if condition="{commitment.isNotChangable}">tooLate</f:if>
-						<f:if condition="{commitment.event.canceled}">canceled</f:if>
-						<f:if condition="{commitment.presentDefault} || ({presentDefaultCount} == 0) ">
-							<f:then> success</f:then>
-							<f:else> primary</f:else>
-						</f:if>
-					</f:variable>
-					<f:variable name="dataOffStyle">
-						<f:if condition="{commitment.isNotChangable}">tooLate</f:if>
-						<f:if condition="{commitment.event.canceled}">canceled</f:if>
-						<f:if condition="{commitment.presentDefault}">
-							<f:then> primary</f:then>
-							<f:else> light</f:else>
-						</f:if>
-					</f:variable>
 					<tr>
 						<td style="border: 0">
 							<f:form absolute="true" action="setPresent" name="commitment" object="{commitment}"
-								arguments="{commitment:commitment, id:uid}" id="event_{commitment.event.uid}" pageType="103"
-								enctype="multipart/form-data">
+								arguments="{commitment:commitment, id:uid}" id="event_{commitment.event.uid}"
+								pageType="103" enctype="multipart/form-data">
 								<div class="d-flex justify-content-between align-items-center">
-									<f:form.radio property="present" class="btn-check " id="event_{commitment.event.uid}_radioNotPresent"
-										value="1"
+									<f:form.radio property="present" class="d-none"
+										id="event_{commitment.event.uid}_radioUnknown" value="-1"
+										disabled="{f:if(condition:'({commitment.isNotChangable} || {commitment.event.canceled}',then:'disabled')}" />
+									<f:form.radio property="present" class="btn-check "
+										id="event_{commitment.event.uid}_radioNotPresent" value="1"
 										disabled="{f:if(condition:'({commitment.isNotChangable} || {commitment.event.canceled}',then:'disabled')}"
 										additionalAttributes="{onchange:'presentAjaxSubmit({commitment.event.uid})'}" />
-									<label style="width:49%" class="btn btn-outline-success" for="event_{commitment.event.uid}_radioNotPresent"
+									<label style="width:49%" class="btn btn-outline-success"
+										for="event_{commitment.event.uid}_radioNotPresent"
 										title="{f:translate(key:'personalDutyRoster.list.in')}">{f:translate(key:'personalDutyRoster.list.inSymbol')}</label>
-						
-									<f:form.radio property="present" class="btn-check " id="event_{commitment.event.uid}_radioPresent" value="0"
+
+									<f:form.radio property="present" class="btn-check "
+										id="event_{commitment.event.uid}_radioPresent" value="0"
 										disabled="{f:if(condition:'{commitment.isNotChangable} || {commitment.event.canceled}',then:'disabled')}"
 										additionalAttributes="{onchange:'presentAjaxSubmit({commitment.event.uid})'}" />
-									<label style="width:49%"  class="btn btn-outline-primary " for="event_{commitment.event.uid}_radioPresent"
+									<label style="width:49%" class="btn btn-outline-primary "
+										for="event_{commitment.event.uid}_radioPresent"
 										title="{f:translate(key:'personalDutyRoster.list.absent')}">{f:translate(key:'personalDutyRoster.list.absentSymbol')}</label>
 								</div>
-								<div class="btn btn-outline-dark mt-1 w-100" id="event_{commitment.event.uid}_radioDescription">
+								<div class="btn btn-info mt-1 w-100" id="event_{commitment.event.uid}_radioDescription">
 									<f:switch expression="{commitment.present}">
 										<f:case value="-1">
 											<f:translate key="personalDutyRoster.list.unknownSymbol" />&nbsp;
@@ -216,7 +208,8 @@
 									<div class="col-sm">
 										<f:variable name="targetGroupFound" value="false" />
 										<ul class="commalist">
-											<f:for each="{commitment.event.visibleUserGroups}" as="userGroup" iteration="iter">
+											<f:for each="{commitment.event.visibleUserGroups}" as="userGroup"
+												iteration="iter">
 												<li><span class="label-info targetGroup">{userGroup.title}</span></li>
 											</f:for>
 										</ul>
@@ -250,7 +243,7 @@
 										{counts.{commitment.event.uid}.displayPercent}%</div>
 									<div class="progress-bar {progressOverloadColor}"
 										id="overProgressbar_{commitment.event.uid}" role="progressbar"
-										style="width:{counts.{commitment.event.uid}.presentOverPercent}%"
+										style="width:{counts.{commitment.event.uid}.presentOverPercent}%;"
 										aria-valuenow="{counts.{commitment.event.uid}.presentOverPercent}"
 										aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
@@ -292,16 +285,30 @@
 						</tr>
 					</f:if>
 				</f:for>
+			</f:then>
+			<f:else>
+				<tr>
+					<td scope="col">
+					</td>
+					<td scope="col">
+						<h4>
+							<f:translate key="personalDutyRoster.list.noneCommitmentsFound" />
+						</h4>
+					</td>
+				</tr>
+			</f:else>
+			</f:if>
+
 			</tbody>
 		</table>
 
 		<f:format.raw>
-            <script defer="defer">
-                let personalDutyRosterListUnknownDescription = '{f:translate(key:"personalDutyRoster.list.unknownSymbol")}&nbsp;{f:translate(key:"personalDutyRoster.list.unknown")}'
-                let personalDutyRosterListInDescription = '{f:translate(key:"personalDutyRoster.list.inSymbol")}&nbsp;{f:translate(key:"personalDutyRoster.list.in")}'
-                let personalDutyRosterListAbsentDescription = '{f:translate(key:"personalDutyRoster.list.absentSymbol")}&nbsp;{f:translate(key:"personalDutyRoster.list.absent")}'
-            </script>
-        </f:format.raw>
+			<script defer="defer">
+				let personalDutyRosterListUnknownDescription = '{f:translate(key:"personalDutyRoster.list.unknownSymbol")}&nbsp;{f:translate(key:"personalDutyRoster.list.unknown")}'
+				let personalDutyRosterListInDescription = '{f:translate(key:"personalDutyRoster.list.inSymbol")}&nbsp;{f:translate(key:"personalDutyRoster.list.in")}'
+				let personalDutyRosterListAbsentDescription = '{f:translate(key:"personalDutyRoster.list.absentSymbol")}&nbsp;{f:translate(key:"personalDutyRoster.list.absent")}'
+			</script>
+		</f:format.raw>
 		<script defer>
 
 
@@ -324,17 +331,17 @@
 								o.css('width', r['counts']['presentOverPercent'] + '%')
 								$('#presentCount_' + id).html(r['counts']['presentCount'])
 								let description = '???'
-								switch($("input[name='tx_participants_personaldutyroster[commitment][present]']:checked").val()){
-									case "0" : description = personalDutyRosterListAbsentDescription
-									break;
-									case "1" : description = personalDutyRosterListInDescription
-									break;
-									case "-1" : description = personalDutyRosterListUnknownDescription
-									break;
+								switch ($("input[name='tx_participants_personaldutyroster[commitment][present]']:checked").val()) {
+									case "0": description = personalDutyRosterListAbsentDescription
+										break;
+									case "1": description = personalDutyRosterListInDescription
+										break;
+									case "-1": description = personalDutyRosterListUnknownDescription
+										break;
 								}
-								
-								$("#event_"+id+"_radioDescription").html(description)
-								getMembersAjaxSubmit( id, true)
+
+								$("#event_" + id + "_radioDescription").html(description)
+								getMembersAjaxSubmit(id, true)
 
 							},
 							error: function (jqXHR, textStatus, errorThrow) {
@@ -375,40 +382,40 @@
 													content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
 												}	
 												</f:if>
-											content += '</li>'
-										})
-										content += '</ul>'
-										ml.append(content)
-									} else {
-									ml.append('<ul><li><f:translate key="personalDutyRoster.list.members.nobody" /></li></ul>')
-									}
-									var d = r['dropouts']
-									if (d != null && Object.keys(d).length > 0) {
-										var content = '<strong><f:translate key="personalDutyRoster.list.dropouts" /></strong><ul>'
-										Object.values(d).forEach(value => {
-											content += '<li>'
-											content += value['first_name'] + ' ' + value['last_name']
-												<f:if condition = "{canViewCurrentlyOffDuty}" >
+						content += '</li>'
+				})
+				content += '</ul>'
+				ml.append(content)
+			} else {
+				ml.append('<ul><li><f:translate key="personalDutyRoster.list.members.nobody" /></li></ul>')
+			}
+			var d = r['dropouts']
+			if (d != null && Object.keys(d).length > 0) {
+				var content = '<strong><f:translate key="personalDutyRoster.list.dropouts" /></strong><ul>'
+				Object.values(d).forEach(value => {
+					content += '<li>'
+					content += value['first_name'] + ' ' + value['last_name']
+						<f:if condition = "{canViewCurrentlyOffDuty}" >
 													if (value['currently_off_duty'] == 1) {
-														content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
-													}	
-												</f:if>
-												content += '</li>'
-										})
-										content += '</ul>'
-										ml.append(content)
-									} 
+							content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
+						}	
+						</f:if>
+						content += '</li>'
+				})
+				content += '</ul>'
+				ml.append(content)
+			} 
 								},
-								error: function(jqXHR, textStatus, errorThrow) {
-									var ml = $('#members_list_' + id).first()
-									ml.empty()
-									ml.text = 'Loading error...'
+			error: function(jqXHR, textStatus, errorThrow) {
+				var ml = $('#members_list_' + id).first()
+				ml.empty()
+				ml.text = 'Loading error...'
 
-								}
+			}
 							});
 						}
 					};
-					service.ajaxCall(form);
+			service.ajaxCall(form);
 				}
 			}
 

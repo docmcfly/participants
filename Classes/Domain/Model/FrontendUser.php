@@ -416,7 +416,7 @@ class FrontendUser extends AbstractEntity
      *
      * @return boolean
      */
-    public function getApplyPlanningData(): bool
+    public function getApplyPlanningData(): ?bool
     {
         return $this->applyPlanningData;
     }
@@ -425,7 +425,7 @@ class FrontendUser extends AbstractEntity
      *
      * @param boolean $b
      */
-    public function setApplyPlanningData(bool $b): void
+    public function setApplyPlanningData(?bool $b): void
     {
         $this->applyPlanningData = $b;
     }

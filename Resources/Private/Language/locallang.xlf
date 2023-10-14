@@ -63,6 +63,10 @@
 			<trans-unit id="personalDutyRoster.list.absentSymbol">
 				<source>∅</source>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.noneCommitmentsFound">
+				<source>There are no event planning entries for which you can accept or cancel.</source>
+			</trans-unit>
+
 			<trans-unit id="personalDutyRoster.list.download.visibleCalendarEntries.symbols">
 				<source>📅 🔎</source>
 			</trans-unit>

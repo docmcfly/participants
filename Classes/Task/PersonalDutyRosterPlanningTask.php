@@ -340,7 +340,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                             $c->setPresentDefault($planningPresent);
                             $c->setPresent($u->getApplyPlanningData()
                                 ? ($planningPresent ? PresentState::PRESENT : PresentState::NOT_PRESENT)
-                                : PresentState::NOT_PRESENT);
+                                : PresentState::UNKNOWN);
 
                             if (PersonalDutyRosterPlanningTask::DISABLE_PERSISTENCE_MANAGER) {
                                 debug($c, "UPDATE:");
@@ -367,7 +367,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                             $planningPresent = $u->getCurrentlyOffDuty() ? false : $this->calculatePlanningPresent($u, $e);
                             $c->setPresent($u->getApplyPlanningData()
                                 ? ($planningPresent ? PresentState::PRESENT : PresentState::NOT_PRESENT)
-                                : PresentState::NOT_PRESENT);
+                                : PresentState::UNKNOWN);
                             $c->setPresentDefault($planningPresent);
                             $c->setPid($this->planningStorageUid);
                             if (PersonalDutyRosterPlanningTask::DISABLE_PERSISTENCE_MANAGER) {
@@ -400,9 +400,9 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
 
     private function sendInfoMail(FrontendUser $user, array $inserts, array $updates, array $canceled)
     {
-        // debug($inserts, 'I');
-        // debug($updates, 'U');
-        // debug($canceled, 'C');
+        //  debug($inserts, 'I');
+        //  debug($updates, 'U');
+        //  debug($canceled, 'C');
         if (filter_var($user->getEmail(), FILTER_VALIDATE_EMAIL) && (!empty($inserts) || !empty($updates) || !empty($canceled))) {
             $recipient = [
                 $user->getEmail() => $user->getFirstName() . ' ' . $user->getLastName()

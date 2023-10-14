@@ -82,6 +82,10 @@
 				<source>∅</source>
 				<target state="tanslated">∅</target>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.noneCommitmentsFound">
+				<source>There are no event planning entries for which you can accept or cancel.</source>
+				<target state="tanslated">Es existieren keine Veranstaltungsplanungseinträge für die Sie zusagen oder absagen können.</target>
+			</trans-unit>
 
 			<trans-unit id="personalDutyRoster.list.download.visibleCalendarEntries.symbols">
 				<source>📅 🔎</source>
