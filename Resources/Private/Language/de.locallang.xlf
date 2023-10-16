@@ -115,11 +115,14 @@
 				<source>Download all promised calendar entries.</source>
 				<target state="tanslated">Alle zugestimmte Kalendereinträge herunterladen.</target>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.showOnlyScheduledEvents">
+				<source>Show only scheduled events</source>
+				<target state="tanslated">Zeige nur eingeplante Termine</target>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.download.calendarEntriesTitle">
 				<source>Download calendar entries in CalDAV format:</source>
 				<target state="tanslated">Kalendereinträge im CalDAV-Format herunterladen:</target>
 			</trans-unit>
-
 			<trans-unit id="personalDutyRoster.list.download.calendarEntriesFileHelp">
 				<source>This download contains an ICS file. This file contains the calendar entries in CalDAV format. Many calendars can import this file format.</source>
 				<target state="tanslated">Dieser Download enhält eine ICS-Datei. Diese Datei enhält die Kalendereinträge im CalDAV-Format. Viele Kalender können dieses Datei-Format importieren.</target>

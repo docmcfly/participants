@@ -116,6 +116,7 @@ class PersonalDutyRosterController extends ActionController
                     $u->addHiddenPersonalDutyRosterGroups($entry->getFrontendUserGroup());
                 }
             }
+            $u->setOnlyScheduledEvents($personalDutyRosterFilterSettings->getOnlyScheduledEvents());
             // debug($u);
             $this->frontendUserRepository->update($u);
         }
@@ -146,6 +147,8 @@ class PersonalDutyRosterController extends ActionController
 
             /** @var FrontendUser $user       */
             $user = $this->frontendUserRepository->findByUid($this->frontendUserService->getCurrentUserUid());
+
+           $personalDutyRosterFilterSettings->setOnlyScheduledEvents($user->getOnlyScheduledEvents());
 
             $canViewMembers = false;
             $allowGroup = $this->settings['canViewMembers'];
@@ -326,12 +329,7 @@ class PersonalDutyRosterController extends ActionController
     {
         $piFlexform = null;
         if ($id == null) {
-            return $this->settings;
-            // if (isset($this->configurationManager->getContentObject()->data['list_type']) && $this->configurationManager->getContentObject()->data['list_type'] == PersonalDutyRosterController::LIST_TYPE) {
-            //     $piFlexform = $this->configurationManager->getContentObject()->data['pi_flexform'];
-            // } else {
-            //     throw new \Exception("The content object is not correct plugin (controller).");
-            // }
+            return $this->prepareSettings($this->settings);
         } else {
             $qb = $this->getQueryBuilder('tt_content');
             $s = $qb->select('list_type', 'pi_flexform')

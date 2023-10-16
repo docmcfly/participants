@@ -37,12 +37,12 @@
 					</div>
 					<div id="collapseOne" class="collapse " aria-labelledby="headingOne"
 						data-parent="#accordionExample">
-						<div class="card-body">
-							<div class="form-group">
-								<f:form action="setPersonalDutyRosterFilter" class="form" method="POST"
-									object="{personalDutyRosterFilterSettings}"
-									objectName="personalDutyRosterFilterSettings">
-									<div class="row">
+						<f:form action="setPersonalDutyRosterFilter" class="form" method="POST"
+							object="{personalDutyRosterFilterSettings}"
+							objectName="personalDutyRosterFilterSettings">
+							<div class="card-body">
+								<div class="form-group">
+									<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
 										<f:for each="{personalDutyRosterFilterSettings.settings}" as="set"
 											iteration="iter">
 											<div class="form-check col">
@@ -58,17 +58,26 @@
 											</div>
 										</f:for>
 									</div>
-									<div class="row">
-										<div class="col" style="text-align: right;">
+									<hr />
+									<div class="row  row-cols-1 row-cols-sm-2"  style="padding-bottom: 1em;">
+										<div class="col form-check " style="padding-left: 2em;">
+											<div class="checkbox">
+												<label for="visibilities.onlyScheduledEvents">
+													<f:form.checkbox id="visibilities.onlyScheduledEvents" property="onlyScheduledEvents" value="1"/>
+													<f:translate key="personalDutyRoster.list.download.showOnlyScheduledEvents" />
+												</label>
+											</div>
+										</div>
+										<div class="col">
 											<f:form.submit
-												value="{f:translate(key:'personalDutyRoster.list.filterSettings.submit')}">
-												<f:translate key="personalDutyRoster.list.filterSettings.submit" />
-											</f:form.submit>
+														value="{f:translate(key:'personalDutyRoster.list.filterSettings.submit')}">
+														<f:translate key="personalDutyRoster.list.filterSettings.submit" />
+													</f:form.submit>
 										</div>
 									</div>
-								</f:form>
+								</div>
 							</div>
-						</div>
+						</f:form>
 						<hr />
 						<f:variable name="paragraph">
 							&#013;&#010;&#013;&#010;

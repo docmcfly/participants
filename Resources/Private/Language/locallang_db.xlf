@@ -56,6 +56,9 @@
 			<trans-unit id="tx_participants_domain_model_user.personal_duty_event_reminder">
 				<source>Reminder email when an event is coming up.</source>
 			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_user.show_only_scheduled_events">
+				<source>Show only scheduled events</source>
+			</trans-unit>
 
 			<!-- TIME_OUT -->
 

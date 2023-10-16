@@ -67,10 +67,10 @@ class CommitmentRepository extends Repository
                     ->eq('tx_participants_domain_model_commitment.event', $qb->quoteIdentifier('tx_participants_domain_model_event.uid')), $qb->expr()
                         ->in('tx_participants_domain_model_event.pid', $dutyRosterStrorageUids)))
             ->where($qb->expr()
-                ->andX($qb->expr()
-                    ->gte('tx_participants_domain_model_event.date', $qb->createNamedParameter($startMoment->format('Y-m-d'))), $qb->expr()
-                        ->eq('tx_participants_domain_model_commitment.user', $qb->createNamedParameter($user->getUid())), $qb->expr()
-                        ->eq('tx_participants_domain_model_commitment.pid', $planningStorageUid)))
+                ->andX(
+                    $qb->expr()->gte('tx_participants_domain_model_event.date', $qb->createNamedParameter($startMoment->format('Y-m-d'))), 
+                    $qb->expr()->eq('tx_participants_domain_model_commitment.user', $qb->createNamedParameter($user->getUid())), 
+                    $qb->expr()->eq('tx_participants_domain_model_commitment.pid', $planningStorageUid)))
             ->orderby('tx_participants_domain_model_event.date', 'ASC')
             ->addOrderby('tx_participants_domain_model_event.time', 'ASC')
             ->groupBy('tx_participants_domain_model_commitment.uid');
@@ -79,7 +79,10 @@ class CommitmentRepository extends Repository
             $qb->andWhere($qb->expr()
                 ->eq('tx_participants_domain_model_event.canceled', 0));
         }
-
+        if($personalDutyRosterFilterSettings->getOnlyScheduledEvents()){
+            $qb->andWhere($qb->expr()
+             ->eq('tx_participants_domain_model_commitment.present_default', 1));
+        }
         $s = $qb->execute();
 
         // debug($qb->getSQL());

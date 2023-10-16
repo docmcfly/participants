@@ -88,6 +88,9 @@
 			<trans-unit id="personalDutyRoster.list.download.promisedCalendarEntries">
 				<source>Download all promised calendar entries.</source>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.showOnlyScheduledEvents">
+				<source>Show only scheduled appointments</source>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.download.calendarEntriesTitle">
 				<source>Download calendar entries in CalDAV format:</source>
 			</trans-unit>

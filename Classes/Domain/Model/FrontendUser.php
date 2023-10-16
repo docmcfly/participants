@@ -80,6 +80,9 @@ class FrontendUser extends AbstractEntity
      */
     protected $hiddenPersonalDutyRosterGroups = null;
 
+    /** @var bool */    
+    protected $onlyScheduledEvents = false;
+
     /** @var boolean */
     protected $applyPlanningData = true;
 
@@ -467,4 +470,22 @@ class FrontendUser extends AbstractEntity
         }
         return $return;
     }
+
+	/**
+	 * 
+	 * @return bool
+	 */
+	public function getOnlyScheduledEvents():bool {
+		return $this->onlyScheduledEvents;
+	}
+	
+	/**
+	 * 
+	 * @param bool $onlyScheduledEvents 
+	 * @return self
+	 */
+	public function setOnlyScheduledEvents($onlyScheduledEvents): self {
+		$this->onlyScheduledEvents = $onlyScheduledEvents;
+		return $this;
+	}
 }

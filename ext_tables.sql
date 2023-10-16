@@ -27,6 +27,7 @@ CREATE TABLE fe_users (
    apply_planning_data SMALLINT (5) UNSIGNED DEFAULT '0' NOT NULL,
    info_mail_when_personal_duty_roster_changed SMALLINT (5) UNSIGNED DEFAULT '1' NOT NULL,
    personal_duty_event_reminder SMALLINT (5) UNSIGNED DEFAULT '1' NOT NULL,
+   show_only_scheduled_events SMALLINT (5) UNSIGNED DEFAULT '0' NOT NULL,
 );
 
 #
