@@ -334,12 +334,12 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                             $this->commitmentRepository->update($c);
                         } else if ($this->resetUser || $c->getPresentDefault() != $planningPresent) {
                             $updatedCount++;
-                            if (($c->getPresent() !== PresentState::NOT_PRESENT) xor $planningPresent) {
+                            if (($c->getPresent() === PresentState::UNKNOWN) || (($c->getPresent() === PresentState::PRESENT) xor $planningPresent)) {
                                 $updates[] = $c;
                             }
                             $c->setPresentDefault($planningPresent);
                             $c->setPresent($u->getApplyPlanningData()
-                                ? ($planningPresent ? PresentState::PRESENT : PresentState::NOT_PRESENT)
+                                ? ($planningPresent ? PresentState::PRESENT : PresentState::UNKNOWN)
                                 : PresentState::UNKNOWN);
 
                             if (PersonalDutyRosterPlanningTask::DISABLE_PERSISTENCE_MANAGER) {
@@ -366,7 +366,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
 
                             $planningPresent = $u->getCurrentlyOffDuty() ? false : $this->calculatePlanningPresent($u, $e);
                             $c->setPresent($u->getApplyPlanningData()
-                                ? ($planningPresent ? PresentState::PRESENT : PresentState::NOT_PRESENT)
+                                ? ($planningPresent ? PresentState::PRESENT : PresentState::UNKNOWN)
                                 : PresentState::UNKNOWN);
                             $c->setPresentDefault($planningPresent);
                             $c->setPid($this->planningStorageUid);
