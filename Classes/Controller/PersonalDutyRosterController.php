@@ -1,6 +1,7 @@
 <?php
 namespace Cylancer\Participants\Controller;
 
+use Cylancer\Participants\Domain\PresentState;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Cylancer\Participants\Utility\Utility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -289,8 +290,9 @@ class PersonalDutyRosterController extends ActionController
             $eventUid = $commitment->getEvent()->getUid();
             $settings = $this->request->hasArgument('id') ? $this->getPreparedSettings(intval($this->request->getArgument('id'))) : $this->getPreparedSettings();
             $return['event_uid'] = $eventUid;
-            $return['members'] = $this->commitmentRepository->getEventMembers($settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
-            $return['dropouts'] = $this->commitmentRepository->getEventCancels($settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
+            $return['members'] = $this->commitmentRepository->getEventCommitments(PresentState::PRESENT, $settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
+            $return['dropouts'] = $this->commitmentRepository->getEventCommitments(PresentState::NOT_PRESENT, $settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
+            $return['undecideds'] = $this->commitmentRepository->getEventCommitments(PresentState::UNKNOWN, $settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
             return json_encode($return);
         } else {
             $return['members'] = [];
@@ -324,11 +326,12 @@ class PersonalDutyRosterController extends ActionController
     {
         $piFlexform = null;
         if ($id == null) {
-            if (isset($this->configurationManager->getContentObject()->data['list_type']) && $this->configurationManager->getContentObject()->data['list_type'] == PersonalDutyRosterController::LIST_TYPE) {
-                $piFlexform = $this->configurationManager->getContentObject()->data['pi_flexform'];
-            } else {
-                throw new \Exception("The content object is not correct plugin (controller).");
-            }
+            return $this->settings;
+            // if (isset($this->configurationManager->getContentObject()->data['list_type']) && $this->configurationManager->getContentObject()->data['list_type'] == PersonalDutyRosterController::LIST_TYPE) {
+            //     $piFlexform = $this->configurationManager->getContentObject()->data['pi_flexform'];
+            // } else {
+            //     throw new \Exception("The content object is not correct plugin (controller).");
+            // }
         } else {
             $qb = $this->getQueryBuilder('tt_content');
             $s = $qb->select('list_type', 'pi_flexform')

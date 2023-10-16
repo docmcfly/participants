@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.6.0',
+    'version' => '3.6.1',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
@@ -29,6 +29,7 @@ $EM_CONF[$_EXTKEY] = [
 /**
  * Change log: 
  * 
+3.6.1   :: Update : Displays the undecideds in the members list. 
 3.6.0   :: Update : Add a unknwon state in your personal duty roster.
 3.5.1   :: Fix : Fix the event sorting.
 3.5.0   :: Undo : Remove the trying of time as integer in the database. (don't use 3.4.* !)

@@ -242,10 +242,10 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         /** @var Event $event **/
         foreach ($this->eventRepository->findTomorrowsEvents() as $event) {
             /** @var FrontendUser $frontendUser **/
-            foreach ($this->commitmentRepository->getEventMembers($this->planningStorageUid, $event->getUid()) as $frontendUserUid => $data) {
+            foreach ($this->commitmentRepository->getEventCommitments(PresentState::PRESENT, $this->planningStorageUid, $event->getUid()) as $frontendUserUid => $data) {
 
                 $frontendUser = $this->frontendUserRepository->findByUid($frontendUserUid);
-                // debug($frontendUser, 'eventReminder()');
+               // debug($frontendUser, 'eventReminder()');
                 if ($frontendUser->getPersonalDutyEventReminder()) {
                     $reminderUsers[$frontendUserUid]['user'] = $frontendUser;
                     $reminderUsers[$frontendUserUid]['events'][] = $event;

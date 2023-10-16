@@ -1,6 +1,7 @@
 <?php
 namespace Cylancer\Participants\Domain\Repository;
 
+use Cylancer\Participants\Domain\PresentState;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -253,64 +254,24 @@ class CommitmentRepository extends Repository
         return $eventUid == null ? $counts : $counts[$eventUid];
     }
 
+
     /**
      *
-     * @param string $storageUids
+     * @param array $storageUids
      * @param int $eventUid
      * @return array
      */
-    public function getEventCancels(string $storageUids, int $eventUid = null): array
+    public function getEventCommitments(int $presentState, int $pidList, int $eventUid = null, bool $userIsScheduled = true): array
     {
         $qb = $this->getQueryBuilder('tx_participants_domain_model_commitment');
+
         $pagesTerm = '';
-        if ($storageUids != null) {
-            $pidList = GeneralUtility::intExplode(',', $storageUids, TRUE);
+        if ($pidList != null) {
             $pagesTerm = $qb->expr()->in('tx_participants_domain_model_commitment.pid', $pidList);
         }
         $eventTerm = $eventUid == null ? '' : $qb->expr()->eq('tx_participants_domain_model_commitment.event', $eventUid);
-
-        $notPresent = $qb->expr()->eq('tx_participants_domain_model_commitment.present', $qb->createNamedParameter(0));
-        $isScheduled = $qb->expr()->eq('tx_participants_domain_model_commitment.present_default', $qb->createNamedParameter(1));
-        // debug($pagesTerm);
-        $qb->select('tx_participants_domain_model_commitment.event', 'fe_users.uid', 'fe_users.first_name', 'fe_users.last_name', 'fe_users.currently_off_duty')
-            ->join('tx_participants_domain_model_commitment', 'fe_users', 'fe_users', $qb->expr()
-                ->andX($qb->expr()
-                    ->eq('tx_participants_domain_model_commitment.user', $qb->quoteIdentifier('fe_users.uid')), $qb->expr()
-                        ->neq('fe_users.disable', $qb->createNamedParameter(1)), $qb->expr()
-                        ->neq('fe_users.deleted', $qb->createNamedParameter(1))))
-            ->from('tx_participants_domain_model_commitment')
-            ->where($pagesTerm, $eventTerm, $isScheduled, $notPresent)
-            ->addOrderBy('fe_users.last_name', 'ASC')
-            ->addOrderBy('fe_users.first_name', 'ASC');
-        // ->orderBy('last_name','first_name');
-        $users = array();
-        // $sql = $qb->getSql();
-        $s = $qb->execute();
-        while ($row = $s->fetchAssociative()) {
-            $users[$row['uid']] = [
-                'last_name' => $row['last_name'],
-                'first_name' => $row['first_name'],
-                'currently_off_duty' => $row['currently_off_duty']
-            ];
-        }
-        // $return['sql'] = $sql;
-        // debug(json_encode($counts));
-        return $users;
-    }
-
-    /**
-     *
-     * @param int $planningStorageUid
-     * @param int $eventUid
-     * @return array
-     */
-    public function getEventMembers(int $planningStorageUid, int $eventUid = null): array
-    {
-        $qb = $this->getQueryBuilder('tx_participants_domain_model_commitment');
-        $planningStorageUidTerm = $qb->expr()->eq('tx_participants_domain_model_commitment.pid', $planningStorageUid);
-        $eventTerm = $eventUid == null ? '' : $qb->expr()->eq('tx_participants_domain_model_commitment.event', $eventUid);
-
-        $memberTerm = $qb->expr()->eq('tx_participants_domain_model_commitment.present', $qb->createNamedParameter(1));
+        $undecided = $qb->expr()->eq('tx_participants_domain_model_commitment.present', $qb->createNamedParameter($presentState));
+        $isScheduled = $qb->expr()->eq('tx_participants_domain_model_commitment.present_default', $qb->createNamedParameter($userIsScheduled));
 
         // debug($pagesTerm);
         $qb->select('tx_participants_domain_model_commitment.event', 'fe_users.uid', 'fe_users.first_name', 'fe_users.last_name', 'fe_users.currently_off_duty')
@@ -320,13 +281,11 @@ class CommitmentRepository extends Repository
                         ->neq('fe_users.disable', $qb->createNamedParameter(1)), $qb->expr()
                         ->neq('fe_users.deleted', $qb->createNamedParameter(1))))
             ->from('tx_participants_domain_model_commitment')
-            ->where($planningStorageUidTerm, $eventTerm, $memberTerm)
+            ->where($pagesTerm, $eventTerm, $isScheduled, $undecided)
             ->addOrderBy('fe_users.last_name', 'ASC')
             ->addOrderBy('fe_users.first_name', 'ASC');
-        // ->orderBy('last_name','first_name');
-
-        // $sql = $qb->getSql();
         $users = array();
+        $sql = $qb->getSql();
         $s = $qb->execute();
         while ($row = $s->fetchAssociative()) {
             $users[$row['uid']] = [
@@ -335,9 +294,7 @@ class CommitmentRepository extends Repository
                 'currently_off_duty' => $row['currently_off_duty']
             ];
         }
-        // debug($sql);
-
-        // $return['sql'] = $sql;
+      //   $users['sql'] = $sql;
         // debug(json_encode($counts));
         return $users;
     }

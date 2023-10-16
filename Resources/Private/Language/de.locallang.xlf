@@ -37,6 +37,10 @@
 				<source>Dropouts</source>
 				<target state="tanslated">Absagen</target>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.undecideds">
+				<source>No feedback</source>
+				<target state="tanslated">Keine Rückmeldung</target>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.listOfMembers">
 				<source>List of Members ...</source>
 				<target state="tanslated">Liste der Teilnehmer*innen...</target>

@@ -362,60 +362,78 @@
 					var u = form.attr('action');
 					var service = {
 						ajaxCall: function (data) {
-							$.ajax({
-								method: "POST",
-								url: u,
-								cache: false,
-								data: form.serialize(),
-								success: function (response) {
-									var r = JSON.parse(response)
-									var ml = $('#members_list_' + id).first()
-									ml.empty()
-									var m = r['members']
-									if (m != null) {
-										var content = '<ul>'
-										Object.values(m).forEach(value => {
-											content += '<li>'
-											content += value['first_name'] + ' ' + value['last_name']
-												<f:if condition = "{canViewCurrentlyOffDuty}" >
-												if (value['currently_off_duty'] == 1) {
-													content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
-												}	
-												</f:if>
-						content += '</li>'
-				})
-				content += '</ul>'
-				ml.append(content)
-			} else {
-				ml.append('<ul><li><f:translate key="personalDutyRoster.list.members.nobody" /></li></ul>')
-			}
-			var d = r['dropouts']
-			if (d != null && Object.keys(d).length > 0) {
-				var content = '<strong><f:translate key="personalDutyRoster.list.dropouts" /></strong><ul>'
-				Object.values(d).forEach(value => {
-					content += '<li>'
-					content += value['first_name'] + ' ' + value['last_name']
-						<f:if condition = "{canViewCurrentlyOffDuty}" >
-													if (value['currently_off_duty'] == 1) {
-							content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
-						}	
-						</f:if>
-						content += '</li>'
-				})
-				content += '</ul>'
-				ml.append(content)
-			} 
-								},
-			error: function(jqXHR, textStatus, errorThrow) {
-				var ml = $('#members_list_' + id).first()
-				ml.empty()
-				ml.text = 'Loading error...'
-
-			}
-							});
-						}
-					};
-			service.ajaxCall(form);
+							$.ajax(
+								{
+									method: "POST",
+									url: u,
+									cache: false,
+									data: form.serialize(),
+									success: function (response) {
+										var r = JSON.parse(response)
+										console.log(r)
+										var ml = $('#members_list_' + id).first()
+										ml.empty()
+										var m = r['members']
+										if (m != null) {
+											var content = '<ul>'
+											Object.values(m).forEach(value => {
+												content += '<li>'
+												content += value['first_name'] + ' ' + value['last_name']
+													<f:if condition = "{canViewCurrentlyOffDuty}" >
+														if (value['currently_off_duty'] == 1) {
+															content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
+														}	
+													</f:if>
+												content += '</li>'
+											})
+											content += '</ul>'
+											ml.append(content)
+										} else {
+											ml.append('<ul><li><f:translate key="personalDutyRoster.list.members.nobody" /></li></ul>')
+										}
+										var d = r['dropouts']
+										if (d != null && Object.keys(d).length > 0) {
+											var content = '<strong><f:translate key="personalDutyRoster.list.dropouts" /></strong><ul>'
+											Object.values(d).forEach(value => {
+												content += '<li>'
+												content += value['first_name'] + ' ' + value['last_name']
+													<f:if condition = "{canViewCurrentlyOffDuty}" >
+														if (value['currently_off_duty'] == 1) {
+															content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
+														}	
+													</f:if>
+												content += '</li>'
+											})
+											content += '</ul>'
+											ml.append(content)
+										} 
+										var d = r['undecideds']
+										if (d != null && Object.keys(d).length > 0) {
+											var content = '<strong><f:translate key="personalDutyRoster.list.undecideds" /></strong><ul>'
+											Object.values(d).forEach(value => {
+												content += '<li>'
+												content += value['first_name'] + ' ' + value['last_name']
+													<f:if condition = "{canViewCurrentlyOffDuty}" >
+														if (value['currently_off_duty'] == 1) {
+															content += ' <f:translate key="personalDutyRoster.list.members.currentlyOffDuty" />'
+														}	
+													</f:if>
+												content += '</li>'
+											})
+											content += '</ul>'
+											ml.append(content)
+										} 
+									},
+									error: function(jqXHR, textStatus, errorThrow) {
+										console.log(jqXHR.response)
+										var ml = $('#members_list_' + id).first()
+										ml.empty()
+										ml.text = 'Loading error...'
+									}
+								});
+							}
+						};
+					service.ajaxCall(form);
 				}
 			}
 

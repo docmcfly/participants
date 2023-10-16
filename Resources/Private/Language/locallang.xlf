@@ -29,6 +29,9 @@
 			<trans-unit id="personalDutyRoster.list.dropouts">
 				<source>Dropouts</source>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.undecideds">
+				<source>No feedback</source>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.listOfMembers">
 				<source>List of Members ...</source>
 			</trans-unit>
