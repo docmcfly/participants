@@ -66,11 +66,14 @@ class CommitmentRepository extends Repository
                 ->andX($qb->expr()
                     ->eq('tx_participants_domain_model_commitment.event', $qb->quoteIdentifier('tx_participants_domain_model_event.uid')), $qb->expr()
                         ->in('tx_participants_domain_model_event.pid', $dutyRosterStrorageUids)))
-            ->where($qb->expr()
-                ->andX(
-                    $qb->expr()->gte('tx_participants_domain_model_event.date', $qb->createNamedParameter($startMoment->format('Y-m-d'))), 
-                    $qb->expr()->eq('tx_participants_domain_model_commitment.user', $qb->createNamedParameter($user->getUid())), 
-                    $qb->expr()->eq('tx_participants_domain_model_commitment.pid', $planningStorageUid)))
+            ->where(
+                $qb->expr()
+                    ->andX(
+                        $qb->expr()->gte('tx_participants_domain_model_event.date', $qb->createNamedParameter($startMoment->format('Y-m-d'))),
+                        $qb->expr()->eq('tx_participants_domain_model_commitment.user', $qb->createNamedParameter($user->getUid())),
+                        $qb->expr()->eq('tx_participants_domain_model_commitment.pid', $planningStorageUid)
+                    )
+            )
             ->orderby('tx_participants_domain_model_event.date', 'ASC')
             ->addOrderby('tx_participants_domain_model_event.time', 'ASC')
             ->groupBy('tx_participants_domain_model_commitment.uid');
@@ -79,9 +82,9 @@ class CommitmentRepository extends Repository
             $qb->andWhere($qb->expr()
                 ->eq('tx_participants_domain_model_event.canceled', 0));
         }
-        if($personalDutyRosterFilterSettings->getOnlyScheduledEvents()){
+        if ($personalDutyRosterFilterSettings->getOnlyScheduledEvents()) {
             $qb->andWhere($qb->expr()
-             ->eq('tx_participants_domain_model_commitment.present_default', 1));
+                ->eq('tx_participants_domain_model_commitment.present_default', 1));
         }
         $s = $qb->execute();
 
@@ -297,7 +300,7 @@ class CommitmentRepository extends Repository
                 'currently_off_duty' => $row['currently_off_duty']
             ];
         }
-      //   $users['sql'] = $sql;
+        //   $users['sql'] = $sql;
         // debug(json_encode($counts));
         return $users;
     }
@@ -316,19 +319,30 @@ class CommitmentRepository extends Repository
         $qb->select('tx_participants_domain_model_commitment.uid')
             ->from('tx_participants_domain_model_commitment')
             ->join('tx_participants_domain_model_commitment', 'tx_participants_domain_model_event', 'tx_participants_domain_model_event', $qb->expr()
-                ->andX($qb->expr()
-                    ->eq('tx_participants_domain_model_commitment.event', $qb->quoteIdentifier('tx_participants_domain_model_event.uid')), $qb->expr()
-                        ->gte('tx_participants_domain_model_event.date', $qb->createNamedParameter($from->format('Y-m-d'))), $qb->expr()
-                        ->lte('tx_participants_domain_model_event.date', $qb->createNamedParameter($until->format('Y-m-d')))))
-            ->where($qb->expr()
-                ->eq('tx_participants_domain_model_commitment.user', $userId));
+                ->andX(
+                    $qb->expr()
+                        ->eq('tx_participants_domain_model_commitment.event', $qb->quoteIdentifier('tx_participants_domain_model_event.uid')),
+                    $qb->expr()
+                        ->gte('tx_participants_domain_model_event.date', $qb->createNamedParameter($from->format('Y-m-d'))),
+                    $qb->expr()
+                        ->lte('tx_participants_domain_model_event.date', $qb->createNamedParameter($until->format('Y-m-d')))
+                )
+            )
+            ->where(
+                $qb->expr()
+                    ->eq('tx_participants_domain_model_commitment.user', $userId)
+            )
+            ->andWhere(
+                $qb->expr()
+                    ->eq('tx_participants_domain_model_commitment.present', PresentState::PRESENT)
+            );
         // debug($sql = $qb->getSql());
         $s = $qb->execute();
 
-        while ($row = $s->fetch()) {
+        while ($row = $s->fetchAssociative()) {
             // debug($row);
             $u = $qb->update('tx_participants_domain_model_commitment')
-                ->set('present', 0)
+                ->set('present', PresentState::NOT_PRESENT)
                 ->where($qb->expr()
                     ->eq('tx_participants_domain_model_commitment.uid', $row['uid']));
             // debug($u->getSQL());
