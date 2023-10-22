@@ -267,7 +267,7 @@ class CommitmentRepository extends Repository
      * @param int $eventUid
      * @return array
      */
-    public function getEventCommitments(int $presentState, int $pidList, int $eventUid = null, bool $userIsScheduled = true): array
+    public function getEventCommitments(int $presentState, int $pidList, int $eventUid = null, ?bool $userIsScheduled = true): array
     {
         $qb = $this->getQueryBuilder('tx_participants_domain_model_commitment');
 
@@ -277,7 +277,6 @@ class CommitmentRepository extends Repository
         }
         $eventTerm = $eventUid == null ? '' : $qb->expr()->eq('tx_participants_domain_model_commitment.event', $eventUid);
         $undecided = $qb->expr()->eq('tx_participants_domain_model_commitment.present', $qb->createNamedParameter($presentState));
-        $isScheduled = $qb->expr()->eq('tx_participants_domain_model_commitment.present_default', $qb->createNamedParameter($userIsScheduled));
 
         // debug($pagesTerm);
         $qb->select('tx_participants_domain_model_commitment.event', 'fe_users.uid', 'fe_users.first_name', 'fe_users.last_name', 'fe_users.currently_off_duty')
@@ -287,11 +286,14 @@ class CommitmentRepository extends Repository
                         ->neq('fe_users.disable', $qb->createNamedParameter(1)), $qb->expr()
                         ->neq('fe_users.deleted', $qb->createNamedParameter(1))))
             ->from('tx_participants_domain_model_commitment')
-            ->where($pagesTerm, $eventTerm, $isScheduled, $undecided)
+            ->where($pagesTerm, $eventTerm, $undecided)
             ->addOrderBy('fe_users.last_name', 'ASC')
             ->addOrderBy('fe_users.first_name', 'ASC');
+        if($userIsScheduled != null) {
+            $qb->andWhere($qb->expr()->eq('tx_participants_domain_model_commitment.present_default', $qb->createNamedParameter($userIsScheduled)));
+        }
         $users = array();
-        $sql = $qb->getSql();
+       //  $sql = $qb->getSql();
         $s = $qb->execute();
         while ($row = $s->fetchAssociative()) {
             $users[$row['uid']] = [

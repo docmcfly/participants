@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.6.2',
+    'version' => '3.6.3',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
@@ -29,6 +29,7 @@ $EM_CONF[$_EXTKEY] = [
 /**
  * Change log: 
  * 
+3.6.3   :: Fix : The membership list includes pledges from unscheduled individuals.
 3.6.2   :: Update : Adds "only scheduled events" filter for personal duty roster. 
 3.6.1   :: Update : Displays the undecideds in the members list. 
 3.6.0   :: Update : Add a unknwon state in your personal duty roster.

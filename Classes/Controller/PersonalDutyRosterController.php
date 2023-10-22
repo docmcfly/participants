@@ -293,7 +293,7 @@ class PersonalDutyRosterController extends ActionController
             $eventUid = $commitment->getEvent()->getUid();
             $settings = $this->request->hasArgument('id') ? $this->getPreparedSettings(intval($this->request->getArgument('id'))) : $this->getPreparedSettings();
             $return['event_uid'] = $eventUid;
-            $return['members'] = $this->commitmentRepository->getEventCommitments(PresentState::PRESENT, $settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
+            $return['members'] = $this->commitmentRepository->getEventCommitments(PresentState::PRESENT, $settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid, null);
             $return['dropouts'] = $this->commitmentRepository->getEventCommitments(PresentState::NOT_PRESENT, $settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
             $return['undecideds'] = $this->commitmentRepository->getEventCommitments(PresentState::UNKNOWN, $settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
             return json_encode($return);
@@ -460,6 +460,5 @@ class PersonalDutyRosterController extends ActionController
     private function toIntArray(string $value): array
     {
         return GeneralUtility::intExplode(',', $value);
-        ;
     }
 }

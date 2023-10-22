@@ -223,6 +223,8 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                     ->toArray())
             );
         }
+        // debug($this->eventGroupAssociation);
+        // debug($this->frontendUserGroupStructure);
         /**
          * 1. iterate over all user groups
          * 2. get the path of the user group to the root (over the subgroups)
@@ -245,7 +247,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
             foreach ($this->commitmentRepository->getEventCommitments(PresentState::PRESENT, $this->planningStorageUid, $event->getUid()) as $frontendUserUid => $data) {
 
                 $frontendUser = $this->frontendUserRepository->findByUid($frontendUserUid);
-               // debug($frontendUser, 'eventReminder()');
+                // debug($frontendUser, 'eventReminder()');
                 if ($frontendUser->getPersonalDutyEventReminder()) {
                     $reminderUsers[$frontendUserUid]['user'] = $frontendUser;
                     $reminderUsers[$frontendUserUid]['events'][] = $event;
@@ -338,9 +340,11 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                                 $updates[] = $c;
                             }
                             $c->setPresentDefault($planningPresent);
-                            $c->setPresent($u->getApplyPlanningData()
-                                ? ($planningPresent ? PresentState::PRESENT : PresentState::UNKNOWN)
-                                : PresentState::UNKNOWN);
+                            $c->setPresent(
+                                ($u->getApplyPlanningData() && $planningPresent)
+                                ? PresentState::PRESENT
+                                : PresentState::UNKNOWN
+                            );
 
                             if (PersonalDutyRosterPlanningTask::DISABLE_PERSISTENCE_MANAGER) {
                                 debug($c, "UPDATE:");
@@ -365,9 +369,12 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                             $c->setUser($u);
 
                             $planningPresent = $u->getCurrentlyOffDuty() ? false : $this->calculatePlanningPresent($u, $e);
-                            $c->setPresent($u->getApplyPlanningData()
-                                ? ($planningPresent ? PresentState::PRESENT : PresentState::UNKNOWN)
-                                : PresentState::UNKNOWN);
+
+                            $c->setPresent(
+                                ($u->getApplyPlanningData() && $planningPresent)
+                                ? PresentState::PRESENT
+                                : PresentState::UNKNOWN
+                            );
                             $c->setPresentDefault($planningPresent);
                             $c->setPid($this->planningStorageUid);
                             if (PersonalDutyRosterPlanningTask::DISABLE_PERSISTENCE_MANAGER) {
