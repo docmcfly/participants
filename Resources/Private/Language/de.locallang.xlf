@@ -37,6 +37,10 @@
 				<source>Dropouts</source>
 				<target state="tanslated">Absagen</target>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.undecideds">
+				<source>No feedback</source>
+				<target state="tanslated">Keine Rückmeldung</target>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.listOfMembers">
 				<source>List of Members ...</source>
 				<target state="tanslated">Liste der Teilnehmer*innen...</target>
@@ -58,13 +62,33 @@
 				<source>Not scheduled.</source>
 				<target state="tanslated">Nicht eingeplant</target>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.unknown">
+				<source>Not yet set.</source>
+				<target state="tanslated">Noch nicht festgelegt.</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.unknownSymbol">
+				<source>❓</source>
+				<target state="tanslated">❓</target>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.in">
 				<source>I am involved</source>
 				<target state="tanslated">Bin dabei</target>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.inSymbol">
+				<source>✓</source>
+				<target state="tanslated">✓</target>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.absent">
 				<source>I am absend</source>
 				<target state="tanslated">Bin abwesend</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.absentSymbol">
+				<source>∅</source>
+				<target state="tanslated">∅</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.noneCommitmentsFound">
+				<source>There are no event planning entries for which you can accept or cancel.</source>
+				<target state="tanslated">Es existieren keine Veranstaltungsplanungseinträge für die Sie zusagen oder absagen können.</target>
 			</trans-unit>
 
 			<trans-unit id="personalDutyRoster.list.download.visibleCalendarEntries.symbols">
@@ -91,11 +115,14 @@
 				<source>Download all promised calendar entries.</source>
 				<target state="tanslated">Alle zugestimmte Kalendereinträge herunterladen.</target>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.showOnlyScheduledEvents">
+				<source>Show only scheduled events</source>
+				<target state="tanslated">Zeige nur eingeplante Termine</target>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.download.calendarEntriesTitle">
 				<source>Download calendar entries in CalDAV format:</source>
 				<target state="tanslated">Kalendereinträge im CalDAV-Format herunterladen:</target>
 			</trans-unit>
-
 			<trans-unit id="personalDutyRoster.list.download.calendarEntriesFileHelp">
 				<source>This download contains an ICS file. This file contains the calendar entries in CalDAV format. Many calendars can import this file format.</source>
 				<target state="tanslated">Dieser Download enhält eine ICS-Datei. Diese Datei enhält die Kalendereinträge im CalDAV-Format. Viele Kalender können dieses Datei-Format importieren.</target>

@@ -59,11 +59,10 @@ class CommitmentSettingsController extends \TYPO3\CMS\Extbase\Mvc\Controller\Act
     /**
      * create a time out
      *
-     * @param
-     *            CommitmentSettings commitmentSettings
-     * @return void
+     * @param  CommitmentSettings commitmentSettings
+     * @return ForwardResponse
      */
-    public function saveAction(CommitmentSettings $commitmentSettings)
+    public function saveAction(CommitmentSettings $commitmentSettings): ForwardResponse
     {
         /**
          *
@@ -71,7 +70,9 @@ class CommitmentSettingsController extends \TYPO3\CMS\Extbase\Mvc\Controller\Act
          */
         $u = $this->frontendUserRepository->findByUid($this->frontendUserService->getCurrentUserUid());
         if ($u != null) {
-            $u->setApplyPlanningData($commitmentSettings->getApplyPlanningData());
+            if ($commitmentSettings->getApplyPlanningData() !== null) {
+                $u->setApplyPlanningData($commitmentSettings->getApplyPlanningData());
+            }
             $u->setInfoMailWhenPersonalDutyRosterChanged($commitmentSettings->getInfoMailWhenPersonalDutyRosterChanged());
             $u->setPersonalDutyEventReminder($commitmentSettings->getPersonalDutyEventReminder());
             $this->frontendUserRepository->update($u);

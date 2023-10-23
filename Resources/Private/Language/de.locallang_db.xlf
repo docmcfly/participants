@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext"
-		original="messages" date="2020-03-18T15:36:48Z"
-		product-name="participants">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-03-18T15:36:48Z" product-name="participants">
 		<header />
 		<body>
-		
+
 			<!--  COMMITMENT -->
-		
+
 			<trans-unit id="tx_participants_domain_model_commitment">
 				<source>Commitment</source>
 				<target state="tanslated">Rückmeldung</target>
 			</trans-unit>
-			<trans-unit
-				id="tx_participants_domain_model_commitment.present">
+			<trans-unit id="tx_participants_domain_model_commitment.present">
 				<source>Present</source>
 				<target state="tanslated">Anwesend</target>
 			</trans-unit>
-			<trans-unit
-				id="tx_participants_domain_model_commitment.present_default">
+			<trans-unit id="tx_participants_domain_model_commitment.present.option.unknown">
+				<source>Unknown</source>
+				<target state="tanslated">Unbestimmt (Noch nicht festgelegt)</target>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_commitment.present.option.notPresent">
+				<source>Not present</source>
+				<target state="tanslated">Nicht anwesend</target>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_commitment.present.option.present">
+				<source>Present</source>
+				<target state="tanslated">Anwesend</target>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_commitment.present_default">
 				<source>Present Default</source>
 				<target state="tanslated">Anwesend (geplant)</target>
 			</trans-unit>
-			<trans-unit
-				id="tx_participants_domain_model_commitment.user">
+			<trans-unit id="tx_participants_domain_model_commitment.user">
 				<source>User</source>
 				<target state="tanslated">Benutzer</target>
 			</trans-unit>
@@ -31,36 +38,38 @@
 				<source>User</source>
 				<target state="tanslated">Benutzer</target>
 			</trans-unit>
-			
+
 
 			<!--  USER  -->
-			
+
 			<trans-unit id="tx_participants_domain_model_user.tx_extbase_type">
 				<source>Participants</source>
-				<target state="tanslated">Teilnehmer</target> 
+				<target state="tanslated">Teilnehmer</target>
 			</trans-unit>
 			<trans-unit id="tx_participants_domain_model_user.tab_settings">
 				<source>Participation (duty roster)</source>
-				<target state="tanslated">Teilnahme (Dienstplan)</target> 
+				<target state="tanslated">Teilnahme (Dienstplan)</target>
 			</trans-unit>
 
 			<trans-unit id="tx_participants_domain_model_user.hidden_personal_duty_roster_groups">
 				<source>Hidden personal duty roster groups</source>
 				<target state="tanslated">Versteckte Nutzergruppen (im Individuellen Dienstplan)</target>
 			</trans-unit>
-			<trans-unit	id="tx_participants_domain_model_user.apply_planning_data">
+			<trans-unit id="tx_participants_domain_model_user.apply_planning_data">
 				<source>Apply the planning data in your own events list if an event is added.</source>
 				<target>Wenn ein neuer Termin zum persönlichen Dienstplan hinzugefügt wird, wird automatisch die Plannungseinstellung für die persönliche Zusage übernommen.</target>
 			</trans-unit>
-			<trans-unit
-				id="tx_participants_domain_model_user.info_mail_when_personal_duty_roster_changed">
+			<trans-unit id="tx_participants_domain_model_user.info_mail_when_personal_duty_roster_changed">
 				<source>Sends an email if the own events is changed.</source>
 				<target>Sendet eine Benachtigungs-E-Mail, wenn der persönliche Dienstplan verändert wurde.</target>
 			</trans-unit>
-			<trans-unit
-				id="tx_participants_domain_model_user.personal_duty_event_reminder">
+			<trans-unit id="tx_participants_domain_model_user.personal_duty_event_reminder">
 				<source>Reminder email when an event is coming up.</source>
 				<target>Sendet eine Erinnerungsmail, wenn ein Event demnächst ansteht.</target>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_user.show_only_scheduled_events">
+				<source>Show only scheduled events</source>
+				<target>Zeige nur eingeplante Termine</target>
 			</trans-unit>
 
 			<!-- TIME_OUT -->
@@ -85,15 +94,14 @@
 				<source>Time out</source>
 				<target state="tanslated">Auszeit</target>
 			</trans-unit>
-			<trans-unit
-				id="tx_participants_domain_model_time_out.description">
+			<trans-unit id="tx_participants_domain_model_time_out.description">
 				<source>Contains all entries from a user time offes.</source>
 				<target state="tanslated">Enthält alle Nutzer_Auszeiten. </target>
 			</trans-unit>
-			
+
 
 			<!--  EVENT_TYPE -->
-			
+
 			<trans-unit id="tx_participants_domain_model_event_type.title">
 				<source>Event type</source>
 				<target state="tanslated">Veranstaltungsart</target>
@@ -113,7 +121,7 @@
 
 
 			<!--  EVENT -->
-			
+
 			<trans-unit id="tx_participants_domain_model_event.title">
 				<source>Event</source>
 				<target state="tanslated">Veranstaltung</target>
@@ -192,7 +200,7 @@
 				<target state="tanslated">Beschreibung</target>
 			</trans-unit>
 
-			<!--  FE_GROUPS -->	
+			<!--  FE_GROUPS -->
 			<trans-unit id="tx_participants_domain_model_feGroups.acronym">
 				<source>Acronym</source>
 				<target state="tanslated">Akronym</target>

@@ -13,7 +13,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2022 C. Gogolin <service@cylancer.net>
+ * (c) 2023 C. Gogolin <service@cylancer.net>
  */
 class PersonalDutyRosterGroupFilterSettings
 {
@@ -32,7 +32,11 @@ class PersonalDutyRosterGroupFilterSettings
         }
     }
     
+
+    /** @var bool */    
+    protected $onlyScheduledEvents = false;
     
+    /** @var array */
     private $settings = [];
 
     /**
@@ -82,4 +86,24 @@ class PersonalDutyRosterGroupFilterSettings
     {
         return ! empty($this->settings);
     }
+
+	
+
+	/**
+	 * 
+	 * @return bool
+	 */
+	public function getOnlyScheduledEvents() {
+		return $this->onlyScheduledEvents;
+	}
+	
+	/**
+	 * 
+	 * @param bool $onlyScheduledEvents 
+	 * @return self
+	 */
+	public function setOnlyScheduledEvents($onlyScheduledEvents): self {
+		$this->onlyScheduledEvents = $onlyScheduledEvents;
+		return $this;
+	}
 }
