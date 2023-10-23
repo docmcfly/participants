@@ -343,9 +343,8 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                             $c->setPresent(
                                 ($u->getApplyPlanningData() && $planningPresent)
                                 ? PresentState::PRESENT
-                                : PresentState::UNKNOWN
+                                : $c->getPresent()
                             );
-
                             if (PersonalDutyRosterPlanningTask::DISABLE_PERSISTENCE_MANAGER) {
                                 debug($c, "UPDATE:");
                             }

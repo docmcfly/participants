@@ -170,7 +170,7 @@
 										for="event_{commitment.event.uid}_radioPresent"
 										title="{f:translate(key:'personalDutyRoster.list.absent')}">{f:translate(key:'personalDutyRoster.list.absentSymbol')}</label>
 								</div>
-								<div class="btn btn-info mt-1 w-100" id="event_{commitment.event.uid}_radioDescription">
+								<div class="badge bg-info mt-1 w-100 presentDescription" id="event_{commitment.event.uid}_radioDescription">
 									<f:switch expression="{commitment.present}">
 										<f:case value="-1">
 											<f:translate key="personalDutyRoster.list.unknownSymbol" />&nbsp;
