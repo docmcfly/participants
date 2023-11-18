@@ -97,6 +97,10 @@
 	text-decoration: line-through;
 }
 
+.tx_participants .presentDescription  {
+	min-width: 13em;
+}
+
 .error {
 	color: #d31f1f;
 }

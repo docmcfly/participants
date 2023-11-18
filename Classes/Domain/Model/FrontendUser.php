@@ -80,6 +80,9 @@ class FrontendUser extends AbstractEntity
      */
     protected $hiddenPersonalDutyRosterGroups = null;
 
+    /** @var bool */    
+    protected $onlyScheduledEvents = false;
+
     /** @var boolean */
     protected $applyPlanningData = true;
 
@@ -416,7 +419,7 @@ class FrontendUser extends AbstractEntity
      *
      * @return boolean
      */
-    public function getApplyPlanningData(): bool
+    public function getApplyPlanningData(): ?bool
     {
         return $this->applyPlanningData;
     }
@@ -425,7 +428,7 @@ class FrontendUser extends AbstractEntity
      *
      * @param boolean $b
      */
-    public function setApplyPlanningData(bool $b): void
+    public function setApplyPlanningData(?bool $b): void
     {
         $this->applyPlanningData = $b;
     }
@@ -467,4 +470,22 @@ class FrontendUser extends AbstractEntity
         }
         return $return;
     }
+
+	/**
+	 * 
+	 * @return bool
+	 */
+	public function getOnlyScheduledEvents():bool {
+		return $this->onlyScheduledEvents;
+	}
+	
+	/**
+	 * 
+	 * @param bool $onlyScheduledEvents 
+	 * @return self
+	 */
+	public function setOnlyScheduledEvents($onlyScheduledEvents): self {
+		$this->onlyScheduledEvents = $onlyScheduledEvents;
+		return $this;
+	}
 }

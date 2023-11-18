@@ -29,6 +29,9 @@
 			<trans-unit id="personalDutyRoster.list.dropouts">
 				<source>Dropouts</source>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.undecideds">
+				<source>No feedback</source>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.listOfMembers">
 				<source>List of Members ...</source>
 			</trans-unit>
@@ -45,12 +48,28 @@
 			<trans-unit id="personalDutyRoster.list.notScheduled">
 				<source>Not scheduled.</source>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.unknown">
+				<source>Not yet set.</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.unknownSymbol">
+				<source>❓</source>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.in">
 				<source>I am involved</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.inSymbol">
+				<source>✓</source>
 			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.absent">
 				<source>I am absend</source>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.absentSymbol">
+				<source>∅</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.noneCommitmentsFound">
+				<source>There are no event planning entries for which you can accept or cancel.</source>
+			</trans-unit>
+
 			<trans-unit id="personalDutyRoster.list.download.visibleCalendarEntries.symbols">
 				<source>📅 🔎</source>
 			</trans-unit>
@@ -68,6 +87,9 @@
 			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.download.promisedCalendarEntries">
 				<source>Download all promised calendar entries.</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.showOnlyScheduledEvents">
+				<source>Show only scheduled appointments</source>
 			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.download.calendarEntriesTitle">
 				<source>Download calendar entries in CalDAV format:</source>

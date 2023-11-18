@@ -90,6 +90,21 @@ $tmp_participants_columns = [
             'default' => 1,
         ]
     ],
+    'show_only_scheduled_events' => [
+        'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_user.show_only_scheduled_events',
+        'config' => [
+            'type' => 'check',
+            'renderType' => 'checkboxToggle',
+            'items' => [
+                [
+                    0 => '',
+                    1 => '',
+                ]
+            ],
+            'readOnly' => true,
+            'default' => 1,
+        ]
+    ],
     
 ];
 
@@ -113,7 +128,7 @@ $GLOBALS['TCA']['fe_users']['columns'][$GLOBALS['TCA']['fe_users']['ctrl']['type
 
 $tmp_types = array_keys($GLOBALS['TCA']['fe_users']['types']);
 foreach($tmp_types as $type){
-    $GLOBALS['TCA']['fe_users']['types'][$type]['showitem'] .= ', --div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_user.tab_settings, apply_planning_data, info_mail_when_personal_duty_roster_changed, personal_duty_event_reminder, hidden_personal_duty_roster_groups ';
+    $GLOBALS['TCA']['fe_users']['types'][$type]['showitem'] .= ', --div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_user.tab_settings, apply_planning_data, info_mail_when_personal_duty_roster_changed, personal_duty_event_reminder, hidden_personal_duty_roster_groups, show_only_scheduled_events ';
 }
 
 
