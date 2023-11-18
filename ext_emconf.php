@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.6.5',
+    'version' => '3.6.6',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
@@ -26,11 +26,11 @@ $EM_CONF[$_EXTKEY] = [
     ],
 ];
 
-
 /**
  * Change log: 
  * 
   
+3.6.6   :: Add : Personal duty roster -> disabled buttons are grey
 3.6.5   :: Fix : Optimize the commitment description text output. 
 3.6.4   :: Fix : Correct the commitments calculation when the scheduling is changed.
 3.6.3   :: Fix : The list of members also contains appointment commitments from persons who are not registered.
