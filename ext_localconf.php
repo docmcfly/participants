@@ -23,7 +23,7 @@ call_user_func(function () {
     );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'Cylancer.Participants',
+        'Participants',
         'TimeOutManagement',
         [
             TimeOutManagementController::class => 'list,delete, create'
@@ -35,7 +35,7 @@ call_user_func(function () {
     );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'Cylancer.Participants',
+        'Participants',
         'TaskForceOverview',
         [
             TaskForceOverviewController::class => 'show'
@@ -47,18 +47,18 @@ call_user_func(function () {
     );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'Cylancer.Participants',
+        'Participants',
         'DutyRoster',
         [
-            DutyRosterController::class => 'show, downloadIcs, reasonsForPrevention'
+            DutyRosterController::class => 'show, downloadIcs'
         ],
         // non-cacheable actions
         [
-            DutyRosterController::class => 'show, downloadIcs, reasonsForPrevention'
+            DutyRosterController::class => 'show, downloadIcs'
         ]
     );
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'Cylancer.Participants',
+        'Participants',
         'PersonalDutyRoster',
         [
             PersonalDutyRosterController::class => 'show, setPresent, setPersonalDutyRosterFilter, downloadAllVisibleCalendarEntries, downloadAllPromisedCalendarEntries, downloadAllPromisedVisibleCalendarEntries, getMembers'

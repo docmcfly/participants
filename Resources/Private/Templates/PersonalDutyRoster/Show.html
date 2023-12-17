@@ -9,20 +9,11 @@
 
 <body>
 	<f:layout name="Default" />
-	This Template is responsible for creating a table of domain objects. If you modify this template, do not forget to
-	change the overwrite settings in
-	/Configuration/ExtensionBuilder/settings.yaml: Resources: Private: Templates: List.html: keep Otherwise your changes
-	will be overwritten the next time you save
-	the extension in the extension builder
 	<f:section name="content">
-		<f:asset.css identifier="personalDutyRoster_bootstrap-toggle.min.css"
-			href="EXT:participants/Resources/Public/Css/bootstrap-toggle.min.css" />
-		<f:asset.css identifier="personalDutyRoster_custom_style"
+		<f:asset.css identifier="personalDutyRoster_custom_style" 
 			href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
 		<f:asset.script identifier="personalDutyRoster_jquery-3.6.3-min.js"
 			src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.3-min.js" />
-		<f:asset.script identifier="personalDutyRoster_bootstrap-toggle.min.js"
-			src="EXT:participants/Resources/Public/JavaScript/Dist/bootstrap-toggle.min.js" defer="true" />
 		<f:if condition="{personalDutyRosterFilterSettings.usable()}">
 			<div class="accordion" id="accordionExample">
 				<div class="card">
