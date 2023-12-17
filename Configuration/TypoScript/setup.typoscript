@@ -30,10 +30,10 @@ plugin.tx_participants {
         }      
       } 
       dutyRoster{
-        # JSON format
-        ajax{ 
-          pageType = 105
-        }
+        # # JSON format
+        # ajax{ 
+        #   pageType = 105
+        # }
         # iCal format
         iCal { 
           pageType = 102
@@ -93,25 +93,25 @@ tx_participants_personalDutyRoster_iCal {
 
 
 
-tx_participants_dutyRoster_ajaxConnect = PAGE
-tx_participants_dutyRoster_ajaxConnect {
-    typeNum < plugin.tx_participants.view.settings.dutyRoster.ajax.pageType
-    config {
-        disableAllHeaderCode = 1
-        additionalHeaders = Content-type:application/json
-        xthml_cleaning = 0 
-        admPanel = 0 
-        debug = 0
-        no_cache = 1
-    }
-  10 = USER
-  10 {
-    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run 
-    extensionName = Participants
-    pluginName = DutyRoster
-    vendorName = Cylancer
-  }
-}
+# tx_participants_dutyRoster_ajaxConnect = PAGE
+# tx_participants_dutyRoster_ajaxConnect {
+#     typeNum < plugin.tx_participants.view.settings.dutyRoster.ajax.pageType
+#     config {
+#         disableAllHeaderCode = 1
+#         additionalHeaders = Content-type:application/json
+#         xthml_cleaning = 0 
+#         admPanel = 0 
+#         debug = 0
+#         no_cache = 1
+#     }
+#   10 = USER
+#   10 {
+#     userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run 
+#     extensionName = Participants
+#     pluginName = DutyRoster
+#     vendorName = Cylancer
+#   }
+# }
 
 tx_participants_dutyRosterICal = PAGE
 tx_participants_dutyRosterICal {

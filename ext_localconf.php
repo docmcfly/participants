@@ -50,11 +50,11 @@ call_user_func(function () {
         'Participants',
         'DutyRoster',
         [
-            DutyRosterController::class => 'show, downloadIcs, reasonsForPrevention'
+            DutyRosterController::class => 'show, downloadIcs'
         ],
         // non-cacheable actions
         [
-            DutyRosterController::class => 'show, downloadIcs, reasonsForPrevention'
+            DutyRosterController::class => 'show, downloadIcs'
         ]
     );
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(

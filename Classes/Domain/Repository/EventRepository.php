@@ -113,7 +113,7 @@ class EventRepository extends Repository
         $s = $qb->execute();
         $return = array();
 
-        while ($row = $s->fetch()) {
+        while ($row = $s->fetchAssociative()) {
             $return[] = $this->findByUid($row['uid']);
         }
         return $return;
@@ -121,7 +121,7 @@ class EventRepository extends Repository
 
 
 
-    public function findEventsAt(array $storageUids, \DateTime $from, \DateTime $until, int $visibility, int $limit = EventRepository::UNLIMITED, bool $inclusiveCanceledEvents = false): array
+    public function findEventsAt(\DateTime $from, \DateTime $until, int $visibility = PublicOption::ALL, int $limit = EventRepository::UNLIMITED, bool $inclusiveCanceledEvents = false): array
     {
         $qb = $this->getQueryBuilder('tx_participants_domain_model_event');
 
@@ -157,19 +157,14 @@ class EventRepository extends Repository
             $qb->andWhere($visibilityRule);
         }
 
-        if ($storageUids == null) {
-            $qb->andWhere($qb->expr()
-                ->in('tx_participants_domain_model_event.pid', $this->createQuery()
-                    ->getQuerySettings()
-                    ->getStoragePageIds()));
-        } else {
-            $qb->andWhere($qb->expr()
-                ->in('tx_participants_domain_model_event.pid', $storageUids));
-        }
-
         if ($limit != EventRepository::UNLIMITED) {
             $qb->setMaxResults($limit);
         }
+
+        $qb->andWhere($qb->expr()
+            ->in('tx_participants_domain_model_event.pid', $this->createQuery()
+                ->getQuerySettings()
+                ->getStoragePageIds()));
 
         if (!$inclusiveCanceledEvents) {
             $qb->andWhere($qb->expr()
@@ -177,6 +172,7 @@ class EventRepository extends Repository
         }
 
         $s = $qb->execute();
+      
         $return = [];
         if (1 == 0) { // add debug infos
             $debug = [];
