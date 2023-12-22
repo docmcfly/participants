@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.7.1',
+    'version' => '3.7.2',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
@@ -30,6 +30,7 @@ $EM_CONF[$_EXTKEY] = [
  * Change log: 
  * 
  
+3.7.2   :: Fix : Event description is not displayed in the list view if the event is hidden (disabled).
 3.7.1   :: Fix : Add missing lanugage setting in the event and event type record. 
 3.7.0   :: Chg : Switch to the new reason for prevention service api.
 3.6.6   :: Add : Personal duty roster -> disabled buttons are grey.
