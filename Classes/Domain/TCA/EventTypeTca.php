@@ -21,10 +21,12 @@ class EventTypeTca
     public function computeTitleDescription(&$parameters)
     {
         $record = BackendUtility::getRecord($parameters['table'], $parameters['row']['uid']);
-        $description = strip_tags($record['description']);
-        if (strlen($description) > 24) {
-            $description = substr($description, 0, 24) . '…';
+        if ($record != null) {
+            $description = isset($record['description']) ? strip_tags($record['description']) : '';
+            if (strlen($description) > 24) {
+                $description = substr($description, 0, 24) . '…';
+            }
+            $parameters['title'] = $record['title'] . (trim($description) == '' ? '' : ' (' . $description . ')');
         }
-        $parameters['title'] = $record['title'] . (trim($description) == '' ? '' : ' (' . $description . ')');
     }
 }
