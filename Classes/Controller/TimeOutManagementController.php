@@ -87,7 +87,7 @@ class TimeOutManagementController extends ActionController
             $this->view->assign('addTimeOut', $addTimeOut);
             $this->view->assign('reasons', $reasons);
         } else {
-            $validationResults->addError('notLoggedInd');
+            $validationResults->addError('notLoggedIn');
         }
         $this->view->assign(TimeOutManagementController::VALIDATIOPN_RESULTS, $validationResults);
     }
@@ -100,7 +100,7 @@ class TimeOutManagementController extends ActionController
      */
     public function deleteAction(TimeOut $timeout = null): void
     {
-        if ($this->frontendUserService->isLogged() && $timeout->getUser()->getUid() === $this->frontendUserService->getCurrentUserUid()) {
+        if ($this->frontendUserService->isLogged() && $timeout->getUser() != null && $timeout->getUser()->getUid() === $this->frontendUserService->getCurrentUserUid()) {
             $this->timeOutRepository->remove($timeout);
         }
         $this->redirect('list');
@@ -109,9 +109,8 @@ class TimeOutManagementController extends ActionController
     /**
      * create a time out
      *
-     * @param
-     *            AddTimeOut addTimeOut
-     * @return Object
+     * @param  AddTimeOut addTimeOut
+     * @return object
      */
     public function createAction(AddTimeOut $addTimeOut = null): object
     {
@@ -164,30 +163,34 @@ class TimeOutManagementController extends ActionController
         /** @var ValidationResults $validationResults **/
         $validationResults = $this->getValidationResults();
 
-        if ($addTimeOut == null) {
-            $validationResults->addError('mysteryError');
+        if (!$this->frontendUserService->isLogged()) {
+            $validationResults->addError('notLoggedIn');
+
         } else {
-            if (empty(trim($addTimeOut->getFrom()))) {
-                $validationResults->addError('invalidFrom');
+            if ($addTimeOut == null) {
+                $validationResults->addError('mysteryError');
             } else {
-                $from = \DateTime::createFromFormat('!' . TimeOutManagementController::GERMAN_DATE_FORMAT, $addTimeOut->getFrom());
-                if ($from === false) {
+                if (empty(trim($addTimeOut->getFrom()))) {
                     $validationResults->addError('invalidFrom');
+                } else {
+                    $from = \DateTime::createFromFormat('!' . TimeOutManagementController::GERMAN_DATE_FORMAT, $addTimeOut->getFrom());
+                    if ($from === false) {
+                        $validationResults->addError('invalidFrom');
+                    }
                 }
-            }
-            if (empty(trim($addTimeOut->getUntil()))) {
-                $validationResults->addError('invalidUntil');
-            } else {
-                $until = \DateTime::createFromFormat('!' . TimeOutManagementController::GERMAN_DATE_FORMAT, $addTimeOut->getUntil());
-                if ($until === false) {
+                if (empty(trim($addTimeOut->getUntil()))) {
                     $validationResults->addError('invalidUntil');
+                } else {
+                    $until = \DateTime::createFromFormat('!' . TimeOutManagementController::GERMAN_DATE_FORMAT, $addTimeOut->getUntil());
+                    if ($until === false) {
+                        $validationResults->addError('invalidUntil');
+                    }
                 }
-            }
-            if (!$validationResults->hasErrors() && $from->getTimestamp() > $until->getTimestamp()) {
-                $validationResults->addError('untilBeforeFrom');
+                if (!$validationResults->hasErrors() && $from->getTimestamp() > $until->getTimestamp()) {
+                    $validationResults->addError('untilBeforeFrom');
+                }
             }
         }
-
         return $validationResults;
     }
 

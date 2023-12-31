@@ -104,7 +104,6 @@ class TaskForceOverviewController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
         }
 
         $usersWithTimeout = array_unique($usersWithTimeout);
-
         $timeOuts = array();
         foreach ($tmp as $reason => $to) {
             $tmpUsersTimeOuts = array();
@@ -123,7 +122,7 @@ class TaskForceOverviewController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
         }
 
         $canViewCurrentlyOfDuty = false;
-        if ($this->settings[TaskForceOverviewController::CAN_VIEW_CURRENTLY_OFF_DUTY] != null) {
+        if ($this->frontendUserService->isLogged() && $this->settings[TaskForceOverviewController::CAN_VIEW_CURRENTLY_OFF_DUTY] != null) {
             /** @var FrontendUserGroup $frontendUserGroup */
             foreach ($this->frontendUserService->getCurrentUser()->getUsergroup() as $frontendUserGroup) {
                 if (in_array($this->settings[TaskForceOverviewController::CAN_VIEW_CURRENTLY_OFF_DUTY], $this->frontendUserService->getSubGroups($frontendUserGroup))) {

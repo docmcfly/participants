@@ -4,7 +4,7 @@
 		<f:then>
 			<f:if condition="{userProfileLink}">
 				<f:then>
-					<f:link.typolink parameter="{userProfileLink}">
+					<f:link.typolink parameter="{userProfileLink}" absolute="true">
 						<strong>{user.firstName}&nbsp;{user.lastName}</strong>
 					</f:link.typolink>
 				</f:then>
@@ -16,7 +16,7 @@
 		<f:else>
 			<f:if condition="{taskForceListLink}">
 				<f:then>
-					<f:link.typolink parameter="{taskForceListLink}#name_{user.username}">
+					<f:link.typolink parameter="{taskForceListLink}#name_{user.username}" absolute="true">
 						<strong>{user.firstName}&nbsp;{user.lastName}</strong>
 					</f:link.typolink>
 				</f:then>
