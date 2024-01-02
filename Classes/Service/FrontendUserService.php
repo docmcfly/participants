@@ -49,7 +49,7 @@ class FrontendUserService implements SingletonInterface
      *
      * @return FrontendUser|bool Returns the current frontend user
      */
-    public function getCurrentUser(): FrontendUser|bool
+    public function getCurrentUser(): FrontendUser|false
     {
         if (! $this->isLogged()) {
             return false;

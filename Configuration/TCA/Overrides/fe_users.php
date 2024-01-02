@@ -57,7 +57,7 @@ $tmp_participants_columns = [
                 ]
             ],
             'readOnly' => true,
-            'default' => 1,
+            'default' => 0,
         ]
     ],
     'info_mail_when_personal_duty_roster_changed' => [
