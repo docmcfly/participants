@@ -81,7 +81,7 @@ class Event extends AbstractEntity
      *
      * @var string
      */
-    protected $time = '00:00';
+    protected $time = '00:00:00';
 
     /**
      *
@@ -350,7 +350,7 @@ class Event extends AbstractEntity
      */
     public function getTime(): \DateTime
     {
-        return \DateTime::createFromFormat('H:i:s', $this->time);
+        return $this->time == null ? \DateTime::createFromFormat('H:i:s', '00:00:00') : \DateTime::createFromFormat('H:i:s', $this->time);
     }
 
     /**
@@ -639,4 +639,7 @@ class Event extends AbstractEntity
     {
         $this->canceled = $canceled;
     }
+
+
+
 }

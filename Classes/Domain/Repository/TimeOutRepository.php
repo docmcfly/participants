@@ -30,6 +30,8 @@ class TimeOutRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $q->lessThanOrEqual('from', $today),
             $q->greaterThanOrEqual('until', $today)
         ]));
+        // $queryParser = TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser::class);
+        // debug($queryParser->convertQueryToDoctrineQueryBuilder($q)->getSQL());
         return $q->execute();
     }
 }

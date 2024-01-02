@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.7.0',
+    'version' => '3.7.9',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
@@ -29,7 +29,16 @@ $EM_CONF[$_EXTKEY] = [
 /**
  * Change log: 
  * 
-  
+
+3.7.9   :: Fix : Fix the default user setting for automatic apply commitments.
+3.7.8   :: Fix : Fix the return value type in the frontend user service.
+3.7.7   :: Fix : Adapts the personal duty roster folter column counts. 
+3.7.6   :: Fix : Link from TaskForceOverview to the user list. 
+3.7.5   :: Fix : Frontend user service: Better handling of simulated users.
+3.7.4   :: Fix : Timeout management: You can only delete a period only without exceptions if the user is logged in. 
+3.7.3   :: Fix : Duty roster excepts events with a null time. 
+3.7.2   :: Fix : Event description is not displayed in the list view if the event is hidden (disabled).
+3.7.1   :: Fix : Add missing lanugage setting in the event and event type record. 
 3.7.0   :: Chg : Switch to the new reason for prevention service api.
 3.6.6   :: Add : Personal duty roster -> disabled buttons are grey.
 3.6.5   :: Fix : Optimize the commitment description text output. 

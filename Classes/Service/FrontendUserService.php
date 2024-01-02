@@ -37,7 +37,7 @@ class FrontendUserService implements SingletonInterface
 
     /**
      *
-     * @param Object $obj
+     * @param object $obj
      * @return int
      */
     public static function getUid(Object $object): int
@@ -47,9 +47,9 @@ class FrontendUserService implements SingletonInterface
 
     /**
      *
-     * @return FrontendUser Returns the current frontend user
+     * @return FrontendUser|bool Returns the current frontend user
      */
-    public function getCurrentUser(): FrontendUser
+    public function getCurrentUser(): FrontendUser|false
     {
         if (! $this->isLogged()) {
             return false;
@@ -78,7 +78,8 @@ class FrontendUserService implements SingletonInterface
     public function isLogged(): bool
     {
         $context = GeneralUtility::makeInstance(Context::class);
-        return $context->getPropertyFromAspect('frontend.user', 'isLoggedIn');
+        $isPreview =  ($context->hasAspect('frontend.preview') && $context->getPropertyFromAspect('frontend.preview', 'isPreview'));
+        return !$isPreview && $context->getPropertyFromAspect('frontend.user', 'isLoggedIn');
     }
 
     /**
@@ -105,30 +106,6 @@ class FrontendUserService implements SingletonInterface
         }
     }
 
-    /**
-     *
-     * @param FrontendUserGroup $userGroup
-     * @param integer $fegid
-     * @param array $loopProtect
-     * @return boolean
-     */
-    public function getAllGroups($userGroup, $return = array(), &$loopProtect = array()): bool
-    {
-        $return = array();
-        if ($userGroup->getUid() == $feugid) {
-            return true;
-        } else {
-            if (! in_array($userGroup->getUid(), $loopProtect)) {
-                $loopProtect[] = $userGroup->getUid();
-                foreach ($userGroup->getSubgroup() as $sg) {
-                    if ($this->contains($sg, $feugid, $loopProtect)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-    }
 
     /**
      *
@@ -213,7 +190,7 @@ class FrontendUserService implements SingletonInterface
             ->where($qb->expr()
             ->inSet('subgroup', $ug))
             ->execute();
-        while ($row = $s->fetch()) {
+        while ($row = $s->fetchAllAssociative()) {
             $uid = intVal($row['uid']);
             if (! in_array($uid, $return)) {
                 $return = array_unique(array_merge($return, $this->_getTopGroups($uid, $return)));

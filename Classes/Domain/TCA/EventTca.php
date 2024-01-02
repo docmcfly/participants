@@ -3,6 +3,7 @@ namespace Cylancer\Participants\Domain\TCA;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -25,6 +26,7 @@ class EventTca
         $typeTitle = '';
         $description = '';
         $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_participants_domain_model_event')->createQueryBuilder();
+        $qb->getRestrictions()->removeByType(HiddenRestriction::class);
         $statement = $qb->select('tx_participants_domain_model_eventtype.title')
             ->addSelect('tx_participants_domain_model_eventtype.description')
             ->addSelect('tx_participants_domain_model_event.uid')
@@ -34,6 +36,7 @@ class EventTca
             ->where($qb->expr()
                 ->eq('tx_participants_domain_model_event.uid', $qb->createNamedParameter(intval($parameters['row']['uid']))))
             ->execute();
+          
         while ($row = $statement->fetchAssociative()) {
             $description = strip_tags($row['description']);
             if (strlen($description) > 10) {

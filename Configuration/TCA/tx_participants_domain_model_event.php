@@ -39,13 +39,14 @@ return [
     'interface' => [
         'showRecordFieldList' => 'l10n_parent, l10n_diffsource, hidden, canceled, event_type, date, full_day, time, '
             . 'duration, usergroups, show_public_usergroups, public_usergroups, description, public, public_description, '
-            . 'show_public_description '
+            . 'show_public_description, sys_language_uid'
     ],
     'types' => [
         '1' => [
             'showitem' => ' l10n_parent, l10n_diffsource, hidden, canceled, event_type, public, date, full_day, time, duration,'
                 . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabGroupSettings, usergroups, show_public_usergroups, public_usergroups, '
-                . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabDescription, description, show_public_description, public_description '
+                . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabDescription, description, show_public_description, public_description, '
+                . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabMiscellaneous, sys_language_uid'
         ]
     ],
     'columns' => [
