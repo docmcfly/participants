@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.7.9',
+    'version' => '3.7.10',
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.5.99',
@@ -30,6 +30,7 @@ $EM_CONF[$_EXTKEY] = [
  * Change log: 
  * 
 
+3.7.10  :: Fix : Repair the (personal) duty roster iCal export file: simple blank lines are not allowed. iCal needs a special coding. 
 3.7.9   :: Fix : Fix the default user setting for automatic apply commitments.
 3.7.8   :: Fix : Fix the return value type in the frontend user service.
 3.7.7   :: Fix : Adapts the personal duty roster folter column counts. 
