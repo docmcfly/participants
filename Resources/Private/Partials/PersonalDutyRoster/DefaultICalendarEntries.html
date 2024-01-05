@@ -30,6 +30,6 @@ UID:dutyRoster-{commitment.event.uid}@{domain}
 DTSTART;<f:if condition="{commitment.event.fullDay}"><f:then>VALUE=DATE</f:then><f:else>TZID=Europe/Berlin</f:else></f:if>:<f:format.date format="%Y%m%d" >{commitment.event.date}</f:format.date><f:if condition="!{commitment.event.fullDay}"><f:format.date format="T%H%M%S" >{commitment.event.time}</f:format.date></f:if>
 DTEND;<f:if condition="{commitment.event.fullDay}"><f:then>VALUE=DATE</f:then><f:else>TZID=Europe/Berlin</f:else></f:if>:<f:if condition="{commitment.event.fullDay}"><f:then><f:format.date format="%Y%m%d" base="{commitment.event.date}"> +1 day</f:format.date></f:then><f:else><f:format.date format="%Y%m%dT%H%M%S" base="{commitment.event.dateTime}"> +{commitment.event.duration} hours</f:format.date></f:else></f:if>
 SUMMARY:🚒 {commitment.event.eventType.title -> f:format.htmlspecialchars()}
-DESCRIPTION:<f:for each="{commitment.event.visiblePublicUsergroups}" as="ug"  iteration="iter">{ug.title}<f:if condition="!{iter.isLast}">, </f:if></f:for><f:if condition="{commitment.event.description}"> ( {commitment.event.description -> f:format.stripTags()} )</f:if>
+DESCRIPTION:<f:for each="{commitment.event.visiblePublicUsergroups}" as="ug"  iteration="iter">{ug.title}<f:if condition="!{iter.isLast}">, </f:if></f:for><f:if condition="{commitment.event.description}"> ( {commitment.event.description -> c:icsBlankLineEncoder()} )</f:if>
 END:VEVENT
 </f:for></f:if>END:VCALENDAR
