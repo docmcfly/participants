@@ -331,12 +331,12 @@
 								o.css('width', r['counts']['presentOverPercent'] + '%')
 								$('#presentCount_' + id).html(r['counts']['presentCount'])
 								let description = '???'
-								switch ($("input[name='tx_participants_personaldutyroster[commitment][present]']:checked").val()) {
-									case "0": description = personalDutyRosterListAbsentDescription
+								switch (r.present) {
+									case 0: description = personalDutyRosterListAbsentDescription
 										break;
-									case "1": description = personalDutyRosterListInDescription
+									case 1: description = personalDutyRosterListInDescription
 										break;
-									case "-1": description = personalDutyRosterListUnknownDescription
+									case -1: description = personalDutyRosterListUnknownDescription
 										break;
 								}
 
