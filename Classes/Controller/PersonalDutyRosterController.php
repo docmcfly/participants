@@ -18,6 +18,7 @@ use Cylancer\Participants\Domain\Model\Commitment;
 use TYPO3\CMS\Extbase\Mvc\Controller\MvcPropertyMappingConfiguration;
 use Cylancer\Participants\Domain\Model\FrontendUser;
 use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 
 /**
  *
@@ -197,6 +198,37 @@ class PersonalDutyRosterController extends ActionController
         $this->view->assign('commitments', $this->getCurrentUserCommitments($id));
         $this->view->assign('domain', parse_url($this->request->getBaseUri(), PHP_URL_HOST));
     }
+
+   /**
+     * The view contains a iCal list.
+     *
+     * @param int $id
+     * @param int $commitmentUid
+     * @return void
+     */
+    public function downloadCalendarEntryAction(int $id, int $commitmentUid): void
+    {
+        
+        if ($this->frontendUserService->isLogged()) {
+            $this->settings = $this->getPreparedSettings($id);
+
+            $planningStorageUid = $this->settings[PersonalDutyRosterController::PLANNING_STORAGE_UID];
+            /** @var \TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface $querySettings */
+            $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+            $querySettings->setStoragePageIds([$planningStorageUid]);
+            $this->commitmentRepository->setDefaultQuerySettings($querySettings);
+
+            $this->commitmentRepository->findByUid($commitmentUid);
+
+            $this->view->assign('commitments', [$this->commitmentRepository->findByUid($commitmentUid)]);
+            $this->view->assign('domain', parse_url($this->request->getBaseUri(), PHP_URL_HOST));
+        } else {
+            throw new \Exception('You ar not logged in');
+        }
+    }
+
+
+
 
     /**
      * The view contains a iCal list.

@@ -21,6 +21,10 @@
 				<source>Target groups</source>
 				<target state="tanslated">Zielgruppen</target>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.for">
+				<source>For</source>
+				<target state="tanslated">Für</target>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.presentOverview">
 				<source>Present overview</source>
 				<target state="tanslated">Überblick</target>
@@ -124,6 +128,18 @@
 				<target state="tanslated">Kalendereinträge im CalDAV-Format herunterladen:</target>
 			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.download.calendarEntriesFileHelp">
+				<source>This download contains an ICS file. This file contains the calendar entries in CalDAV format. Many calendars can import this file format.</source>
+				<target state="tanslated">Dieser Download enhält eine ICS-Datei. Diese Datei enhält die Kalendereinträge im CalDAV-Format. Viele Kalender können dieses Datei-Format importieren.</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.calendarEntryTitle">
+				<source>Download calendar entries in CalDAV format:</source>
+				<target state="tanslated">Kalendereinträge im CalDAV-Format herunterladen:</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.calendarEntry.symbol">
+				<source>🗓️</source>
+				<target state="tanslated">🗓️</target>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.calendarEntryFileHelp">
 				<source>This download contains an ICS file. This file contains the calendar entries in CalDAV format. Many calendars can import this file format.</source>
 				<target state="tanslated">Dieser Download enhält eine ICS-Datei. Diese Datei enhält die Kalendereinträge im CalDAV-Format. Viele Kalender können dieses Datei-Format importieren.</target>
 			</trans-unit>

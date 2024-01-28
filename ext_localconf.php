@@ -61,11 +61,11 @@ call_user_func(function () {
         'Participants',
         'PersonalDutyRoster',
         [
-            PersonalDutyRosterController::class => 'show, setPresent, setPersonalDutyRosterFilter, downloadAllVisibleCalendarEntries, downloadAllPromisedCalendarEntries, downloadAllPromisedVisibleCalendarEntries, getMembers'
+            PersonalDutyRosterController::class => 'show, setPresent, setPersonalDutyRosterFilter, downloadAllVisibleCalendarEntries, downloadAllPromisedCalendarEntries, downloadAllPromisedVisibleCalendarEntries, downloadCalendarEntry, getMembers'
         ],
         // non-cacheable actions
         [
-            PersonalDutyRosterController::class => 'show, setPresent, setPersonalDutyRosterFilter, downloadAllVisibleCalendarEntries, downloadAllPromisedCalendarEntries, downloadAllPromisedVisibleCalendarEntries, getMembers'
+            PersonalDutyRosterController::class => 'show, setPresent, setPersonalDutyRosterFilter, downloadAllVisibleCalendarEntries, downloadAllPromisedCalendarEntries, downloadAllPromisedVisibleCalendarEntries, downloadCalendarEntry, getMembers'
         ]
     );
 

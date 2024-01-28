@@ -120,10 +120,31 @@
 							<f:translate key="personalDutyRoster.list.present" />
 						</h4>
 					</th>
-					<th scope="col">
+					<th scope="col"  class="d-md-block d-lg-none">
 						<h4>
 							<f:translate key="personalDutyRoster.list.event" />
 						</h4>
+					</th>
+					<th scope="col"   class="d-none d-lg-block">
+						<div class="container">
+							<div class="row">
+								<div class="col p-0 ">
+									<h4>
+										<f:translate key="personalDutyRoster.list.date" />		
+									</h4>
+								</div>
+								<div class="col-sm ">
+									<h4>
+										<f:translate key="personalDutyRoster.list.event" />		
+									</h4>
+								</div>
+								<div class="col-sm">
+									<h4>
+										<f:translate key="personalDutyRoster.list.targetGroups" />
+									</h4>
+								</div>
+							</div>
+						</div>
 					</th>
 				</tr>
 			</thead>
@@ -182,20 +203,28 @@
 						<td style="border: 0">
 							<div class="container">
 								<div class="row">
-									<div class="col-">
-										<f:format.date format="j.m.Y">{commitment.event.date}</f:format.date>
-										<f:if condition="!{commitment.event.fullDay}">
-											<f:then>
-												<f:format.date format="H:i">{commitment.event.time}</f:format.date>
-											</f:then>
-											<f:else>
-												<span style="padding-left: 4ex;">&nbsp;</span>
-											</f:else>
-										</f:if>
+									<div class="col p-0 ">
+										<f:link.action
+										title="{f:translate(key:'personalDutyRoster.list.download.calendarEntryTitle')}{paragraph -> f:format.htmlentitiesDecode(encoding: 'utf-8')}{f:translate(key:'personalDutyRoster.list.download.calendarEntriesFileHelp')}"
+										class="btn btn-outline-primary" pageType="104"
+										action="downloadCalendarEntry" arguments="{id:uid, commitmentUid:commitment.uid}">
+											<f:translate
+												key="personalDutyRoster.list.download.calendarEntry.symbol" />
+												<f:format.date format="j.m.Y">{commitment.event.date}</f:format.date>
+											<f:if condition="!{commitment.event.fullDay}">
+												<f:then>
+													<f:format.date format="H:i">{commitment.event.time}</f:format.date>
+												</f:then>
+												<f:else>
+													<span style="padding-left: 4ex;">&nbsp;</span>
+												</f:else>
+											</f:if>
+										</f:link.action>
 									</div>
 									<div class="col-sm ">
 										<span
-											class="label-info eventName strong {f:if(condition:commitment.event.canceled,then:'canceled')}">{commitment.event.eventType.title}</span>
+											class="label-info eventName strong {f:if(condition:commitment.event.canceled,then:'canceled')}">{commitment.event.eventType.title}
+										</span>
 										<div>
 											<f:if condition="{commitment.event.canceled}">
 												<f:translate key="personalDutyRoster.list.event.canceled" />
@@ -206,6 +235,7 @@
 										</div>
 									</div>
 									<div class="col-sm">
+										<span class="d-md-inline d-lg-none"><f:translate key="personalDutyRoster.list.for" /></span>
 										<f:variable name="targetGroupFound" value="false" />
 										<ul class="commalist">
 											<f:for each="{commitment.event.visibleUserGroups}" as="userGroup"

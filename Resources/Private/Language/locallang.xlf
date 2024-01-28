@@ -17,6 +17,9 @@
 			<trans-unit id="personalDutyRoster.list.targetGroups">
 				<source>Target groups</source>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.for">
+				<source>For</source>
+			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.presentOverview">
 				<source>Present overview</source>
 			</trans-unit>
@@ -95,6 +98,15 @@
 				<source>Download calendar entries in CalDAV format:</source>
 			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.download.calendarEntriesFileHelp">
+				<source>This download contains an ICS file. This file contains the calendar entries in CalDAV format. Many calendars can import this file format.</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.calendarEntryTitle">
+				<source>Download calendar entries in CalDAV format:</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.calendarEntry.symbol">
+				<source>🗓️</source>
+			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.download.calendarEntryFileHelp">
 				<source>This download contains an ICS file. This file contains the calendar entries in CalDAV format. Many calendars can import this file format.</source>
 			</trans-unit>
 			<trans-unit id="personalDutyRoster.list.event.canceled">
