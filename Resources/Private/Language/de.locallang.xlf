@@ -195,10 +195,14 @@
 				<source>Enables the reminder for the next event:</source>
 				<target state="tanslated">Schaltet den Erinnungsmechanismus für das nächste Event ein:</target>
 			</trans-unit> 
-			<trans-unit id="task.personalDutyRosterPlanning.reminderTargetUrl">
-				<source>Reminder target url:</source>
-				<target state="tanslated">Ziel-Url in der Erinnerungsmail:</target>
+			<trans-unit id="task.personalDutyRosterPlanning.personalDutyRosterPageUid">
+				<source>Target page (uid) of the link to the personal duty roster</source>
+				<target>Zielseite (uid) des Links zum persönlichen Dienstplan</target>
 			</trans-unit> 
+			<trans-unit id="task.personalDutyRosterPlanning.siteIdentifier">
+				<source>Site identifier</source>
+				<target state="tanslated">Site Identifier (Eindeutige Kennung)</target>
+			</trans-unit>
 
 			<trans-unit id="task.personalDutyRosterPlanning.error.invalidPage.dutyRosterStorageUids">
 				<source>Duty roster page id is not valid. (Not a number or not a valid page: %1)</source>
@@ -220,10 +224,17 @@
 				<source>Specified user uids are not valid. (Not a number or not a valid page: %1)</source>
 				<target state="tanslated">Die UIDs der Nutzereinschränkung ist ungültig: %1.</target>
 			</trans-unit>
-			<trans-unit id="task.personalDutyRosterPlanning.error.invalidUrl.reminderTargetUrl">
-				<source>Specified url %1 is not valid.</source>
-				<target state="tanslated">Die angegebene URL %1 ist ungültig.</target>
+			<trans-unit id="task.personalDutyRosterPlanning.error.invalidUrl.personalDutyRosterPageUid">
+				<source>The specified target page uid is not a valid page.</source>
+				<target>Die angegebene Zielseite ist keine gültige Seite. </target>
 			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.error.siteNotFound.siteIdentifier">
+				<source>Site with specified identifier not found.</source>
+				<target state="tanslated">Site mit dem angebebenen identifier wurde nicht gefunden.</target>
+			</trans-unit>
+
+			
+			
 			<trans-unit id="task.personalDutyRosterPlanning.updateMail.senderName">
 				<source>Personal duty roster planner</source>
 				<target state="tanslated">Persönlicher Dienstplaner</target>
@@ -253,6 +264,10 @@
 				<source>Canceled events: </source>
 				<target state="tanslated">Folgenden Termine wurden abgesagt:</target>
 			</trans-unit>
+			<trans-unit id="task.personalDutyRosterPlanning.updateMail.personalDutyRosterPage">
+				<source>You can see more in your personal duty roster... </source>
+				<target state="tanslated">Mehr siehst Du in deinem persönlichen Dienstplan...</target>
+			</trans-unit>
 			<trans-unit id="task.personalDutyRosterPlanning.updateMail.footer">
 				<source>Check all listed events and update your commitments, please.</source>
 				<target state="tanslated">Bitte überprüfe alle aufgelisteten Veranstaltungen und aktualisiere Deine Zusagen.</target>
@@ -260,7 +275,7 @@
 			<trans-unit id="task.personalDutyRosterPlanning.updateMail.regards">
 				<source>Your adminstration</source>
 				<target state="tanslated">Mit freundlichem Gruß
-Eurer Webserviceteam
+Dein Webserviceteam
 				</target>
 			</trans-unit>
 
@@ -280,14 +295,14 @@ Eurer Webserviceteam
 				<source>Do you have one or more Events tomorrow: </source>
 				<target state="tanslated">Du hast morgen eine oder mehrere Veranstaltungen:</target>
 			</trans-unit>
-			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.seeReminderTargetUrl">
-				<source>You can see more: </source>
-				<target state="tanslated">Mehr siehst Du unter:</target>
+			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.personalDutyRosterPage">
+				<source>You can see more in your personal duty roster... </source>
+				<target state="tanslated">Mehr siehst Du in deinem persönlichen Dienstplan...</target>
 			</trans-unit>
 			<trans-unit id="task.personalDutyRosterPlanning.reminderMail.regards">
 				<source>Your adminstration</source>
 				<target state="tanslated">Mit freundlichem Gruß
-Eurer Webserviceteam
+Dein Webserviceteam
 				</target>
 			</trans-unit>
 
@@ -349,6 +364,10 @@ Eurer Webserviceteam
 			<trans-unit id="timeOutManagement.addTimeOut.info.savedSuccessful">
 				<source>Successful saved</source>
 				<target state="tanslated">Erfolgreich gespeichert</target>
+			</trans-unit>
+			<trans-unit id="timeOutManagement.addTimeOut.info.deletedSuccessful">
+				<source>Successful deleted</source>
+				<target state="tanslated">Erfolgreich gelöscht</target>
 			</trans-unit>
 
 

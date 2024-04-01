@@ -3,7 +3,6 @@ namespace Cylancer\Participants\Service;
 use Cylancer\Participants\Domain\PublicOption;
 use Cylancer\Participants\Domain\Repository\EventRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
@@ -12,7 +11,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2022 C. Gogolin <service@cylancer.net>
+ * (c) 2024 C.Gogolin <service@cylancer.net>
  * 
  * @package Cylancer\Participants\Service
  */
@@ -22,10 +21,9 @@ class ReasonsForPreventionService
     public static function reasonsForPreventionAction(array $storageUids, \DateTime $from, \DateTime $until, string $visibility = 'ALL'): array
     {
 
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
 
-        $eventRepository = GeneralUtility::makeInstance(EventRepository::class, $objectManager);
+        $eventRepository = GeneralUtility::makeInstance(EventRepository::class);
 
         $eventRepository->injectPersistenceManager($persistenceManager);
         $querySettings = $eventRepository->createQuery()->getQuerySettings();

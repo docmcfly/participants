@@ -10,7 +10,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2024 C. Gogolin <service@cylancer.net>
+ * (c) 2024 C.Gogolin <service@cylancer.net>
  *
  * @package Cylancer\Participants\ViewHelpers
  */

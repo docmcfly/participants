@@ -1,6 +1,6 @@
 <!-- errors and infos -->
 <f:for each="{validationResults.infos}" as="info" key="infoKey">
-	<div class="alert alert-success">
+	<div class="alert alert-success" data-key="{prefix}.{infoKey}">
 		<f:translate key="{prefix}.{infoKey}" arguments="{info.arguments}" />
 	</div>
 </f:for>
@@ -13,7 +13,7 @@
 		})
 	</script>
 	<f:for each="{validationResults.errors}" as="error" key="errorKey">
-		<div class="alert alert-danger">
+		<div class="alert alert-danger" data-key="{prefix}.{errorKey}">
 			<f:translate key="{prefix}.{errorKey}" arguments="{error.arguments}"/>
 		</div>
 	</f:for>

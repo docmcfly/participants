@@ -4,6 +4,7 @@ namespace Cylancer\Participants\Controller;
 use Cylancer\Participants\Domain\Model\AddTimeOut;
 use Cylancer\Participants\Domain\Model\TimeOut;
 use Cylancer\Participants\Domain\Repository\TimeOutRepository;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use Cylancer\Participants\Domain\Repository\CommitmentRepository;
 use Cylancer\Participants\Service\FrontendUserService;
@@ -19,14 +20,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2022 C. Gogolin <service@cylancer.net>
+ * (c) 2024 C.Gogolin <service@cylancer.net>
  *
  * @package Cylancer\Participants\Controller
  */
 class TimeOutManagementController extends ActionController
 {
 
-    const GERMAN_DATE_FORMAT = 'd.m.Y';
 
     const STANDARD_DATE_FORMAT = 'Y-m-d';
 
@@ -61,9 +61,9 @@ class TimeOutManagementController extends ActionController
     /**
      * action set defaults
      *
-     * @return void
+     * @return ResponseInterface
      */
-    public function listAction(): void
+    public function listAction(): ResponseInterface
     {
         /** @var ValidationResults $validationResults **/
         $validationResults = $this->getValidationResults();
@@ -90,36 +90,43 @@ class TimeOutManagementController extends ActionController
             $validationResults->addError('notLoggedIn');
         }
         $this->view->assign(TimeOutManagementController::VALIDATIOPN_RESULTS, $validationResults);
+        return $this->htmlResponse();
     }
 
     /**
      * deletes a time out
      *
      * @param TimeOut $timeout
-     * @return void
+     * @return ResponseInterface
      */
-    public function deleteAction(TimeOut $timeout = null): void
+    public function deleteAction(TimeOut $timeout = null): ResponseInterface
     {
+        $validationResults = $this->validate($timeout);
         if ($this->frontendUserService->isLogged() && $timeout->getUser() != null && $timeout->getUser()->getUid() === $this->frontendUserService->getCurrentUserUid()) {
+            
             $this->timeOutRepository->remove($timeout);
+            $this->persistenceManager->persistAll();
+            $validationResults->addInfo('deletedSuccessful');
         }
-        $this->redirect('list');
+        return GeneralUtility::makeInstance(ForwardResponse::class, 'list')->withArguments([
+            TimeOutManagementController::VALIDATIOPN_RESULTS => $validationResults
+        ]);
     }
 
     /**
      * create a time out
      *
      * @param  AddTimeOut addTimeOut
-     * @return object
+     * @return ResponseInterface
      */
-    public function createAction(AddTimeOut $addTimeOut = null): object
+    public function createAction(AddTimeOut $addTimeOut = null): ResponseInterface
     {
         /** @var ValidationResults $validationResults **/
         $validationResults = $this->validate($addTimeOut);
         if (!$validationResults->hasErrors()) {
             $timeOut = new TimeOut();
-            $timeOut->setFrom($this->transformDate($addTimeOut->getFrom()));
-            $timeOut->setUntil($this->transformDate($addTimeOut->getUntil()));
+            $timeOut->setFrom($addTimeOut->getFrom());
+            $timeOut->setUntil($addTimeOut->getUntil());
             $timeOut->setReason($addTimeOut->getReason());
             $timeOut->setUser($this->frontendUserService->getCurrentUser());
             $this->timeOutRepository->add($timeOut);
@@ -142,46 +149,33 @@ class TimeOutManagementController extends ActionController
     }
 
     /**
-     * transform from dd.mm.yyyy to yyyy-mm-dd
      *
-     * @param string germanDate
-     * @return string
-     */
-    private function transformDate(string $germanDate): string
-    {
-        return \DateTime::createFromFormat('!' . TimeOutManagementController::GERMAN_DATE_FORMAT, $germanDate)->format(TimeOutManagementController::STANDARD_DATE_FORMAT);
-    }
-
-    /**
-     *
-     * @param
-     *            ddTimeOut addTimeOut
+     * @param Timeout $timeout
      * @return ValidationResults
      */
-    private function validate(AddTimeOut $addTimeOut = null): ValidationResults
+    private function validate(TimeOut $timeout = null): ValidationResults
     {
         /** @var ValidationResults $validationResults **/
         $validationResults = $this->getValidationResults();
-
         if (!$this->frontendUserService->isLogged()) {
             $validationResults->addError('notLoggedIn');
 
         } else {
-            if ($addTimeOut == null) {
+            if ($timeout == null) {
                 $validationResults->addError('mysteryError');
             } else {
-                if (empty(trim($addTimeOut->getFrom()))) {
+                if (empty(trim($timeout->getFrom()))) {
                     $validationResults->addError('invalidFrom');
                 } else {
-                    $from = \DateTime::createFromFormat('!' . TimeOutManagementController::GERMAN_DATE_FORMAT, $addTimeOut->getFrom());
+                    $from = \DateTime::createFromFormat('!' . TimeOutManagementController::STANDARD_DATE_FORMAT, $timeout->getFrom());
                     if ($from === false) {
                         $validationResults->addError('invalidFrom');
                     }
                 }
-                if (empty(trim($addTimeOut->getUntil()))) {
+                if (empty(trim($timeout->getUntil()))) {
                     $validationResults->addError('invalidUntil');
                 } else {
-                    $until = \DateTime::createFromFormat('!' . TimeOutManagementController::GERMAN_DATE_FORMAT, $addTimeOut->getUntil());
+                    $until = \DateTime::createFromFormat('!' . TimeOutManagementController::STANDARD_DATE_FORMAT, $timeout->getUntil());
                     if ($until === false) {
                         $validationResults->addError('invalidUntil');
                     }

@@ -12,8 +12,8 @@
 	<f:section name="content">
 		<f:asset.css identifier="personalDutyRoster_custom_style" 
 			href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
-		<f:asset.script identifier="personalDutyRoster_jquery-3.6.3-min.js"
-			src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.3-min.js" />
+		<f:asset.script identifier="personalDutyRoster_jquery-3.7.1-min.js"
+			src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.7.1-min.js" />
 		<f:if condition="{personalDutyRosterFilterSettings.usable()}">
 			<div class="accordion" id="accordionExample">
 				<div class="card">
@@ -41,7 +41,7 @@
 													<label for="visibilities.{set.frontendUserGroup.uid}"
 														style="width: 15rem;">
 														<f:form.checkbox
-															property="settings.{set.frontendUserGroup.uid}.{visible}"
+															property="settings.{set.frontendUserGroup.uid}.visible"
 															value="1" checked="{set.visible}" />
 														{set.frontendUserGroup.title}
 													</label>
@@ -60,7 +60,7 @@
 											</div>
 										</div>
 										<div class="col">
-											<f:form.submit
+											<f:form.submit class="btn btn-primary"
 														value="{f:translate(key:'personalDutyRoster.list.filterSettings.submit')}">
 														<f:translate key="personalDutyRoster.list.filterSettings.submit" />
 													</f:form.submit>
@@ -353,15 +353,14 @@
 							cache: false,
 							data: form.serialize(),
 							success: function (response) {
-								var r = JSON.parse(response)
 								var p = $('#progressbar_' + id)
-								p.html(r['counts']['displayPercent'] + '%')
-								p.css('width', r['counts']['presentPercent'] + '%')
+								p.html(response['counts']['displayPercent'] + '%')
+								p.css('width', response['counts']['presentPercent'] + '%')
 								var o = $('#overProgressbar_' + id)
-								o.css('width', r['counts']['presentOverPercent'] + '%')
-								$('#presentCount_' + id).html(r['counts']['presentCount'])
+								o.css('width', response['counts']['presentOverPercent'] + '%')
+								$('#presentCount_' + id).html(response['counts']['presentCount'])
 								let description = '???'
-								switch (r.present) {
+								switch (response.present) {
 									case 0: description = personalDutyRosterListAbsentDescription
 										break;
 									case 1: description = personalDutyRosterListInDescription
@@ -399,11 +398,9 @@
 									cache: false,
 									data: form.serialize(),
 									success: function (response) {
-										var r = JSON.parse(response)
-										console.log(r)
 										var ml = $('#members_list_' + id).first()
 										ml.empty()
-										var m = r['members']
+										var m = response['members']
 										if (m != null) {
 											var content = '<ul>'
 											Object.values(m).forEach(value => {
@@ -421,7 +418,7 @@
 										} else {
 											ml.append('<ul><li><f:translate key="personalDutyRoster.list.members.nobody" /></li></ul>')
 										}
-										var d = r['dropouts']
+										var d = response['dropouts']
 										if (d != null && Object.keys(d).length > 0) {
 											var content = '<strong><f:translate key="personalDutyRoster.list.dropouts" /></strong><ul>'
 											Object.values(d).forEach(value => {
@@ -437,7 +434,7 @@
 											content += '</ul>'
 											ml.append(content)
 										} 
-										var d = r['undecideds']
+										var d = response['undecideds']
 										if (d != null && Object.keys(d).length > 0) {
 											var content = '<strong><f:translate key="personalDutyRoster.list.undecideds" /></strong><ul>'
 											Object.values(d).forEach(value => {

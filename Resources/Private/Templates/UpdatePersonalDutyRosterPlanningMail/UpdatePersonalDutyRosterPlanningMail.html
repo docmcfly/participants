@@ -1,0 +1,23 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:c="http://typo3.org/ns/Cylancer/Participants/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+<f:layout name="UpdatePersonalDutyRosterPlanningMail" /><f:section name="content"><p><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.salutation" arguments="{0:user.name}" /></p>
+	<p></p>
+	<p><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.teaser" /></p>
+	<p></p>
+	<f:if condition="{inserts}"><p><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.titleInserts" /></p>
+	<ul><f:for each="{inserts}" as="commitment"><li><f:format.date format="d.m.Y">{commitment.event.date}</f:format.date><f:if condition="!{commitment.event.fullDay}"> <f:format.date format="H:i">{commitment.event.time}</f:format.date></f:if> :: <strong>{commitment.event.eventType.title}</strong><f:if condition="{commitment.event.description}"> (<f:format.crop maxCharacters="30"><f:format.stripTags>{commitment.event.description}</f:format.stripTags></f:format.crop>)</f:if></li></f:for></ul></f:if>
+	<f:if condition="{updates}"><p><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.titleUpdates" /></p>
+	<ul><f:for each="{updates}" as="commitment"><li><f:format.date format="d.m.Y">{commitment.event.date}</f:format.date><f:if condition="!{commitment.event.fullDay}"> <f:format.date format="H:i">{commitment.event.time}</f:format.date></f:if> :: <strong>{commitment.event.eventType.title}</strong><f:if condition="{commitment.event.description}"> (<f:format.crop maxCharacters="30"><f:format.stripTags>{commitment.event.description}</f:format.stripTags></f:format.crop>)</f:if></li></f:for></ul></f:if>
+	<f:if condition="{canceled}"><p><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.titleCanceled" /></p>
+	<ul><f:for each="{canceled}" as="commitment"><li><f:format.date format="d.m.Y">{commitment.event.date}</f:format.date><f:if condition="!{commitment.event.fullDay}"> <f:format.date format="H:i">{commitment.event.time}</f:format.date></f:if> :: <strong>{commitment.event.eventType.title}</strong><f:if condition="{commitment.event.description}"> (<f:format.crop maxCharacters="30"><f:format.stripTags>{commitment.event.description}</f:format.stripTags></f:format.crop>)</f:if></li></f:for></ul></f:if>
+	
+
+	<p><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.footer" /></p> 
+	<p><f:link.action linkAccessRestrictedPages="true"  absolute="true" pageUid="{pageUid}" noCache="true" ><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.personalDutyRosterPage" /></f:link.action></p>
+	<p><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.regards" /></p> 
+</f:section></body></html>

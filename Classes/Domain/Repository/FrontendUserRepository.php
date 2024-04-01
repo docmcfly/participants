@@ -15,7 +15,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2022 Clemens Gogolin <service@cylancer.net>
+ * (c) 2024 C.Gogolin <service@cylancer.net>
  *
  * @package Cylancer\Participants\Domain\Repository
  *         
@@ -52,7 +52,6 @@ class FrontendUserRepository extends Repository
         $qb = $this->getQueryBuilder('fe_users');
         $qb->select('uid')->from('fe_users');
 
-        $usergroupTerm = array();
         foreach (GeneralUtility::intExplode(',', $userGroups, TRUE) as $ug) {
             $qb->orWhere($qb->expr()
                 ->inSet('usergroup', strval($ug)));
@@ -61,9 +60,9 @@ class FrontendUserRepository extends Repository
 
         //  debug($qb->getSql());
 
-        $s = $qb->execute();
+        $s = $qb->executeQuery();
         $return = array();
-        while ($row = $s->fetch()) {
+        while ($row = $s->fetchAssociative()) {
             $return[] = $this->findByUid($row['uid']);
         }
 

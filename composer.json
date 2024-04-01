@@ -4,8 +4,8 @@
 	"description" : "A extension for user participants. ",
 	"license" : "GPL-2.0-or-later",
 	"require" : {
-		"typo3/cms-core" : "^11.5",
-		"cylancer/usertools" : ">=2.3.0"
+		"typo3/cms-core" : "^12.4",
+		"cylancer/usertools" : ">=3.0.0"
 	},
 	"autoload" : {
 		"psr-4" : {

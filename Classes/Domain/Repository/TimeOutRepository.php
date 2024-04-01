@@ -9,7 +9,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2022 Clemens Gogolin <service@cylancer.net>
+ * (c) 2024 C.Gogolin <service@cylancer.net>
  *
  * The repository for time out entries.
  *
@@ -26,10 +26,10 @@ class TimeOutRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         $today = date('Y-m-d');
         $q = $this->createQuery();
-        $q->matching($q->logicalAnd([
+        $q->matching($q->logicalAnd(
             $q->lessThanOrEqual('from', $today),
             $q->greaterThanOrEqual('until', $today)
-        ]));
+        ));
         // $queryParser = TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser::class);
         // debug($queryParser->convertQueryToDoctrineQueryBuilder($q)->getSQL());
         return $q->execute();

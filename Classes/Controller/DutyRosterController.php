@@ -2,7 +2,8 @@
 namespace Cylancer\Participants\Controller;
 
 use Cylancer\Participants\Domain\Model\Event;
-use Cylancer\Participants\Domain\PublicOption;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -15,7 +16,7 @@ use Cylancer\Participants\Domain\Repository\EventRepository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2022 C. Gogolin <service@cylancer.net>
+ * (c) 2024 C.Gogolin <service@cylancer.net>
  *
  * @package Cylancer\Participants\Controller
  */
@@ -108,7 +109,7 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             ->from('tt_content')
             ->where($qb->expr()
                 ->eq('uid', $qb->createNamedParameter($id)))
-            ->execute();
+            ->executeQuery();
         if ($row = $s->fetchAssociative()) {
             $contentElement = $row;
         } else {
@@ -127,7 +128,7 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      *
      * @return void
      */
-    public function showAction(): void
+    public function showAction(): ResponseInterface
     {
         $events = array();
         switch ($this->settings['renderType']) {
@@ -140,7 +141,8 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         }
         $this->view->assign('settings', $this->settings);
         $this->view->assign('events', $this->prepareEvents($events));
-        $this->view->assign('uid', $this->configurationManager->getContentObject()->data['uid']);
+        $this->view->assign('uid', $this->request->getAttribute('currentContentObject')->data['uid']);
+        return $this->htmlResponse();
     }
 
     /**
@@ -148,17 +150,19 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @param string $id
      * @return void
      */
-    public function downloadIcsAction(string $id)
+    public function downloadIcsAction(string $id): ResponseInterface
     {
         $normalizedParams = $this->request->getAttribute('normalizedParams');
         $baseUri = $normalizedParams->getSiteUrl();
 
         $this->view->assign('domain', parse_url($baseUri, PHP_URL_HOST));
         $this->view->assign('events', $this->prepareEvents($this->eventRepository->findPublicEvents(EventRepository::UNLIMITED, $this->getStorageUid($id), false)));
+
+        return $this->htmlResponse();
     }
 
 
-
+    
 
 
 }

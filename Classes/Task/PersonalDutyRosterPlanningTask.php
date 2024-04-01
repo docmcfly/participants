@@ -2,10 +2,16 @@
 namespace Cylancer\Participants\Task;
 
 use Cylancer\Participants\Domain\PresentState;
+use Psr\Http\Message\ServerRequestFactoryInterface;
+use Symfony\Component\Mime\Address;
+use TYPO3\CMS\Core\Mail\FluidEmail;
+use TYPO3\CMS\Core\Mail\MailerInterface;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use Cylancer\Participants\Domain\Model\Commitment;
 use Cylancer\Participants\Domain\Repository\EventRepository;
@@ -17,7 +23,6 @@ use Cylancer\Participants\Domain\Model\FrontendUserGroup;
 use Cylancer\Participants\Domain\Model\FrontendUser;
 use TYPO3\CMS\Core\Utility\MailUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use Cylancer\Participants\Service\EmailSendService;
 use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
 
 class PersonalDutyRosterPlanningTask extends AbstractTask
@@ -27,35 +32,60 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
     // input fields
     const PLANNING_STORAGE_UID = 'planningStorageUid';
 
+    /** @var int */
     public $planningStorageUid = 0;
 
     const DUTY_ROSTER_STORAGE_UIDS = 'dutyRosterStorageUids';
 
-    public $dutyRosterStorageUids = 0;
+    /** @var string */
+    public $_dutyRosterStorageUids = '';
+
+    /** @var array */
+    public $dutyRosterStorageUids = [];
 
     const FE_USER_STORAGE_UIDS = 'feUserStorageUids';
 
-    public $feUserStorageUids = 0;
+    /** @var string */
+    public $_feUserStorageUids = 0;
+    /** @var array */
+    public $feUserStorageUids = [];
 
     const FE_USERGROUP_STORAGE_UIDS = 'feUsergroupStorageUids';
 
-    public $feUsergroupStorageUids = 0;
+    /** @var string */
+    public $_feUsergroupStorageUids = 0;
+    /** @var array */
+    public $feUsergroupStorageUids = [];
 
     const SPECIFIED_USER_UIDS = 'specifiedUserUids';
 
-    public $specifiedUserUids = '';
+    /** @var string */
+    public $_specifiedUserUids = '';
+    /** @var array */
+    public $specifiedUserUids = [];
 
     const RESET_USERS = 'resetUsers';
 
-    public $resetUser = '';
+    /** @var string */
+    public $_resetUser = '';
+
+    /** @var bool */
+    public $resetUser = false;
 
     const ENABLE_REMINDER = 'enableReminder';
 
     public $enableReminder = '';
 
-    const REMINDER_TARGET_URL = 'reminderTargetUrl';
+    const PERSONAL_DUTY_ROSTER_PAGE_UID = 'personalDutyRosterPageUid';
 
-    public $reminderTargetUrl = '';
+    /** @var int */
+    public $personalDutyRosterPageUid = 0;
+
+    const SITE_IDENTIFIER = 'siteIdentifier';
+
+    /** @var string */
+    public $siteIdentifier = '';
+
 
     // ------------------------------------------------------
     // debug switch
@@ -92,9 +122,6 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
     /** @var PersistenceManager     */
     private $persistenceManager = null;
 
-    /** @var EmailSendService */
-    private $emailSendService = null;
-
     /** @var array  */
     private $frontendUserGroupStructure = null;
 
@@ -107,37 +134,36 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
     private function initialize()
     {
         $this->planningStorageUid = intval($this->planningStorageUid);
-        $this->dutyRosterStorageUids = GeneralUtility::intExplode(',', $this->dutyRosterStorageUids);
-        $this->feUserStorageUids = GeneralUtility::intExplode(',', $this->feUserStorageUids);
-        $this->feUsergroupStorageUids = GeneralUtility::intExplode(',', $this->feUsergroupStorageUids);
-        $this->specifiedUserUids = GeneralUtility::intExplode(',', $this->specifiedUserUids, TRUE);
-        $this->resetUser = boolval($this->resetUser);
+        $this->dutyRosterStorageUids = GeneralUtility::intExplode(',', $this->_dutyRosterStorageUids);
+        $this->feUserStorageUids = GeneralUtility::intExplode(',', $this->_feUserStorageUids);
+        $this->feUsergroupStorageUids = GeneralUtility::intExplode(',', $this->_feUsergroupStorageUids);
+        $this->specifiedUserUids = GeneralUtility::intExplode(',', $this->_specifiedUserUids, TRUE);
+        $this->resetUser = boolval($this->_resetUser);
 
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
 
         $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
 
-        $this->frontendUserRepository = GeneralUtility::makeInstance(FrontendUserRepository::class, $objectManager);
+        $this->frontendUserRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
         $this->frontendUserRepository->injectPersistenceManager($this->persistenceManager);
         $querySettings = $this->frontendUserRepository->createQuery()->getQuerySettings();
         $querySettings->setStoragePageIds($this->feUserStorageUids);
         $this->frontendUserRepository->setDefaultQuerySettings($querySettings);
 
-        $this->frontendUserGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class, $objectManager);
+        $this->frontendUserGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
         $this->frontendUserGroupRepository->injectPersistenceManager($this->persistenceManager);
         $querySettings = $this->frontendUserGroupRepository->createQuery()->getQuerySettings();
         $querySettings->setStoragePageIds($this->feUsergroupStorageUids);
         $this->frontendUserGroupRepository->setDefaultQuerySettings($querySettings);
 
-        $this->eventRepository = GeneralUtility::makeInstance(EventRepository::class, $objectManager);
+        $this->eventRepository = GeneralUtility::makeInstance(EventRepository::class);
         $this->eventRepository->injectPersistenceManager($this->persistenceManager);
         $querySettings = $this->eventRepository->createQuery()->getQuerySettings();
         $querySettings->setStoragePageIds($this->dutyRosterStorageUids);
         $this->eventRepository->setDefaultQuerySettings($querySettings);
 
-        $this->commitmentRepository = GeneralUtility::makeInstance(CommitmentRepository::class, $objectManager);
+        $this->commitmentRepository = GeneralUtility::makeInstance(CommitmentRepository::class);
         $this->commitmentRepository->injectPersistenceManager($this->persistenceManager);
         $querySettings = $this->commitmentRepository->createQuery()->getQuerySettings();
         $querySettings->setStoragePageIds([
@@ -153,9 +179,6 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         }
         $this->frontendUserGroupStructure = $tmp;
 
-        // debug($this->frontendUserGroupStructure);
-
-        $this->emailSendService = GeneralUtility::makeInstance(EmailSendService::class);
     }
 
     private function validate(): bool
@@ -167,10 +190,11 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         $valid &= $this->frontendUserRepository != null;
         $valid &= $this->frontendUserGroupRepository != null;
         $valid &= $this->eventRepository != null;
-        $valid &= $this->emailSendService != null;
         $valid &= $this->frontendUserService != null;
         if ($valid) {
             $valid &= $this->isPageUidValid($this->planningStorageUid);
+            $valid &= $this->isPageUidValid($this->personalDutyRosterPageUid);
+            $valid &= $this->isSiteIdentifierValid($this->siteIdentifier);
             foreach ($this->dutyRosterStorageUids as $dr) {
                 $valid &= $this->isPageUidValid($dr);
             }
@@ -205,6 +229,23 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
     {
         return $this->frontendUserRepository->findByUid($uid) != null;
     }
+
+
+    /**
+     *
+     * @return boolean
+     */
+    private function isSiteIdentifierValid(string $siteIdentifier): bool
+    {
+        try {
+            GeneralUtility::makeInstance(SiteFinder::class)->getSiteByIdentifier($siteIdentifier);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
+
 
     private $eventGroupAssociation = [];
 
@@ -255,18 +296,42 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
             }
         }
         foreach ($reminderUsers as $frontendUserUid => $data) {
-            $data['reminderTargetUrl'] = $this->reminderTargetUrl;
             $frontendUser = $data['user'];
-            $recipient = [
-                $frontendUser->getEmail() => $frontendUser->getFirstName() . ' ' . $frontendUser->getLastName()
-            ];
-            $sender = [
-                MailUtility::getSystemFromAddress() => LocalizationUtility::translate('task.personalDutyRosterPlanning.reminderMail.senderName', PersonalDutyRosterPlanningTask::EXTENSION_NAME)
-            ];
-            $subject = LocalizationUtility::translate('task.personalDutyRosterPlanning.reminderMail.subject', PersonalDutyRosterPlanningTask::EXTENSION_NAME);
-            $this->emailSendService->sendTemplateEmail($recipient, $sender, [], $subject, 'TommorrowsEventsReminderMail', PersonalDutyRosterPlanningTask::EXTENSION_NAME, $data);
+            $fluidEmail = GeneralUtility::makeInstance(FluidEmail::class);
+            $fluidEmail
+                ->setRequest($this->createRequest($this->siteIdentifier))
+                ->to(new Address($frontendUser->getEmail(), $frontendUser->getFirstName() . ' ' . $frontendUser->getLastName()))
+                ->from(new Address(MailUtility::getSystemFromAddress(),LocalizationUtility::translate('task.personalDutyRosterPlanning.reminderMail.senderName', PersonalDutyRosterPlanningTask::EXTENSION_NAME)))
+                ->subject(LocalizationUtility::translate('task.personalDutyRosterPlanning.reminderMail.subject', PersonalDutyRosterPlanningTask::EXTENSION_NAME))
+                ->format(FluidEmail::FORMAT_BOTH) // send HTML and plaintext mail
+                ->setTemplate('TommorrowsEventsReminderMail')
+                ->assign('user', $frontendUser)
+                ->assign('events', $data['events'])
+                ->assign('pageUid', $this->personalDutyRosterPageUid)
+            ;
+            GeneralUtility::makeInstance(MailerInterface::class)->send($fluidEmail);
         }
     }
+
+
+
+    private function createRequest(string $siteIdentifier): RequestInterface
+    {
+        $serverRequestFactory = GeneralUtility::makeInstance(ServerRequestFactoryInterface::class);
+        $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByIdentifier($siteIdentifier);
+        $serverRequest = $serverRequestFactory->createServerRequest('GET', $site->getBase())
+            ->withAttribute('applicationType', \TYPO3\CMS\Core\Core\SystemEnvironmentBuilder::REQUESTTYPE_FE)
+            ->withAttribute('site', $site)
+            ->withAttribute('extbase', new \TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters());
+        $request = GeneralUtility::makeInstance(Request::class, $serverRequest);
+        //$GLOBALS['TYPO3_REQUEST'] = $request;
+        if (!isset($GLOBALS['TYPO3_REQUEST'])) {
+            $GLOBALS['TYPO3_REQUEST'] = $request;
+        }
+        return $request;
+    }
+
+
 
     public function execute()
     {
@@ -410,28 +475,29 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         //  debug($updates, 'U');
         //  debug($canceled, 'C');
         if (filter_var($user->getEmail(), FILTER_VALIDATE_EMAIL) && (!empty($inserts) || !empty($updates) || !empty($canceled))) {
-            $recipient = [
-                $user->getEmail() => $user->getFirstName() . ' ' . $user->getLastName()
-            ];
-            $sender = [
-                MailUtility::getSystemFromAddress() => LocalizationUtility::translate('task.personalDutyRosterPlanning.updateMail.senderName', PersonalDutyRosterPlanningTask::EXTENSION_NAME)
-            ];
-            $subject = LocalizationUtility::translate('task.personalDutyRosterPlanning.updateMail.subject', PersonalDutyRosterPlanningTask::EXTENSION_NAME);
 
-            $data = [
-                'user' => $user
-            ];
+
+            $fluidEmail = GeneralUtility::makeInstance(FluidEmail::class);
+            $fluidEmail
+                ->setRequest($this->createRequest($this->siteIdentifier))
+                ->to(new Address($user->getEmail(), $user->getFirstName() . ' ' . $user->getLastName()))
+                ->from(new Address(MailUtility::getSystemFromAddress(), LocalizationUtility::translate('task.personalDutyRosterPlanning.updateMail.senderName', PersonalDutyRosterPlanningTask::EXTENSION_NAME)))
+                ->subject(LocalizationUtility::translate('task.personalDutyRosterPlanning.updateMail.subject', PersonalDutyRosterPlanningTask::EXTENSION_NAME))
+                ->format(FluidEmail::FORMAT_BOTH) // send HTML and plaintext mail
+                ->setTemplate('UpdatePersonalDutyRosterPlanningMail')
+                ->assign('user', $user)
+                ->assign('pageUid', $this->personalDutyRosterPageUid)
+            ;
             if (!empty($inserts)) {
-                $data['inserts'] = $inserts;
+                $fluidEmail->assign('inserts',$inserts);
             }
             if (!empty($updates)) {
-                $data['updates'] = $updates;
+                $fluidEmail->assign('updates',$updates);
             }
             if (!empty($canceled)) {
-                $data['canceled'] = $canceled;
+                $fluidEmail->assign('canceled',$canceled);
             }
-
-            $this->emailSendService->sendTemplateEmail($recipient, $sender, [], $subject, 'UpdatePersonalDutyRosterPlanningMail', PersonalDutyRosterPlanningTask::EXTENSION_NAME, $data);
+            GeneralUtility::makeInstance(MailerInterface::class)->send($fluidEmail);
         }
     }
 
@@ -442,13 +508,14 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
      */
     public function getAdditionalInformation()
     {
-        return 'Duty roster stroarge uids:' . $this->dutyRosterStorageUids . //
+        return 'Duty roster stroarge uids:' . $this->_dutyRosterStorageUids . //
             ' / planning storage uid: ' . $this->planningStorageUid . //
-            ' / frontend user storage uids: ' . $this->feUserStorageUids . //
-            ' / frontend user group storage uids: ' . $this->feUsergroupStorageUids . //
-            ' / specified user uids:' . $this->specifiedUserUids . //
+            ' / frontend user storage uids: ' . $this->_feUserStorageUids . //
+            ' / frontend user group storage uids: ' . $this->_feUsergroupStorageUids . //
+            ' / specified user uids:' . $this->_specifiedUserUids . //
             ' / enable reminder:' . $this->enableReminder . //
-            ' / reminder target url:' . $this->reminderTargetUrl;
+            ' / personal duty roster page uid:' . $this->personalDutyRosterPageUid .
+            ' / site identifier:' . $this->siteIdentifier;
     }
 
     /**
@@ -461,21 +528,23 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
     {
         switch ($key) {
             case PersonalDutyRosterPlanningTask::RESET_USERS:
-                return $this->resetUser;
+                return $this->_resetUser;
             case PersonalDutyRosterPlanningTask::ENABLE_REMINDER:
                 return $this->enableReminder;
-            case PersonalDutyRosterPlanningTask::REMINDER_TARGET_URL:
-                return $this->reminderTargetUrl;
+            case PersonalDutyRosterPlanningTask::PERSONAL_DUTY_ROSTER_PAGE_UID:
+                return $this->personalDutyRosterPageUid;
             case PersonalDutyRosterPlanningTask::SPECIFIED_USER_UIDS:
-                return $this->specifiedUserUids;
+                return $this->_specifiedUserUids;
             case PersonalDutyRosterPlanningTask::DUTY_ROSTER_STORAGE_UIDS:
-                return $this->dutyRosterStorageUids;
+                return $this->_dutyRosterStorageUids;
             case PersonalDutyRosterPlanningTask::PLANNING_STORAGE_UID:
                 return $this->planningStorageUid;
             case PersonalDutyRosterPlanningTask::FE_USER_STORAGE_UIDS:
-                return $this->feUserStorageUids;
+                return $this->_feUserStorageUids;
             case PersonalDutyRosterPlanningTask::FE_USERGROUP_STORAGE_UIDS:
-                return $this->feUsergroupStorageUids;
+                return $this->_feUsergroupStorageUids;
+            case PersonalDutyRosterPlanningTask::SITE_IDENTIFIER:
+                return $this->siteIdentifier;
             default:
                 throw new \Exception("Unknown key: $key");
         }
@@ -491,29 +560,33 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
     {
         switch ($key) {
             case PersonalDutyRosterPlanningTask::DUTY_ROSTER_STORAGE_UIDS:
-                $this->dutyRosterStorageUids = $value;
+                $this->_dutyRosterStorageUids = $value;
                 break;
             case PersonalDutyRosterPlanningTask::PLANNING_STORAGE_UID:
                 $this->planningStorageUid = $value;
                 break;
             case PersonalDutyRosterPlanningTask::FE_USER_STORAGE_UIDS:
-                $this->feUserStorageUids = $value;
+                $this->_feUserStorageUids = $value;
                 break;
             case PersonalDutyRosterPlanningTask::FE_USERGROUP_STORAGE_UIDS:
-                $this->feUsergroupStorageUids = $value;
+                $this->_feUsergroupStorageUids = $value;
                 break;
             case PersonalDutyRosterPlanningTask::SPECIFIED_USER_UIDS:
-                $this->specifiedUserUids = $value;
+                $this->_specifiedUserUids = $value;
                 break;
             case PersonalDutyRosterPlanningTask::RESET_USERS:
-                $this->resetUser = $value;
+                $this->_resetUser = $value;
                 break;
             case PersonalDutyRosterPlanningTask::ENABLE_REMINDER:
                 $this->enableReminder = $value;
                 break;
-            case PersonalDutyRosterPlanningTask::REMINDER_TARGET_URL:
-                $this->reminderTargetUrl = $value;
+            case PersonalDutyRosterPlanningTask::PERSONAL_DUTY_ROSTER_PAGE_UID:
+                $this->personalDutyRosterPageUid = $value;
                 break;
+            case PersonalDutyRosterPlanningTask::SITE_IDENTIFIER:
+                $this->siteIdentifier = $value;
+                break;
+
             default:
                 throw new \Exception("Unknown key: $key");
         }

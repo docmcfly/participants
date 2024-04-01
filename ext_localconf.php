@@ -5,13 +5,13 @@ use Cylancer\Participants\Controller\TaskForceOverviewController;
 use Cylancer\Participants\Controller\DutyRosterController;
 use Cylancer\Participants\Controller\PersonalDutyRosterController;
 
-defined('TYPO3_MODE') || die('Access denied.');
+defined('TYPO3') || die('Access denied.');
 
 call_user_func(function () {
 
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'Cylancer.Participants',
+        'Participants',
         'CommitmentSettings',
         [
             CommitmentSettingsController::class => 'show, save'
@@ -147,3 +147,13 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Cylancer\Partic
     'description' => 'LLL:EXT:usertools/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.description',
     'additionalFields' => \Cylancer\Participants\Task\PersonalDutyRosterPlanningAdditionalFieldProvider::class
 ];
+
+// E-Mail-Templates
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths']['participants-UpdatePersonalDutyRosterPlanningMail']    = 'EXT:participants/Resources/Private/Templates/UpdatePersonalDutyRosterPlanningMail/';
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['layoutRootPaths']['participants-UpdatePersonalDutyRosterPlanningMail']    = 'EXT:participants/Resources/Private/Layouts/UpdatePersonalDutyRosterPlanningMail/';
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['partialRootPaths']['participants-UpdatePersonalDutyRosterPlanningMail']    = 'EXT:participants/Resources/Private/Partials/UpdatePersonalDutyRosterPlanningMail/';
+
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths']['participants-TommorrowsEventsReminderMail']    = 'EXT:participants/Resources/Private/Templates/TommorrowsEventsReminderMail/';
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['layoutRootPaths']['participants-TommorrowsEventsReminderMail']    = 'EXT:participants/Resources/Private/Layouts/TommorrowsEventsReminderMail/';
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['partialRootPaths']['participants-TommorrowsEventsReminderMail']    = 'EXT:participants/Resources/Private/Partials/TommorrowsEventsReminderMail/';
+

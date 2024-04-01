@@ -1,8 +1,9 @@
 <?php
 namespace Cylancer\Participants\Controller;
 
+use Cylancer\Participants\Domain\Repository\FrontendUserGroupRepository;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
-use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository;
 use Cylancer\Participants\Domain\Repository\TimeOutRepository;
 use Cylancer\Participants\Domain\Repository\CommitmentRepository;
 use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
@@ -19,7 +20,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2022 C. Gogolin <service@cylancer.net>
+ * (c) 2024 C.Gogolin <service@cylancer.net>
  *
  * @package Cylancer\Participants\Controller
  */
@@ -85,7 +86,7 @@ class TaskForceOverviewController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
      *
      * @return void
      */
-    public function showAction(): void
+    public function showAction(): ResponseInterface
     {
         $this->view->assign(TaskForceOverviewController::TASK_FORCE_LIST . 'Link', $this->settings[TaskForceOverviewController::TASK_FORCE_LIST]);
         $this->view->assign(TaskForceOverviewController::USER_PROFILE . 'Link', $this->settings[TaskForceOverviewController::USER_PROFILE]);
@@ -176,6 +177,8 @@ class TaskForceOverviewController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
         $this->view->assign(TaskForceOverviewController::CURRENT_FIRE_DEPARTMENT_GROUP, $cg);
         $this->view->assign(TaskForceOverviewController::FIRE_DEPARTMENT_GROUP_1 . 'Marker', $cg == 1 ? 'background-color: ' . $this->settings[TaskForceOverviewController::CURRENT_FIRE_DEPARTMENT_GROUP_COLOR] . ';' : '');
         $this->view->assign(TaskForceOverviewController::FIRE_DEPARTMENT_GROUP_2 . 'Marker', $cg == 0 ? 'background-color: ' . $this->settings[TaskForceOverviewController::CURRENT_FIRE_DEPARTMENT_GROUP_COLOR] . ';' : '');
+
+        return $this->htmlResponse();
     }
 
     /**
