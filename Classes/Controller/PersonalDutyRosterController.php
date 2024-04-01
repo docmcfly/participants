@@ -114,7 +114,6 @@ class PersonalDutyRosterController extends ActionController
             foreach ($u->getHiddenPersonalDutyRosterGroups()->toArray() as $ug) {
                 $u->removeHiddenPersonalDutyRosterGroups($ug);
             }
-            debug($personalDutyRosterFilterSettings);
 
             // add new settings (hidden groups)
             foreach ($personalDutyRosterFilterSettings->getSettings() as $entry) {
