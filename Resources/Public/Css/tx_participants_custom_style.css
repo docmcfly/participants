@@ -1,8 +1,10 @@
 @charset "UTF-8";
 
-.tx_participants .lnkBtn, .tx_participants .lnkBtn:active,
-	.tx_participants .lnkBtn:focus, .tx_participants .lnkBtn:hover,
-	.tx_participants .lnkBtn:visited {
+.tx_participants .lnkBtn,
+.tx_participants .lnkBtn:active,
+.tx_participants .lnkBtn:focus,
+.tx_participants .lnkBtn:hover,
+.tx_participants .lnkBtn:visited {
 	border: 0;
 	margin: 0;
 	padding: 0;
@@ -17,8 +19,8 @@
 	padding: .25rem !important;
 }
 
-.tx_participants label.btn.btn-.toggle-on, .tx_participants label.btn.btn-.toggle-off
-	{
+.tx_participants label.btn.btn-.toggle-on,
+.tx_participants label.btn.btn-.toggle-off {
 	border: 1px solid #eaebec;
 	white-space: nowrap;
 	font-size: 75%;
@@ -37,9 +39,10 @@
 	background-color: #888;
 }
 
-.tx_participants label.btn.btn-.toggle-on.canceled, .tx_participants label.btn.btn-.toggle-off.canceled,
-	.tx_participants label.btn.btn-.toggle-on.tooLate, .tx_participants label.btn.btn-.toggle-off.tooLate
-	{
+.tx_participants label.btn.btn-.toggle-on.canceled,
+.tx_participants label.btn.btn-.toggle-off.canceled,
+.tx_participants label.btn.btn-.toggle-on.tooLate,
+.tx_participants label.btn.btn-.toggle-off.tooLate {
 	text-decoration: none;
 	background-color: #888 !important;
 }
@@ -57,19 +60,23 @@
 	background-color: var(- -light);
 }
 
-.tx_participants .dutyRoster.big .upcomingDate {
+.tx_participants .dutyRoster.big .upcomingDate td {
 	background-color: #eb987e;
 }
 
-.tx_participants .dutyRoster.big .upcomingDateNext {
+.tx_participants .dutyRoster.big .upcomingDateNext td {
 	background-color: #f2baa9;
 }
 
-.tx_participants .dutyRoster.big .upcomingDateNextNext {
+.tx_participants .dutyRoster.big .upcomingDateNextNext td {
 	background-color: #f8dcd3;
 }
 
-.tx_participants  ul.commalist {
+.tx_participants .dutyRoster.big .upcomingDateBefore {
+	scroll-margin-top: 150px;
+}
+
+.tx_participants ul.commalist {
 	display: inline;
 	list-style: none;
 	margin: 0;
@@ -97,13 +104,14 @@
 	text-decoration: line-through;
 }
 
-.tx_participants .presentDescription  {
+.tx_participants .presentDescription {
 	min-width: 13em;
 }
 
-.tx_participants .btn-check:disabled + label {
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(100%);
+.tx_participants .btn-check:disabled+label {
+	-webkit-filter: grayscale(100%);
+	/* Safari 6.0 - 9.0 */
+	filter: grayscale(100%);
 }
 
 .error {

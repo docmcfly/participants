@@ -14,11 +14,11 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '4.0.0',
+    'version' => '4.0.1',
     'constraints' => [
         'depends' => [
             'typo3' => '12.4.0-12.4.99',
-            'bootstrap_package' => '13.0.1-13.0.99',
+            'bootstrap_package' => '14.0.0-14.0.99',
             'usertools' => '3.0.0-3.99.99'
         ],
         'conflicts' => [],
@@ -29,6 +29,7 @@ $EM_CONF[$_EXTKEY] = [
 /**
  * Change log: 
  * 
+4.0.1   :: FIX : Fix colors of next event in the duty roster and update the bootstrap package to 14.0.0
 4.0.0   :: UPD : Update to TYPO3 12.4.0
 3.8.0   :: Add : The personal roster contains new links for downloading the iCal files of individual events.
 3.7.11  :: Fix : Repair the commitment description text output.

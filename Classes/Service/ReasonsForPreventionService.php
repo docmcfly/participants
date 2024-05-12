@@ -21,6 +21,10 @@ class ReasonsForPreventionService
     public static function reasonsForPreventionAction(array $storageUids, \DateTime $from, \DateTime $until, string $visibility = 'ALL'): array
     {
 
+        if(empty($storageUids)){
+            return ['data' => []];
+        }
+        
         $persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
 
         $eventRepository = GeneralUtility::makeInstance(EventRepository::class);
