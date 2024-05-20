@@ -76,12 +76,25 @@
 	scroll-margin-top: 150px;
 }
 
+.tx_participants ul.commalist:empty {
+	display: none;
+}
+
+.tx_participants  ul.commalist:has(> :nth-child(2))  {
+	display: block;
+	margin-left: 0;
+}
+
+.tx_participants .dutyRoster.little ul.commalist:has(> :nth-child(2))  {
+	margin-left: .5rem;
+}
+
+
 .tx_participants ul.commalist {
 	display: inline;
 	list-style: none;
-	margin: 0;
-	padding: 0;
-	list-style: none;
+	margin-left: 0;
+	padding-left: 0;
 }
 
 .tx_participants ul.commalist li {
