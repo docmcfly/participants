@@ -10,8 +10,8 @@
 	<f:layout name="Default" />
 	<f:section name="content">
 		<f:if condition="{settings.autoScroll}">
-			<f:asset.script identifier="dutyRoster_jquery-3.6.3-min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.3-min.js" />
-			<f:asset.script identifier="dutyRoster_fastSearch.js" src="EXT:participants/Resources/Public/JavaScript/Src/jumpToCurrentEvent.js" defer="defer" />
+			<f:asset.script identifier="dutyRoster_jquery-3.7.1-min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.7.1-min.js" />
+			<f:asset.script identifier="dutyRoster_jumpToCurrentEvent.js" src="EXT:participants/Resources/Public/JavaScript/Src/jumpToCurrentEvent.js" defer="defer" />
 		</f:if>
 		<f:asset.css identifier="personalDutyRoster_custom_style" href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
 		<div class="dutyRoster {settings.renderType}">
@@ -107,24 +107,18 @@
 				</f:case>
 				<f:case value="little">
 					<f:for each="{events}" as="event" iteration="iterator">
-						<div class="row" style="margin-left: 0; margin-right: 0;">
+						<div class="row">
 							<!-- date -->
-							<div class="col-2">
+							<div class="col-2 mx-0">
 								<time datetime="{f:format.date(date:event.date, format:'Y-m-d')}"> <f:format.date format="d.m">{event.date}</f:format.date> </time>
 							</div>
 							<!-- category -->
-							<div class="col-10">
+							<div class="col-10 mx-0">
 								&nbsp; <span class="label label-info"><span class=" {f:if(condition:event.canceled, then:'canceled')}"
 									title="{f:if(condition:event.canceled, then:'{f:translate(key:\'dutyRoster.small.event.canceled\')}')}"
-								>{event.eventType.title}</span> <f:if condition="{f:count(subject:event.visiblePublicUsergroups)} > 0">
-										<ul class="commalist withBrackets">
-											<f:for each="{event.visiblePublicUsergroups}" as="ug" iteration="iter">
-												<f:if condition="{ug.accronym}">
-													<li><abbr title="{ug.title}">{ug.accronym}</abbr></li>
-												</f:if>
-											</f:for>
-										</ul>
-									</f:if> </span>
+								>{event.eventType.title}</span> 
+								<f:if condition="{f:count(subject:event.visiblePublicUsergroups)} > 0"><ul class="commalist withBrackets fs-6"><f:for each="{event.visiblePublicUsergroups}" as="ug" iteration="iter"><f:if condition="{ug.accronym}"><li><abbr title="{ug.title}">{ug.accronym}</abbr></li></f:if></f:for></ul></f:if>
+							 </span>
 							</div>
 						</div>
 						<!-- row -->

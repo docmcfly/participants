@@ -2,6 +2,7 @@
 namespace Cylancer\Participants\Task;
 
 use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider;
 use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
 use TYPO3\CMS\Scheduler\Task\Enumeration\Action;
@@ -10,10 +11,13 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
- 
+
 class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAdditionalFieldProvider
 {
+
+    const TRANSLATION_PREFIX = 'LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.';
+
+
 
     /**
      *
@@ -48,7 +52,7 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         $fieldCode = '<input type="hidden" name="tx_scheduler[' . $key . ']" id="' . $fieldID . '" value="0"><input type="checkbox" class="" ' . $checked . ' name="tx_scheduler[' . $key . ']" id="' . $fieldID . '" value="1" >';
         $additionalFields[$fieldID] = [
             'code' => $fieldCode,
-            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.' . $key,
+            'label' => PersonalDutyRosterPlanningAdditionalFieldProvider::TRANSLATION_PREFIX . $key,
             'cshKey' => '_MOD_system_txschedulerM1',
             'cshLabel' => $fieldID
         ];
@@ -86,7 +90,7 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         $fieldCode = '<input type="text" class="form-control" name="tx_scheduler[' . $key . ']" id="' . $fieldID . '" value="' . $taskInfo[$key] . '" >';
         $additionalFields[$fieldID] = [
             'code' => $fieldCode,
-            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.' . $key,
+            'label' => PersonalDutyRosterPlanningAdditionalFieldProvider::TRANSLATION_PREFIX . $key,
             'cshKey' => '_MOD_system_txschedulerM1',
             'cshLabel' => $fieldID
         ];
@@ -124,7 +128,7 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         $fieldCode = '<input type="number" min="0" max="99999" class="form-control" name="tx_scheduler[' . $key . ']" id="' . $fieldID . '" value="' . $taskInfo[$key] . '" >';
         $additionalFields[$fieldID] = [
             'code' => $fieldCode,
-            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.' . $key,
+            'label' => PersonalDutyRosterPlanningAdditionalFieldProvider::TRANSLATION_PREFIX . $key,
             'cshKey' => '_MOD_system_txschedulerM1',
             'cshLabel' => $fieldID
         ];
@@ -163,7 +167,7 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         $fieldCode = '<textarea type="url" class="form-control" name="tx_scheduler[' . $key . ']" id="' . $fieldID . '" >' . $taskInfo[$key] . '</textarea>';
         $additionalFields[$fieldID] = [
             'code' => $fieldCode,
-            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.' . $key,
+            'label' => PersonalDutyRosterPlanningAdditionalFieldProvider::TRANSLATION_PREFIX . $key,
             'cshKey' => '_MOD_system_txschedulerM1',
             'cshLabel' => $fieldID
         ];
@@ -181,7 +185,7 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
     private function initUrlAddtionalField(array &$taskInfo, $task, SchedulerModuleController $schedulerModule, string $key, array &$additionalFields)
     {
         $currentSchedulerModuleAction = $schedulerModule->getCurrentAction();
-        
+
         // Initialize extra field value
         if (empty($taskInfo[$key])) {
             if ($currentSchedulerModuleAction->equals(Action::ADD)) {
@@ -195,19 +199,19 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
                 $taskInfo[$key] = '';
             }
         }
-        
+
         // Write the code for the field
         $fieldID = 'task_' . $key;
         $fieldCode = '<input type="url" class="form-control" name="tx_scheduler[' . $key . ']" id="' . $fieldID . '" value="' . $taskInfo[$key] . '" >';
         $additionalFields[$fieldID] = [
             'code' => $fieldCode,
-            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.' . $key,
+            'label' => PersonalDutyRosterPlanningAdditionalFieldProvider::TRANSLATION_PREFIX . $key,
             'cshKey' => '_MOD_system_txschedulerM1',
             'cshLabel' => $fieldID
         ];
     }
-    
-    
+
+
     /**
      * This method is used to define new fields for adding or editing a task
      * In this case, it adds a sleep time field
@@ -237,9 +241,11 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         $this->initBooleanAddtionalField($taskInfo, $task, $schedulerModule, PersonalDutyRosterPlanningTask::RESET_USERS, $additionalFields);
 
         $this->initBooleanAddtionalField($taskInfo, $task, $schedulerModule, PersonalDutyRosterPlanningTask::ENABLE_REMINDER, $additionalFields);
-        
-        $this->initUrlAddtionalField($taskInfo, $task, $schedulerModule, PersonalDutyRosterPlanningTask::REMINDER_TARGET_URL, $additionalFields);
-        
+
+        $this->initIntegerAddtionalField($taskInfo, $task, $schedulerModule, PersonalDutyRosterPlanningTask::PERSONAL_DUTY_ROSTER_PAGE_UID, $additionalFields);
+
+        $this->initStringAddtionalField($taskInfo, $task, $schedulerModule, PersonalDutyRosterPlanningTask::SITE_IDENTIFIER, $additionalFields);
+
         // debug($additionalFields);
         return $additionalFields;
     }
@@ -256,9 +262,9 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         $result = true;
         $pages = GeneralUtility::intExplode(',', $submittedData[$key]);
         foreach ($pages as $uid) {
-            if (! $this->validatePage($uid)) {
+            if (!$this->validatePage($uid)) {
                 $this->addMessage(str_replace('%1', $uid, $this->getLanguageService()
-                    ->sL('LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.error.invalidPage.' . $key)), FlashMessage::ERROR);
+                    ->sL(PersonalDutyRosterPlanningAdditionalFieldProvider::TRANSLATION_PREFIX . 'error.invalidPage.' . $key)), FlashMessage::ERROR);
                 $result = false;
             }
         }
@@ -273,9 +279,7 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
      */
     private function validateUser(int $uid)
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        /** @var FrontendUserRepository $frontendUserRepository */
-        $frontendUserRepository = $objectManager->get(FrontendUserRepository::class);
+        $frontendUserRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
         return $frontendUserRepository->findByUid($uid) != null;
     }
 
@@ -294,9 +298,9 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         $result = true;
         $userUids = GeneralUtility::intExplode(',', $submittedData[$key]);
         foreach ($userUids as $uid) {
-            if (! $this->validateUser($uid)) {
+            if (!$this->validateUser($uid)) {
                 $this->addMessage(str_replace('%1', $uid, $this->getLanguageService()
-                    ->sL('LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.error.invalidUser.' . $key)), FlashMessage::ERROR);
+                    ->sL(PersonalDutyRosterPlanningAdditionalFieldProvider::TRANSLATION_PREFIX . 'error.invalidUser.' . $key)), FlashMessage::ERROR);
                 $result = false;
             }
         }
@@ -314,9 +318,9 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
     private function validatePageAdditionalField(array &$submittedData, SchedulerModuleController $schedulerModule, string $key)
     {
         $result = true;
-        if (! $this->validatePage($submittedData[$key])) {
+        if (!$this->validatePage($submittedData[$key])) {
             $this->addMessage(str_replace('%1', $submittedData[$key], $this->getLanguageService()
-                ->sL('LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.error.invalidPage.' . $key)), FlashMessage::ERROR);
+                ->sL(PersonalDutyRosterPlanningAdditionalFieldProvider::TRANSLATION_PREFIX . 'error.invalidPage.' . $key)), FlashMessage::ERROR);
             $result = false;
         }
 
@@ -325,9 +329,8 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
 
     private function validatePage($pid)
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $pageRepository = $objectManager->get(PageRepository::class);
-        return trim($pid) == strval(intval($pid)) && $pageRepository->getPage($pid) != null;
+        $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+        return trim($pid) == strval(intval($pid)) && $pageRepository->getPage($pid, true) != null;
     }
 
     /**
@@ -340,9 +343,9 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
     private function validateBooleanAdditionalField(array &$submittedData, SchedulerModuleController $schedulerModule, string $key)
     {
         $result = true;
-        if (! ($submittedData[$key] === '0' || $submittedData[$key] === '1')) {
+        if (!($submittedData[$key] === '0' || $submittedData[$key] === '1')) {
             $this->addMessage(str_replace('%1', $submittedData[$key], $this->getLanguageService()
-                ->sL('LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.error.invalidBoolean.' . $key)), FlashMessage::ERROR);
+                ->sL(PersonalDutyRosterPlanningAdditionalFieldProvider::TRANSLATION_PREFIX . 'error.invalidBoolean.' . $key)), FlashMessage::ERROR);
             $result = false;
         }
 
@@ -359,18 +362,39 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
     private function validateUrlAdditionalField(array &$submittedData, SchedulerModuleController $schedulerModule, string $key)
     {
         $url = trim($submittedData[$key]);
-        if(strlen($url) == 0 ) {
-            return true; 
+        if (strlen($url) == 0) {
+            return true;
         }
-        if( !(is_string($url) && strlen($url) > 5 && filter_var($url, FILTER_VALIDATE_URL))) {
+        if (!(is_string($url) && strlen($url) > 5 && filter_var($url, FILTER_VALIDATE_URL))) {
             $this->addMessage(str_replace('%1', $submittedData[$key], $this->getLanguageService()
-                ->sL('LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.error.invalidUrl.' . $key)), FlashMessage::ERROR);
+                ->sL(PersonalDutyRosterPlanningAdditionalFieldProvider::TRANSLATION_PREFIX . 'error.invalidUrl.' . $key)), FlashMessage::ERROR);
             return false;
         }
-        return true; 
+        return true;
     }
-    
-    
+
+
+    /**
+     *
+     * @param array $submittedData
+     * @param SchedulerModuleController $schedulerModule
+     * @param string $key
+     * @return boolean
+     */
+    private function validateSitedField(array &$submittedData, SchedulerModuleController $schedulerModule, string $key)
+    {
+        $result = true;
+
+        try {
+            GeneralUtility::makeInstance(SiteFinder::class)->getSiteByIdentifier($submittedData[$key]);
+        } catch (\Exception $e) {
+            $this->addMessage($this->getLanguageService()
+                ->sL(PersonalDutyRosterPlanningAdditionalFieldProvider::TRANSLATION_PREFIX . 'error.siteNotFound.' . $key), FlashMessage::ERROR);
+            $result = false;
+        }
+        return $result;
+    }
+
     /**
      * This method checks any additional data that is relevant to the specific task
      * If the task class is not relevant, the method is expected to return TRUE
@@ -391,7 +415,8 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         $result &= $this->validateUsersAdditionalField($submittedData, $schedulerModule, PersonalDutyRosterPlanningTask::SPECIFIED_USER_UIDS, true);
         $result &= $this->validateBooleanAdditionalField($submittedData, $schedulerModule, PersonalDutyRosterPlanningTask::RESET_USERS);
         $result &= $this->validateBooleanAdditionalField($submittedData, $schedulerModule, PersonalDutyRosterPlanningTask::ENABLE_REMINDER);
-        $result &= $this->validateUrlAdditionalField($submittedData, $schedulerModule, PersonalDutyRosterPlanningTask::REMINDER_TARGET_URL);
+        $result &= $this->validatePageAdditionalField($submittedData, $schedulerModule, PersonalDutyRosterPlanningTask::PERSONAL_DUTY_ROSTER_PAGE_UID);
+        $result &= $this->validateSitedField($submittedData, $schedulerModule, PersonalDutyRosterPlanningTask::SITE_IDENTIFIER);
         return $result;
     }
 
@@ -429,7 +454,8 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
         $this->saveAdditionalField($submittedData, $task, PersonalDutyRosterPlanningTask::SPECIFIED_USER_UIDS);
         $this->saveAdditionalField($submittedData, $task, PersonalDutyRosterPlanningTask::RESET_USERS);
         $this->saveAdditionalField($submittedData, $task, PersonalDutyRosterPlanningTask::ENABLE_REMINDER);
-        $this->saveAdditionalField($submittedData, $task, PersonalDutyRosterPlanningTask::REMINDER_TARGET_URL);
+        $this->saveAdditionalField($submittedData, $task, PersonalDutyRosterPlanningTask::PERSONAL_DUTY_ROSTER_PAGE_UID);
+        $this->saveAdditionalField($submittedData, $task, PersonalDutyRosterPlanningTask::SITE_IDENTIFIER);
     }
 
     /**

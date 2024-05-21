@@ -3,7 +3,6 @@ namespace Cylancer\Participants\Domain\Model;
 
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use Cylancer\Participants\Domain\Repository\FrontendUserGroupRepository;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
@@ -13,7 +12,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2023 C. Gogolin <service@cylancer.net>
+ * (c) 2024 C.Gogolin <service@cylancer.net>
  */
 class PersonalDutyRosterGroupFilterSettings
 {
@@ -21,12 +20,11 @@ class PersonalDutyRosterGroupFilterSettings
     public function __set(string $name ,  $value): void{
         if($name === 'settings'){
             $persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
-            $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
             /** @var FrontendUserGroupRepository $frontendUserGroupRepository */
-            $frontendUserGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class, $objectManager);
+            $frontendUserGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
             $frontendUserGroupRepository->injectPersistenceManager($persistenceManager);
             foreach($value as  $k=>$v){
-                $isVisible = is_array($v); 
+                $isVisible = isset($v['visible']) &&  $v['visible'] === '1'; 
                 $this->add($frontendUserGroupRepository->findByUid(intval($k)) , $isVisible); 
             }
         }

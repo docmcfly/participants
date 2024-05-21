@@ -2,6 +2,7 @@
 namespace Cylancer\Participants\Controller;
 
 use Cylancer\Participants\Domain\Model\CommitmentSettings;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use Cylancer\Participants\Service\FrontendUserService;
 use Cylancer\Participants\Domain\Model\FrontendUser;
@@ -15,8 +16,8 @@ use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2021 C. Gogolin <service@cylancer.net>
- *
+ * (c) 2024 C.Gogolin <service@cylancer.net>
+ * 
  * @package Cylancer\Participants\Controller
  */
 class CommitmentSettingsController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
@@ -31,8 +32,11 @@ class CommitmentSettingsController extends \TYPO3\CMS\Extbase\Mvc\Controller\Act
     /** @var FrontendUserRepository  */
     private $frontendUserRepository = null;
 
-    public function __construct(FrontendUserService $frontendUserService, PersistenceManager $persistenceManager, FrontendUserRepository $frontendUserRepository)
-    {
+    public function __construct(
+        FrontendUserService $frontendUserService,
+        PersistenceManager $persistenceManager,
+        FrontendUserRepository $frontendUserRepository
+    ) {
         $this->frontendUserService = $frontendUserService;
         $this->persistenceManager = $persistenceManager;
         $this->frontendUserRepository = $frontendUserRepository;
@@ -42,11 +46,11 @@ class CommitmentSettingsController extends \TYPO3\CMS\Extbase\Mvc\Controller\Act
      *
      * @return void
      */
-    public function showAction(): void
+    public function showAction(): ResponseInterface
     {
         /** @var FrontendUser $u */
-        $u = $this->frontendUserRepository->findByUid($this->frontendUserService->getCurrentUserUid());
-        if ($u != null) {
+        $u = $this->frontendUserService->getCurrentUser();
+        if ($u !== false) {
             $s = new CommitmentSettings();
             $s->setApplyPlanningData($u->getApplyPlanningData());
             $s->setInfoMailWhenPersonalDutyRosterChanged($u->getInfoMailWhenPersonalDutyRosterChanged());
@@ -54,6 +58,7 @@ class CommitmentSettingsController extends \TYPO3\CMS\Extbase\Mvc\Controller\Act
             $this->view->assign('commitmentSettings', $s);
             $this->view->assign('settings', $this->settings);
         }
+        return $this->htmlResponse();
     }
 
     /**

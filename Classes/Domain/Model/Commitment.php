@@ -73,7 +73,7 @@ class Commitment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     }
 
     /**
-    * @return bool $present
+    * @return int $present
     */
 
     public function getPresent() {
@@ -81,7 +81,7 @@ class Commitment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     }
 
     /**
-    * @param bool $present
+    * @param int $present
     * @return void
     */
 

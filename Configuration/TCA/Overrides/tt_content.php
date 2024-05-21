@@ -2,33 +2,33 @@
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-defined('TYPO3') or die();
+defined('TYPO3') || die('Access denied.');
 
 (static function (): void{
 
 
     ExtensionUtility::registerPlugin(
-        'Cylancer.Participants',
+        'Participants',
         'TimeOutManagement',
         'TimeOutManagement'
     );
     ExtensionUtility::registerPlugin(
-        'Cylancer.Participants',
+        'Participants',
         'TaskForceOverview',
         'TaskForceOverview'
     );
     ExtensionUtility::registerPlugin(
-        'Cylancer.Participants',
+        'Participants',
         'CommitmentSettings',
         'CommitmentSettings'
     );
     ExtensionUtility::registerPlugin(
-        'Cylancer.Participants',
+        'Participants',
         'DutyRoster',
         'DutyRoster'
     );
     ExtensionUtility::registerPlugin(
-        'Cylancer.Participants',
+        'Participants',
         'PersonalDutyRoster',
         'PersonalDutyRoster'
     );

@@ -12,8 +12,8 @@
 	<f:section name="content">
 		<f:asset.css identifier="personalDutyRoster_custom_style" 
 			href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
-		<f:asset.script identifier="personalDutyRoster_jquery-3.6.3-min.js"
-			src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.3-min.js" />
+		<f:asset.script identifier="personalDutyRoster_jquery-3.7.1-min.js"
+			src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.7.1-min.js" />
 		<f:if condition="{personalDutyRosterFilterSettings.usable()}">
 			<div class="accordion" id="accordionExample">
 				<div class="card">
@@ -41,7 +41,7 @@
 													<label for="visibilities.{set.frontendUserGroup.uid}"
 														style="width: 15rem;">
 														<f:form.checkbox
-															property="settings.{set.frontendUserGroup.uid}.{visible}"
+															property="settings.{set.frontendUserGroup.uid}.visible"
 															value="1" checked="{set.visible}" />
 														{set.frontendUserGroup.title}
 													</label>
@@ -60,7 +60,7 @@
 											</div>
 										</div>
 										<div class="col">
-											<f:form.submit
+											<f:form.submit class="btn btn-primary"
 														value="{f:translate(key:'personalDutyRoster.list.filterSettings.submit')}">
 														<f:translate key="personalDutyRoster.list.filterSettings.submit" />
 													</f:form.submit>
@@ -120,10 +120,31 @@
 							<f:translate key="personalDutyRoster.list.present" />
 						</h4>
 					</th>
-					<th scope="col">
+					<th scope="col"  class="d-md-block d-lg-none">
 						<h4>
 							<f:translate key="personalDutyRoster.list.event" />
 						</h4>
+					</th>
+					<th scope="col"   class="d-none d-lg-block">
+						<div class="container">
+							<div class="row">
+								<div class="col p-0 ">
+									<h4>
+										<f:translate key="personalDutyRoster.list.date" />		
+									</h4>
+								</div>
+								<div class="col-sm ">
+									<h4>
+										<f:translate key="personalDutyRoster.list.event" />		
+									</h4>
+								</div>
+								<div class="col-sm">
+									<h4>
+										<f:translate key="personalDutyRoster.list.targetGroups" />
+									</h4>
+								</div>
+							</div>
+						</div>
 					</th>
 				</tr>
 			</thead>
@@ -182,20 +203,28 @@
 						<td style="border: 0">
 							<div class="container">
 								<div class="row">
-									<div class="col-">
-										<f:format.date format="j.m.Y">{commitment.event.date}</f:format.date>
-										<f:if condition="!{commitment.event.fullDay}">
-											<f:then>
-												<f:format.date format="H:i">{commitment.event.time}</f:format.date>
-											</f:then>
-											<f:else>
-												<span style="padding-left: 4ex;">&nbsp;</span>
-											</f:else>
-										</f:if>
+									<div class="col p-0 ">
+										<f:link.action
+										title="{f:translate(key:'personalDutyRoster.list.download.calendarEntryTitle')}{paragraph -> f:format.htmlentitiesDecode(encoding: 'utf-8')}{f:translate(key:'personalDutyRoster.list.download.calendarEntriesFileHelp')}"
+										class="btn btn-outline-primary" pageType="104"
+										action="downloadCalendarEntry" arguments="{id:uid, commitmentUid:commitment.uid}">
+											<f:translate
+												key="personalDutyRoster.list.download.calendarEntry.symbol" />
+												<f:format.date format="j.m.Y">{commitment.event.date}</f:format.date>
+											<f:if condition="!{commitment.event.fullDay}">
+												<f:then>
+													<f:format.date format="H:i">{commitment.event.time}</f:format.date>
+												</f:then>
+												<f:else>
+													<span style="padding-left: 4ex;">&nbsp;</span>
+												</f:else>
+											</f:if>
+										</f:link.action>
 									</div>
 									<div class="col-sm ">
 										<span
-											class="label-info eventName strong {f:if(condition:commitment.event.canceled,then:'canceled')}">{commitment.event.eventType.title}</span>
+											class="label-info eventName strong {f:if(condition:commitment.event.canceled,then:'canceled')}">{commitment.event.eventType.title}
+										</span>
 										<div>
 											<f:if condition="{commitment.event.canceled}">
 												<f:translate key="personalDutyRoster.list.event.canceled" />
@@ -206,6 +235,7 @@
 										</div>
 									</div>
 									<div class="col-sm">
+										<span class="d-md-inline d-lg-none"><f:translate key="personalDutyRoster.list.for" /></span>
 										<f:variable name="targetGroupFound" value="false" />
 										<ul class="commalist">
 											<f:for each="{commitment.event.visibleUserGroups}" as="userGroup"
@@ -323,20 +353,19 @@
 							cache: false,
 							data: form.serialize(),
 							success: function (response) {
-								var r = JSON.parse(response)
 								var p = $('#progressbar_' + id)
-								p.html(r['counts']['displayPercent'] + '%')
-								p.css('width', r['counts']['presentPercent'] + '%')
+								p.html(response['counts']['displayPercent'] + '%')
+								p.css('width', response['counts']['presentPercent'] + '%')
 								var o = $('#overProgressbar_' + id)
-								o.css('width', r['counts']['presentOverPercent'] + '%')
-								$('#presentCount_' + id).html(r['counts']['presentCount'])
+								o.css('width', response['counts']['presentOverPercent'] + '%')
+								$('#presentCount_' + id).html(response['counts']['presentCount'])
 								let description = '???'
-								switch ($("input[name='tx_participants_personaldutyroster[commitment][present]']:checked").val()) {
-									case "0": description = personalDutyRosterListAbsentDescription
+								switch (response.present) {
+									case 0: description = personalDutyRosterListAbsentDescription
 										break;
-									case "1": description = personalDutyRosterListInDescription
+									case 1: description = personalDutyRosterListInDescription
 										break;
-									case "-1": description = personalDutyRosterListUnknownDescription
+									case -1: description = personalDutyRosterListUnknownDescription
 										break;
 								}
 
@@ -369,11 +398,9 @@
 									cache: false,
 									data: form.serialize(),
 									success: function (response) {
-										var r = JSON.parse(response)
-										console.log(r)
 										var ml = $('#members_list_' + id).first()
 										ml.empty()
-										var m = r['members']
+										var m = response['members']
 										if (m != null) {
 											var content = '<ul>'
 											Object.values(m).forEach(value => {
@@ -391,7 +418,7 @@
 										} else {
 											ml.append('<ul><li><f:translate key="personalDutyRoster.list.members.nobody" /></li></ul>')
 										}
-										var d = r['dropouts']
+										var d = response['dropouts']
 										if (d != null && Object.keys(d).length > 0) {
 											var content = '<strong><f:translate key="personalDutyRoster.list.dropouts" /></strong><ul>'
 											Object.values(d).forEach(value => {
@@ -407,7 +434,7 @@
 											content += '</ul>'
 											ml.append(content)
 										} 
-										var d = r['undecideds']
+										var d = response['undecideds']
 										if (d != null && Object.keys(d).length > 0) {
 											var content = '<strong><f:translate key="personalDutyRoster.list.undecideds" /></strong><ul>'
 											Object.values(d).forEach(value => {

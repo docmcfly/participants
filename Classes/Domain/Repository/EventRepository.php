@@ -15,7 +15,7 @@ use Cylancer\Participants\Domain\Model\Event;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2022 C. Gogolin <service@cylancer.net>
+ * (c) 2024 C.Gogolin <service@cylancer.net>
  *
  * The repository for events
  */
@@ -61,7 +61,7 @@ class EventRepository extends Repository
             ->addOrderBy('time', QueryInterface::ORDER_ASCENDING);
 
         // debug($qb->getSql());
-        $s = $qb->execute();
+        $s = $qb->executeQuery();
         $return = array();
 
         while ($row = $s->fetch()) {
@@ -79,9 +79,9 @@ class EventRepository extends Repository
             ->join('tx_participants_domain_model_event', 'tx_participants_domain_model_eventtype', 'tx_participants_domain_model_eventtype', $qb->expr()
                 ->eq('tx_participants_domain_model_event.event_type', $qb->quoteIdentifier('tx_participants_domain_model_eventtype.uid')))
             ->where($qb->expr()
-                ->orX($qb->expr()
+                ->or($qb->expr()
                     ->eq('tx_participants_domain_model_event.public', PublicOption::PUBLIC ), $qb->expr()
-                        ->andX($qb->expr()
+                        ->and($qb->expr()
                             ->eq('tx_participants_domain_model_event.public', PublicOption::INHERITED), $qb->expr()
                                 ->eq('tx_participants_domain_model_eventtype.public', PublicOption::PUBLIC ))))
             ->orderBy('date', QueryInterface::ORDER_ASCENDING)
@@ -110,7 +110,7 @@ class EventRepository extends Repository
                 ->gte('tx_participants_domain_model_event.date', $qb->createNamedParameter(date('Y-m-d'))));
         }
         // debug($qb->getSql());
-        $s = $qb->execute();
+        $s = $qb->executeQuery();
         $return = array();
 
         while ($row = $s->fetchAssociative()) {
@@ -128,9 +128,9 @@ class EventRepository extends Repository
         switch ($visibility) {
             case PublicOption::PUBLIC:
             case PublicOption::INTERNAL:
-                $visibilityRule = $qb->expr()->orX($qb->expr()
+                $visibilityRule = $qb->expr()->or($qb->expr()
                     ->eq('tx_participants_domain_model_event.public', PublicOption::PUBLIC ), $qb->expr()
-                        ->andX($qb->expr()
+                        ->and($qb->expr()
                             ->eq('tx_participants_domain_model_event.public', PublicOption::INHERITED), $qb->expr()
                                 ->eq('tx_participants_domain_model_eventtype.public', PublicOption::PUBLIC )));
 
@@ -146,7 +146,7 @@ class EventRepository extends Repository
             ->join('tx_participants_domain_model_event', 'tx_participants_domain_model_eventtype', 'tx_participants_domain_model_eventtype', $qb->expr()
                 ->eq('tx_participants_domain_model_event.event_type', $qb->quoteIdentifier('tx_participants_domain_model_eventtype.uid')))
             ->where(
-                $qb->expr()->andX(
+                $qb->expr()->and(
                     $qb->expr()->gte('date', $qb->createNamedParameter($from->format('Y-m-d'))),
                     $qb->expr()->lte('date', $qb->createNamedParameter($until->format('Y-m-d')))
                 )
@@ -171,7 +171,7 @@ class EventRepository extends Repository
                 ->eq('tx_participants_domain_model_event.canceled', 0));
         }
 
-        $s = $qb->execute();
+        $s = $qb->executeQuery();
       
         $return = [];
         if (1 == 0) { // add debug infos

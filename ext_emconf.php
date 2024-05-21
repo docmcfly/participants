@@ -14,12 +14,12 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.7.10',
+    'version' => '4.0.2',
     'constraints' => [
         'depends' => [
-            'typo3' => '11.5.0-11.5.99',
-            'bootstrap_package' => '13.0.1-13.0.99',
-            'usertools' => '2.0.0-2.9.99'
+            'typo3' => '12.4.0-12.4.99',
+            'bootstrap_package' => '14.0.0-14.0.99',
+            'usertools' => '3.0.0-3.99.99'
         ],
         'conflicts' => [],
         'suggests' => [],
@@ -29,7 +29,11 @@ $EM_CONF[$_EXTKEY] = [
 /**
  * Change log: 
  * 
-
+4.0.2   :: CHG : Change the small duty roster output. 
+4.0.1   :: FIX : Fix colors of next event in the duty roster and update the bootstrap package to 14.0.0
+4.0.0   :: UPD : Update to TYPO3 12.4.0
+3.8.0   :: Add : The personal roster contains new links for downloading the iCal files of individual events.
+3.7.11  :: Fix : Repair the commitment description text output.
 3.7.10  :: Fix : Repair the (personal) duty roster iCal export file: simple blank lines are not allowed. iCal needs a special coding. 
 3.7.9   :: Fix : Fix the default user setting for automatic apply commitments.
 3.7.8   :: Fix : Fix the return value type in the frontend user service.

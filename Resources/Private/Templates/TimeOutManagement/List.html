@@ -9,11 +9,6 @@
 <body>
 	<f:layout name="Default" />
 	<f:section name="content">
-	
-		<f:asset.script identifier="timeoutmanagement_jquery-3.6.3-min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.6.3-min.js" defer="true"/>
-		<f:asset.script identifier="timeoutmanagement_bootstrap-datepicker.min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/bootstrap-datepicker.min.js" defer="true"/>
-		<f:asset.script identifier="timeoutmanagement_custom-datepicker.js" src="EXT:participants/Resources/Public/JavaScript/Dist/custom-datepicker.js" defer="true" />
-	
 		<div class="card profile">
 			<f:render partial="validationResults" arguments="{prefix:'timeOutManagement.addTimeOut', validationResults: validationResults}" />
 			<f:security.ifAuthenticated>
@@ -70,7 +65,7 @@
 						<label for="from"><f:translate key="timeOutManagement.addTimeOut.from" /></label>
 					</div>
 					<div class="col-11">
-						<f:form.textfield property="from" name="from" class="datepicker from form-control" id="timeOutManagement-addTimeOut-from" />
+						<f:form.textfield type="date" property="from" name="from" class=" from form-control" id="timeOutManagement-addTimeOut-from" />
 					</div>
 				</div>
 				<div class="row form-group">
@@ -78,7 +73,7 @@
 						<label for="until"><f:translate key="timeOutManagement.addTimeOut.until" /></label>
 					</div>
 					<div class="col-11">
-						<f:form.textfield property="until" name="until" class="datepicker until form-control" id="timeOutManagement-addTimeOut-until" />
+						<f:form.textfield type="date" property="until" name="until" class="until form-control" id="timeOutManagement-addTimeOut-until" />
 					</div>
 				</div>
 				<div class="row form-group">
@@ -96,7 +91,7 @@
 						<label for="until"><f:translate key="timeOutManagement.addTimeOut.updateCommitments" /></label>
 					</div>
 				</div>
-				<div class="row form-group">
+				<div class="row form-group mt-3">
 					<div class="col-12">
 						<f:form.submit class="btn btn-primary btn-lg" value="{f:translate(key: 'timeOutManagement.addTimeOut.submit')}" />
 					</div>

@@ -16,7 +16,7 @@ use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2022 C. Gogolin <service@cylancer.net>
+ * (c) 2024 C.Gogolin <service@cylancer.net>
  *
  * @package Cylancer\Participants\Service
  */
@@ -40,7 +40,7 @@ class FrontendUserService implements SingletonInterface
      * @param object $obj
      * @return int
      */
-    public static function getUid(Object $object): int
+    public static function getUid(object $object): int
     {
         return $object->getUid();
     }
@@ -51,7 +51,7 @@ class FrontendUserService implements SingletonInterface
      */
     public function getCurrentUser(): FrontendUser|false
     {
-        if (! $this->isLogged()) {
+        if (!$this->isLogged()) {
             return false;
         }
         return $this->frontendUserRepository->findByUid($this->getCurrentUserUid());
@@ -63,7 +63,7 @@ class FrontendUserService implements SingletonInterface
      */
     public function getCurrentUserUid(): int
     {
-        if (! $this->isLogged()) {
+        if (!$this->isLogged()) {
             return false;
         }
         $context = GeneralUtility::makeInstance(Context::class);
@@ -78,8 +78,12 @@ class FrontendUserService implements SingletonInterface
     public function isLogged(): bool
     {
         $context = GeneralUtility::makeInstance(Context::class);
-        $isPreview =  ($context->hasAspect('frontend.preview') && $context->getPropertyFromAspect('frontend.preview', 'isPreview'));
-        return !$isPreview && $context->getPropertyFromAspect('frontend.user', 'isLoggedIn');
+        $isPreview = ($context->hasAspect('frontend.preview') && $context->getPropertyFromAspect('frontend.preview', 'isPreview'));
+        if ($isPreview) {
+            return $this->frontendUserRepository->findByUid($context->getPropertyFromAspect('frontend.user', 'id')) !== null;
+        } else {
+            return $context->getPropertyFromAspect('frontend.user', 'isLoggedIn');
+        }
     }
 
     /**
@@ -94,7 +98,7 @@ class FrontendUserService implements SingletonInterface
         if ($userGroup->getUid() == $feugid) {
             return true;
         } else {
-            if (! in_array($userGroup->getUid(), $loopProtect)) {
+            if (!in_array($userGroup->getUid(), $loopProtect)) {
                 $loopProtect[] = $userGroup->getUid();
                 foreach ($userGroup->getSubgroup() as $sg) {
                     if ($this->contains($sg, $feugid, $loopProtect)) {
@@ -148,7 +152,7 @@ class FrontendUserService implements SingletonInterface
         $return[] = $frontendUserGroup->getUid();
         foreach ($frontendUserGroup->getSubgroup() as $ug) {
             $uid = $ug->getUid();
-            if (! in_array($uid, $return)) {
+            if (!in_array($uid, $return)) {
                 $return = array_unique(array_merge($return, $this->_getSubgroups($ug, $return)));
             }
         }
@@ -188,11 +192,11 @@ class FrontendUserService implements SingletonInterface
         $s = $qb->select('fe_groups.uid')
             ->from('fe_groups')
             ->where($qb->expr()
-            ->inSet('subgroup', $ug))
-            ->execute();
+                ->inSet('subgroup', $ug))
+            ->executeQuery();
         while ($row = $s->fetchAllAssociative()) {
             $uid = intVal($row['uid']);
-            if (! in_array($uid, $return)) {
+            if (!in_array($uid, $return)) {
                 $return = array_unique(array_merge($return, $this->_getTopGroups($uid, $return)));
             }
         }
