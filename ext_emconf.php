@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '4.0.2',
+    'version' => '4.0.3',
     'constraints' => [
         'depends' => [
             'typo3' => '12.4.0-12.4.99',
@@ -29,6 +29,7 @@ $EM_CONF[$_EXTKEY] = [
 /**
  * Change log: 
  * 
+4.0.3   :: FIX : PersonalDutyRoster -> fix the progess bars counter if the user has changed its commitment.
 4.0.2   :: CHG : Change the small duty roster output. 
 4.0.1   :: FIX : Fix colors of next event in the duty roster and update the bootstrap package to 14.0.0
 4.0.0   :: UPD : Update to TYPO3 12.4.0

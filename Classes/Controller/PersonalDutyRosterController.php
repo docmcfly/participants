@@ -313,11 +313,10 @@ class PersonalDutyRosterController extends ActionController
                 $settings = $this->getPreparedSettings(intval($this->request->getArgument('id')));
                 $this->commitmentRepository->update($commitment);
                 $this->persistenceManager->persistAll();
-                $cc = $this->commitmentRepository->getEventCommitmentCounts($settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
             }
+            $cc = $this->commitmentRepository->getEventCommitmentCounts($settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
             $return['counts'] = Utility::calculatePresentDatas($cc['presentCount'], $cc['presentDefaultCount']);
-        } else {
-
+         } else {
             $return['present'] = false;
             $return['counts'] = [
                 'presentCount' => 0,
