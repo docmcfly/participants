@@ -154,6 +154,7 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_participants_domain_model_eventtype',
+                'foreign_table_where' => 'ORDER BY title',
                 'eval' => 'required'
             ]
         ],
