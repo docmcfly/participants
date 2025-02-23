@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '4.0.5',
+    'version' => '4.1.1',
     'constraints' => [
         'depends' => [
             'typo3' => '12.4.0-12.4.99',
@@ -29,6 +29,8 @@ $EM_CONF[$_EXTKEY] = [
 /**
  * Change log: 
  * 
+4.1.1   :: FIX : Personal duty roster: Added missing gray line if the event is cancelled.
+4.1.0   :: UPD : You can hide the target group in the duty roster. 
 4.0.5   :: UPD : Resort the columns of the dutyroster.  
 4.0.4   :: UPD : THe event types are sorted by alphabet in the event BE form. 
 4.0.3   :: FIX : PersonalDutyRoster -> fix the progess bars counter if the user has changed its commitment.

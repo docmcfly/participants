@@ -42,6 +42,9 @@
 				<source>Count of event on the small render type</source>
 			</trans-unit>
 
+			<trans-unit id="flexforms_general.settings.hiddenTargetGroups">
+				<source>Hide the target groups</source>
+			</trans-unit>
 			<trans-unit id="flexforms_general.settings.autoScroll">
 				<source>Automatic scrolling to the next event</source>
 			</trans-unit>

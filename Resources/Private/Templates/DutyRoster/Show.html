@@ -29,16 +29,13 @@
 											<f:translate key="dutyRoster.large.header.event" />
 										</h4>
 									</div>
-<!--									<div class="col">
-										<h4 class="label-info eventName">
-											<f:translate key="dutyRoster.large.header.descriptions" />
-										</h4>
-									</div>-->
-									<div class="col-sm">
-										<h4 class="label-info eventName">
-											<f:translate key="dutyRoster.large.header.targetGroups" />
-										</h4>
-									</div>
+									<f:if	condition="!{settings.hiddenTargetGroups}">
+										<div class="col-sm">
+											<h4 class="label-info eventName">
+												<f:translate key="dutyRoster.large.header.targetGroups" />
+											</h4>
+										</div>
+									</f:if>
 								</div>
 							</th>
 						</tr>
@@ -89,13 +86,15 @@
 													</f:if> </span>
 											</div>
 										</div>
-										<div class="col-sm">
-											<ul class="commalist">
-												<f:for each="{event.visiblePublicUserGroups}" as="usergroup">
-													<li><span class="label-info targetGroup" style="white-space: nowrap;">{usergroup.title}</span></li>
-												</f:for>
-											</ul>
-										</div>
+										<f:if	condition="!{settings.hiddenTargetGroups}">
+											<div class="col-sm">
+												<ul class="commalist">
+													<f:for each="{event.visiblePublicUserGroups}" as="usergroup">
+														<li><span class="label-info targetGroup" style="white-space: nowrap;">{usergroup.title}</span></li>
+													</f:for>
+												</ul>
+											</div>
+										</f:if>
 									</div>
 								</td>
 							</tr>
