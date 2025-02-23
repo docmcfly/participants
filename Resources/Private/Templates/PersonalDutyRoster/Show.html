@@ -158,7 +158,7 @@
 					<f:variable name="progressOverloadColor">{f:if(condition:'{presentDefaultCount} == 0',
 						then:'bg-success', else: 'bg-primary')}</f:variable>
 					<tr>
-						<td style="border: 0">
+						<td class="pt-3" style="border: 0">
 							<f:form absolute="true" action="setPresent" name="commitment" object="{commitment}"
 								arguments="{commitment:commitment, id:uid}" id="event_{commitment.event.uid}"
 								pageType="103" enctype="multipart/form-data">
@@ -200,7 +200,7 @@
 								</div>
 							</f:form>
 						</td>
-						<td style="border: 0">
+						<td  class="pt-3"  style="border: 0">
 							<div class="container">
 								<div class="row">
 									<div class="col p-0 ">
@@ -249,70 +249,78 @@
 						</td>
 					</tr>
 					<f:if condition="!{commitment.event.canceled}">
-						<tr>
-							<td style="border: 0">
-								<f:if condition="{commitment.presentDefault}">
-									<f:then>
-										<div class="badge bg-success" style="display: block">
-											<f:translate key="personalDutyRoster.list.scheduled" />
-										</div>
-									</f:then>
-									<f:else>
-										<div class="badge bg-light text-dark" style="display: block">
-											<f:translate key="personalDutyRoster.list.notScheduled" />
-										</div>
-									</f:else>
-								</f:if>
-							</td>
-							<td style="border: 0">
-								<div class="progress">
-									<div class="progress-bar {progressColor}" id="progressbar_{commitment.event.uid}"
-										role="progressbar" style="width:{counts.{commitment.event.uid}.presentPercent}%"
-										aria-valuenow="{counts.{commitment.event.uid}.presentPercent}" aria-valuemin="0"
-										aria-valuemax="{counts.{commitment.event.uid}.presentDefaultPercent}">
-										{counts.{commitment.event.uid}.displayPercent}%</div>
-									<div class="progress-bar {progressOverloadColor}"
-										id="overProgressbar_{commitment.event.uid}" role="progressbar"
-										style="width:{counts.{commitment.event.uid}.presentOverPercent}%;"
-										aria-valuenow="{counts.{commitment.event.uid}.presentOverPercent}"
-										aria-valuemin="0" aria-valuemax="100"></div>
-								</div>
-								<f:translate key="personalDutyRoster.list.members" />: <span
-									id="presentCount_{commitment.event.uid}">{counts.{commitment.event.uid}.presentCount}</span>
-								( {counts.{commitment.event.uid}.presentDefaultCount} ) <f:if
-									condition="{canViewMembers}">
-									<f:form style="display:inline" absolute="true" action="getMembers" name="commitment"
-										hiddenFieldClassName="d-none" object="{commitment}"
-										arguments="{commitment:commitment, id=uid}"
-										id="member_list_{commitment.event.uid}" pageType="103"
-										enctype="multipart/form-data">
-										<button id="getMemberBtn_{commitment.event.uid}"
-											class="getMemberBtn text-primary lnkBtn" type="button"
-											data-toggle="collapse" data-target="#members_list_{commitment.event.uid}"
-											data-bs-toggle="collapse"
-											data-bs-target="#members_list_{commitment.event.uid}" aria-expanded="true"
-											aria-controls="members_list_{commitment.event.uid}"
-											onclick="getMembersAjaxSubmit({commitment.event.uid})">
-											&nbsp; :: &nbsp;
-											<f:translate key="personalDutyRoster.list.listOfMembers" />
-										</button>
-									</f:form>
-								</f:if>
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>
-								<f:if condition="{canViewMembers}">
-									<div id="members_list_{commitment.event.uid}" class="collapse "
-										aria-labelledby="headingOne" data-parent="#accordionExample">
-										<div class="card-body spinner-border members-spinner" role="status">
-										</div>
-										<span class="sr-only">Loading...</span>
+						<f:then>
+							<tr>
+								<td style="border: 0">
+									<f:if condition="{commitment.presentDefault}">
+										<f:then>
+											<div class="badge bg-success" style="display: block">
+												<f:translate key="personalDutyRoster.list.scheduled" />
+											</div>
+										</f:then>
+										<f:else>
+											<div class="badge bg-light text-dark" style="display: block">
+												<f:translate key="personalDutyRoster.list.notScheduled" />
+											</div>
+										</f:else>
+									</f:if>
+								</td>
+								<td style="border: 0">
+									<div class="progress">
+										<div class="progress-bar {progressColor}" id="progressbar_{commitment.event.uid}"
+											role="progressbar" style="width:{counts.{commitment.event.uid}.presentPercent}%"
+											aria-valuenow="{counts.{commitment.event.uid}.presentPercent}" aria-valuemin="0"
+											aria-valuemax="{counts.{commitment.event.uid}.presentDefaultPercent}">
+											{counts.{commitment.event.uid}.displayPercent}%</div>
+										<div class="progress-bar {progressOverloadColor}"
+											id="overProgressbar_{commitment.event.uid}" role="progressbar"
+											style="width:{counts.{commitment.event.uid}.presentOverPercent}%;"
+											aria-valuenow="{counts.{commitment.event.uid}.presentOverPercent}"
+											aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
-								</f:if>
-							</td>
-						</tr>
+									<f:translate key="personalDutyRoster.list.members" />: <span
+										id="presentCount_{commitment.event.uid}">{counts.{commitment.event.uid}.presentCount}</span>
+									( {counts.{commitment.event.uid}.presentDefaultCount} ) <f:if
+										condition="{canViewMembers}">
+										<f:form style="display:inline" absolute="true" action="getMembers" name="commitment"
+											hiddenFieldClassName="d-none" object="{commitment}"
+											arguments="{commitment:commitment, id=uid}"
+											id="member_list_{commitment.event.uid}" pageType="103"
+											enctype="multipart/form-data">
+											<button id="getMemberBtn_{commitment.event.uid}"
+												class="getMemberBtn text-primary lnkBtn" type="button"
+												data-toggle="collapse" data-target="#members_list_{commitment.event.uid}"
+												data-bs-toggle="collapse"
+												data-bs-target="#members_list_{commitment.event.uid}" aria-expanded="true"
+												aria-controls="members_list_{commitment.event.uid}"
+												onclick="getMembersAjaxSubmit({commitment.event.uid})">
+												&nbsp; :: &nbsp;
+												<f:translate key="personalDutyRoster.list.listOfMembers" />
+											</button>
+										</f:form>
+									</f:if>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<f:if condition="{canViewMembers}">
+										<div id="members_list_{commitment.event.uid}" class="collapse "
+											aria-labelledby="headingOne" data-parent="#accordionExample">
+											<div class="card-body spinner-border members-spinner" role="status">
+											</div>
+											<span class="sr-only">Loading...</span>
+										</div>
+									</f:if>
+								</td>
+							</tr>
+						</f:then>
+						<f:else>
+							<tr>
+								<td></td>
+								<td></td>
+							</tr>
+						</f:else>
 					</f:if>
 				</f:for>
 			</f:then>
