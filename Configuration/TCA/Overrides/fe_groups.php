@@ -58,7 +58,7 @@ if (isset($GLOBALS['TCA']['fe_groups']['types']['0']['showitem'])) {
 
 $GLOBALS['TCA']['fe_groups']['columns'][$GLOBALS['TCA']['fe_groups']['ctrl']['type']]['config']['items'][] = ['LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:fe_groups.tx_extbase_type.Tx_Participants_Usergroups','Tx_Participants_Usergroups'];
 $GLOBALS['TCA']['fe_groups']['types']['Tx_Participants_Usergroups']['showitem'] .= ', accronym';
-$GLOBALS['TCA']['fe_groups']['types']['Tx_Extbase_Domain_Model_FrontendUserGroup']['showitem'] .= ', accronym';
+// $GLOBALS['TCA']['fe_groups']['types']['Tx_Extbase_Domain_Model_FrontendUserGroup']['showitem'] .= ', accronym';
 $GLOBALS['TCA']['fe_groups']['types']['0']['showitem'] .= ', accronym';
 
 

@@ -16,38 +16,21 @@ use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2024 C.Gogolin <service@cylancer.net>
+ * (c) 2025 C. Gogolin <service@cylancer.net>
  * 
- * @package Cylancer\Participants\Controller
  */
 class CommitmentSettingsController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
-    /** @var FrontendUserService */
-    private $frontendUserService = null;
-
-    /** @var PersistenceManager */
-    private $persistenceManager;
-
-    /** @var FrontendUserRepository  */
-    private $frontendUserRepository = null;
-
     public function __construct(
-        FrontendUserService $frontendUserService,
-        PersistenceManager $persistenceManager,
-        FrontendUserRepository $frontendUserRepository
+        private readonly FrontendUserService $frontendUserService,
+        private readonly PersistenceManager $persistenceManager,
+        private readonly FrontendUserRepository $frontendUserRepository
     ) {
-        $this->frontendUserService = $frontendUserService;
-        $this->persistenceManager = $persistenceManager;
-        $this->frontendUserRepository = $frontendUserRepository;
     }
 
-    /**
-     *
-     * @return void
-     */
     public function showAction(): ResponseInterface
-    {
+ {
         /** @var FrontendUser $u */
         $u = $this->frontendUserService->getCurrentUser();
         if ($u !== false) {
@@ -61,12 +44,6 @@ class CommitmentSettingsController extends \TYPO3\CMS\Extbase\Mvc\Controller\Act
         return $this->htmlResponse();
     }
 
-    /**
-     * create a time out
-     *
-     * @param  CommitmentSettings commitmentSettings
-     * @return ForwardResponse
-     */
     public function saveAction(CommitmentSettings $commitmentSettings): ForwardResponse
     {
         /**

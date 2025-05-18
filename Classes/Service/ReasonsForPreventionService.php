@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Cylancer\Participants\Service;
 use Cylancer\Participants\Domain\PublicOption;
 use Cylancer\Participants\Domain\Repository\EventRepository;
@@ -11,20 +11,19 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2024 C.Gogolin <service@cylancer.net>
+ * (c) 2025 C. Gogolin <service@cylancer.net>
  * 
- * @package Cylancer\Participants\Service
  */
 class ReasonsForPreventionService
 {
-    
+
     public static function reasonsForPreventionAction(array $storageUids, \DateTime $from, \DateTime $until, string $visibility = 'ALL'): array
     {
 
-        if(empty($storageUids)){
+        if (empty($storageUids)) {
             return ['data' => []];
         }
-        
+
         $persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
 
         $eventRepository = GeneralUtility::makeInstance(EventRepository::class);
@@ -32,9 +31,9 @@ class ReasonsForPreventionService
         $eventRepository->injectPersistenceManager($persistenceManager);
         $querySettings = $eventRepository->createQuery()->getQuerySettings();
         $querySettings->setStoragePageIds($storageUids);
-        $eventRepository->setDefaultQuerySettings($querySettings);#
+        $eventRepository->setDefaultQuerySettings($querySettings);
 
-        return $eventRepository->findEventsAt( $from, $until, ReasonsForPreventionService::mapVisiblity($visibility));
+        return $eventRepository->findEventsAt($from, $until, ReasonsForPreventionService::mapVisiblity($visibility));
 
     }
 

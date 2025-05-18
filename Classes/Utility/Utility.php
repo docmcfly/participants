@@ -7,7 +7,7 @@ namespace Cylancer\Participants\Utility;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2024 C.Gogolin <service@cylancer.net>
+ * (c) 2025 C. Gogolin <service@cylancer.net>
  *
  * Utility class with static methods
  */
@@ -16,10 +16,6 @@ class Utility
 
     /**
      * Calculates from the counter a percentage distribution.
-     *
-     * @param int $presentCount
-     * @param int $presentDefaultCount
-     * @return array
      */
     public static function calculatePresentDatas(int $presentCount, int $presentDefaultCount): array
     {

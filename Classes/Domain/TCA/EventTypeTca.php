@@ -9,11 +9,9 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2024 C.Gogolin <service@cylancer.net>
+ * (c) 2025 C. Gogolin <service@cylancer.net>
  *
- * This class contains a tca configuration function.
  * 
- * @package Cylancer\Participants\Domain\TCA
  */
 class EventTypeTca
 {

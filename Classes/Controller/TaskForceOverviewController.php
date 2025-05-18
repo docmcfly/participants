@@ -20,72 +20,48 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2024 C.Gogolin <service@cylancer.net>
+ * (c) 2025 C. Gogolin <service@cylancer.net>
  *
- * @package Cylancer\Participants\Controller
  */
 class TaskForceOverviewController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
-    const TASK_FORCE_LIST = 'taskForceList';
+    private const TASK_FORCE_LIST = 'taskForceList';
 
-    const USER_PROFILE = 'userProfile';
+    private const USER_PROFILE = 'userProfile';
 
-    const LOCAL_FIRE_CHIEF = 'localFireChief';
+    private const LOCAL_FIRE_CHIEF = 'localFireChief';
 
-    const DEPUTY_LOCAL_FIRE_CHIEF = 'deputyLocalFireChief';
+    private const DEPUTY_LOCAL_FIRE_CHIEF = 'deputyLocalFireChief';
 
-    const FIRE_DEPARTMENT_GROUP_LEADER = 'fireDepartmentGroupLeader';
+    private const FIRE_DEPARTMENT_GROUP_LEADER = 'fireDepartmentGroupLeader';
 
-    const SPECIAL_FORCES = 'specialForces';
+    private const SPECIAL_FORCES = 'specialForces';
 
-    const SPECIAL_FORCES_COLOR = 'specialForcesColor';
+    private const SPECIAL_FORCES_COLOR = 'specialForcesColor';
 
-    const FIRE_DEPARTMENT_GROUP_1 = 'fireDepartmentGroup1';
+    private const FIRE_DEPARTMENT_GROUP_1 = 'fireDepartmentGroup1';
 
-    const FIRE_DEPARTMENT_GROUP_2 = 'fireDepartmentGroup2';
+    private const FIRE_DEPARTMENT_GROUP_2 = 'fireDepartmentGroup2';
 
-    const CURRENT_FIRE_DEPARTMENT_GROUP = 'currentFireDepartmentGroup';
+    private const CURRENT_FIRE_DEPARTMENT_GROUP = 'currentFireDepartmentGroup';
 
-    const CURRENT_FIRE_DEPARTMENT_GROUP_COLOR = 'currentFireDepartmentGroupColor';
+    private const CURRENT_FIRE_DEPARTMENT_GROUP_COLOR = 'currentFireDepartmentGroupColor';
 
-    const TIME_OUTS = 'timeOuts';
+    private const TIME_OUTS = 'timeOuts';
 
-    const WITHOUT_DIGITAL_SIGNAL_UNIT = 'withoutDigitalSignalingUnit';
+    private const WITHOUT_DIGITAL_SIGNAL_UNIT = 'withoutDigitalSignalingUnit';
 
-    const CAN_VIEW_CURRENTLY_OFF_DUTY = 'canViewCurrentlyOffDuty';
-
-    /** @var FrontendUserService */
-    private $frontendUserService = null;
-
-    /** @var TimeOutRepository  */
-    private $timeOutRepository = null;
-
-    /** @var CommitmentRepository */
-    private $commitmentRepository = null;
-
-    /**  @var FrontendUserRepository */
-    private $frontendUserRepository = null;
-
-    /** @var FrontendUserGroupRepository */
-    private $frontendUserGroupRepository = null;
-
+    private const CAN_VIEW_CURRENTLY_OFF_DUTY = 'canViewCurrentlyOffDuty';
     public function __construct(
-        FrontendUserService $frontendUserService, TimeOutRepository $timeOutRepository, CommitmentRepository $commitmentRepository, //
-        FrontendUserRepository $frontendUserRepository, FrontendUserGroupRepository $frontendUserGroupRepository
+        private readonly FrontendUserService $frontendUserService,
+        private readonly TimeOutRepository $timeOutRepository,
+        private readonly CommitmentRepository $commitmentRepository, //
+        private readonly FrontendUserRepository $frontendUserRepository,
+        private readonly FrontendUserGroupRepository $frontendUserGroupRepository
     ) {
-        $this->frontendUserService = $frontendUserService;
-        $this->timeOutRepository = $timeOutRepository;
-        $this->commitmentRepository = $commitmentRepository;
-        $this->frontendUserRepository = $frontendUserRepository;
-        $this->frontendUserGroupRepository = $frontendUserGroupRepository;
     }
 
-    /**
-     * Shows the task forces.
-     *
-     * @return void
-     */
     public function showAction(): ResponseInterface
     {
         $this->view->assign(TaskForceOverviewController::TASK_FORCE_LIST . 'Link', $this->settings[TaskForceOverviewController::TASK_FORCE_LIST]);
@@ -181,11 +157,6 @@ class TaskForceOverviewController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
         return $this->htmlResponse();
     }
 
-    /**
-     *
-     * @param string $until
-     * @return bool
-     */
     private static function isInTheFuture(?string $until): bool
     {
         return $until == null ? false : \DateTime::createFromFormat('Y-m-d', $until)->getTimestamp() > time();
@@ -198,11 +169,6 @@ class TaskForceOverviewController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
         }, $array);
     }
 
-    /**
-     *
-     * @param QueryResultInterface|array $users
-     * @param array $userUids
-     */
     private static function filter($users, array $userUids): array
     {
         $return = array();

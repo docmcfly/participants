@@ -4,8 +4,8 @@
 	"description" : "A extension for user participants. ",
 	"license" : "GPL-2.0-or-later",
 	"require" : {
-		"typo3/cms-core" : "^12.4",
-		"cylancer/usertools" : ">=3.0.0"
+		"typo3/cms-core" : "^13.4",
+		"cylancer/usertools" : ">=4.1.0"
 	},
 	"autoload" : {
 		"psr-4" : {
@@ -13,7 +13,7 @@
 		}
 	},
 	"authors" : [{
-			"name" : "Clemens Gogolin",
+			"name" : "C. Gogolin",
 			"email" : "service@cylancer.net",
 			"role" : "developer",
 			"homepage" : "https://github.com/docmcfly/participants"

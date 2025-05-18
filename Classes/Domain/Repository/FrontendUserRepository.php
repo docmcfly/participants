@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 namespace Cylancer\Participants\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -15,23 +15,14 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2024 C.Gogolin <service@cylancer.net>
+ * (c) 2025 C. Gogolin <service@cylancer.net>
  *
- * @package Cylancer\Participants\Domain\Repository
  *         
  */
 class FrontendUserRepository extends Repository
 {
 
-    // protected $defaultOrderings = ['sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING];
-    /**
-     *
-     * @var array
-     * @param string $table
-     *            table name
-     * @return QueryBuilder
-     */
-    protected function getQueryBuilder(string $table)
+    protected function getQueryBuilder(string $table): QueryBuilder
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
     }
@@ -41,7 +32,7 @@ class FrontendUserRepository extends Repository
      * @param string $userGroups
      * @return QueryResultInterface|array
      */
-    public function findByUserGroups(string $userGroups = '', bool $orderByName = true)
+    public function findByUserGroups(string $userGroups = ''): array
     {
         if (empty(trim($userGroups))) {
             return [];

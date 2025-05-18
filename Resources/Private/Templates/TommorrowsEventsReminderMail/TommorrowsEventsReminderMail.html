@@ -10,7 +10,7 @@
 	<p></p>
 	<p><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.reminderMail.teaser" /></p>
 	<ul><f:for each="{events}" as="event"><li><f:format.date format="d.m.Y">{event.date}</f:format.date><f:if condition="!{event.fullDay}"> <f:format.date format="H:i">{event.time}</f:format.date></f:if> :: <strong>{event.eventType.title}</strong><f:if condition="{commitment.event.description}"> (<f:format.crop maxCharacters="30"><f:format.stripTags>{commitment.event.description}</f:format.stripTags></f:format.crop>)</f:if></li></f:for></ul>
-	<p><f:link.action linkAccessRestrictedPages="true"  absolute="true" pageUid="{pageUid}" noCache="true" ><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.reminderMail.personalDutyRosterPage" /></f:link.action></p>
+	<p><f:link.page linkAccessRestrictedPages="true"  absolute="true" pageUid="{pageUid}" noCache="true" ><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.reminderMail.personalDutyRosterPage" /></f:link.page></p>
 	<p></p>
 	<p><f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.reminderMail.regards" /></p> 
 </f:section></body></html>  

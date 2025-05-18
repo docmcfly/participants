@@ -20,49 +20,32 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2024 C.Gogolin <service@cylancer.net>
+ * (c) 2025 C. Gogolin <service@cylancer.net>
  *
- * @package Cylancer\Participants\Controller
  */
 class TimeOutManagementController extends ActionController
 {
 
 
-    const STANDARD_DATE_FORMAT = 'Y-m-d';
+    private const STANDARD_DATE_FORMAT = 'Y-m-d';
 
-    const REASONS = 'reasons';
+    private const REASONS = 'reasons';
 
-    const ADD_TIME_OUT = 'addTimeOut';
+    private const ADD_TIME_OUT = 'addTimeOut';
 
-    const VALIDATIOPN_RESULTS = 'validationResults';
+    private const VALIDATIOPN_RESULTS = 'validationResults';
 
-    /** @var FrontendUserService */
-    private $frontendUserService = null;
 
-    /** @var TimeOutRepository */
-    public $timeOutRepository = null;
-
-    /** @var CommitmentRepository   */
-    public $commitmentRepository = null;
-
-    /** @var PersistenceManager */
-    public $persistenceManager = null;
-
-    public function __construct(FrontendUserService $frontendUserService, TimeOutRepository $timeOutRepository, CommitmentRepository $commitmentRepository, PersistenceManager $persistenceManager)
-    {
-        $this->frontendUserService = $frontendUserService;
-        $this->timeOutRepository = $timeOutRepository;
-        $this->commitmentRepository = $commitmentRepository;
-        $this->persistenceManager = $persistenceManager;
+    public function __construct(
+        private readonly FrontendUserService $frontendUserService,
+        private readonly TimeOutRepository $timeOutRepository,
+        private readonly CommitmentRepository $commitmentRepository,
+        private readonly PersistenceManager $persistenceManager
+    ) {
     }
 
-    private $_validationResults = null;
+    private ?ValidationResults $_validationResults = null;
 
-    /**
-     * action set defaults
-     *
-     * @return ResponseInterface
-     */
     public function listAction(): ResponseInterface
     {
         /** @var ValidationResults $validationResults **/
@@ -93,17 +76,11 @@ class TimeOutManagementController extends ActionController
         return $this->htmlResponse();
     }
 
-    /**
-     * deletes a time out
-     *
-     * @param TimeOut $timeout
-     * @return ResponseInterface
-     */
     public function deleteAction(TimeOut $timeout = null): ResponseInterface
     {
         $validationResults = $this->validate($timeout);
         if ($this->frontendUserService->isLogged() && $timeout->getUser() != null && $timeout->getUser()->getUid() === $this->frontendUserService->getCurrentUserUid()) {
-            
+
             $this->timeOutRepository->remove($timeout);
             $this->persistenceManager->persistAll();
             $validationResults->addInfo('deletedSuccessful');
@@ -113,12 +90,6 @@ class TimeOutManagementController extends ActionController
         ]);
     }
 
-    /**
-     * create a time out
-     *
-     * @param  AddTimeOut addTimeOut
-     * @return ResponseInterface
-     */
     public function createAction(AddTimeOut $addTimeOut = null): ResponseInterface
     {
         /** @var ValidationResults $validationResults **/
@@ -148,12 +119,7 @@ class TimeOutManagementController extends ActionController
         ]);
     }
 
-    /**
-     *
-     * @param Timeout $timeout
-     * @return ValidationResults
-     */
-    private function validate(TimeOut $timeout = null): ValidationResults
+    private function validate(?TimeOut $timeout = null): ValidationResults
     {
         /** @var ValidationResults $validationResults **/
         $validationResults = $this->getValidationResults();
@@ -188,7 +154,7 @@ class TimeOutManagementController extends ActionController
         return $validationResults;
     }
 
-    private function getValidationResults()
+    private function getValidationResults(): ValidationResults
     {
         if ($this->_validationResults == null) {
             $this->_validationResults = ($this->request->hasArgument(TimeOutManagementController::VALIDATIOPN_RESULTS)) ? //

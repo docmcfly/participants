@@ -1,8 +1,14 @@
 <?php
 
-/***************************************************************
- * Extension Manager/Repository config file for ext: "participants"
- ***************************************************************/
+/**
+ * This file is part of the "Participants" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * (c) 2025 C. Gogolin <service@cylancer.net>
+ *
+ */
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Participants',
@@ -14,12 +20,12 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '4.1.1',
+    'version' => '5.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '12.4.0-12.4.99',
-            'bootstrap_package' => '14.0.0-14.0.99',
-            'usertools' => '3.0.0-3.99.99'
+            'typo3' => '13.4.0-13.4.99',
+            'bootstrap_package' => '15.0.0-15.0.99',
+            'usertools' => '4.0.0-4.1.99'
         ],
         'conflicts' => [],
         'suggests' => [],
@@ -29,6 +35,7 @@ $EM_CONF[$_EXTKEY] = [
 /**
  * Change log: 
  * 
+5.0.0   :: UPD : Update to TYPO3 13.4.0
 4.1.1   :: FIX : Personal duty roster: Added missing gray line if the event is cancelled.
 4.1.0   :: UPD : You can hide the target group in the duty roster. 
 4.0.5   :: UPD : Resort the columns of the dutyroster.  
