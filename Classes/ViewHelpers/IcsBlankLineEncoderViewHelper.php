@@ -9,14 +9,13 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2024 C.Gogolin <service@cylancer.net>
+ * (c) 2025 C. Gogolin <service@cylancer.net>
  *
- * @package Cylancer\Participants\ViewHelpers
  */
 class IcsBlankLineEncoderViewHelper extends AbstractViewHelper
 {
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('value', '*', 'The value ', true);
     }
@@ -24,11 +23,8 @@ class IcsBlankLineEncoderViewHelper extends AbstractViewHelper
     /**
      * Escapes special characters with their escaped counterparts as needed using PHPs htmlspecialchars() function.
      *
-     * @return string the altered string
-     * @see http://www.php.net/manual/function.htmlspecialchars.php
-     * @api
      */
-    public function render()
+    public function render(): string
     {
         $value = $this->arguments['value'];
         if ($value === null) {

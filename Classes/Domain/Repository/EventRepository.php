@@ -15,9 +15,8 @@ use Cylancer\Participants\Domain\Model\Event;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2024 C.Gogolin <service@cylancer.net>
+ * (c) 2025 C. Gogolin <service@cylancer.net>
  *
- * The repository for events
  */
 class EventRepository extends Repository
 {
@@ -27,22 +26,13 @@ class EventRepository extends Repository
         'time' => QueryInterface::ORDER_ASCENDING
     );
 
-    const UNLIMITED = -1;
+    public const UNLIMITED = -1;
 
-    /**
-     *
-     * @param string $table
-     * @return QueryBuilder
-     */
     protected function getQueryBuilder(string $table): QueryBuilder
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
     }
 
-    /**
-     *
-     * @return Event[]
-     */
     public function findTomorrowsEvents(): array
     {
         $tmp = new \DateTime();
@@ -62,9 +52,9 @@ class EventRepository extends Repository
 
         // debug($qb->getSql());
         $s = $qb->executeQuery();
-        $return = array();
+        $return = [];
 
-        while ($row = $s->fetch()) {
+        while ($row = $s->fetchAssociative()) {
             $return[] = $this->findByUid($row['uid']);
         }
         // debug($return);
@@ -80,10 +70,10 @@ class EventRepository extends Repository
                 ->eq('tx_participants_domain_model_event.event_type', $qb->quoteIdentifier('tx_participants_domain_model_eventtype.uid')))
             ->where($qb->expr()
                 ->or($qb->expr()
-                    ->eq('tx_participants_domain_model_event.public', PublicOption::PUBLIC ), $qb->expr()
+                    ->eq('tx_participants_domain_model_event.public', PublicOption::PUBLIC), $qb->expr()
                         ->and($qb->expr()
                             ->eq('tx_participants_domain_model_event.public', PublicOption::INHERITED), $qb->expr()
-                                ->eq('tx_participants_domain_model_eventtype.public', PublicOption::PUBLIC ))))
+                                ->eq('tx_participants_domain_model_eventtype.public', PublicOption::PUBLIC))))
             ->orderBy('date', QueryInterface::ORDER_ASCENDING)
             ->addOrderBy('time', QueryInterface::ORDER_ASCENDING);
 
@@ -111,7 +101,7 @@ class EventRepository extends Repository
         }
         // debug($qb->getSql());
         $s = $qb->executeQuery();
-        $return = array();
+        $return = [];
 
         while ($row = $s->fetchAssociative()) {
             $return[] = $this->findByUid($row['uid']);
@@ -129,10 +119,10 @@ class EventRepository extends Repository
             case PublicOption::PUBLIC:
             case PublicOption::INTERNAL:
                 $visibilityRule = $qb->expr()->or($qb->expr()
-                    ->eq('tx_participants_domain_model_event.public', PublicOption::PUBLIC ), $qb->expr()
+                    ->eq('tx_participants_domain_model_event.public', PublicOption::PUBLIC), $qb->expr()
                         ->and($qb->expr()
                             ->eq('tx_participants_domain_model_event.public', PublicOption::INHERITED), $qb->expr()
-                                ->eq('tx_participants_domain_model_eventtype.public', PublicOption::PUBLIC )));
+                                ->eq('tx_participants_domain_model_eventtype.public', PublicOption::PUBLIC)));
 
                 break;
             default:
@@ -172,11 +162,13 @@ class EventRepository extends Repository
         }
 
         $s = $qb->executeQuery();
-      
+
         $return = [];
         if (1 == 0) { // add debug infos
             $debug = [];
             $debug['sql'] = $qb->getSql();
+            $debug['inFrom'] = $from;
+            $debug['inUntil'] = $until;
             $debug['from'] = $from->format('Y-m-d');
             $debug['until'] = $until->format('Y-m-d');
             $return['debug'] = $debug;
@@ -185,14 +177,36 @@ class EventRepository extends Repository
         while ($row = $s->fetchAssociative()) {
             /** @var Event $e */
             $e = $this->findByUid($row['uid']);
-            $tmp = [];
-            $tmp['description'] = htmlspecialchars($e->getEventType()->getTitle() . ' (' . $e->getDate()->format('d.m.Y') . ')');
-            $tmp['title'] = htmlspecialchars($e->getEventType()->getTitle());
-            $tmp['begin_date'] = htmlspecialchars($e->getDate()->format('d.m.Y'));
-            $data[] = $tmp;
+            if (!(($this->getEndTime($e) < $from) || ($this->getStartTime($e) > $until))) {
+                $tmp = [];
+                $tmp['description'] = htmlspecialchars($e->getEventType()->getTitle() . ' (' . $e->getDate()->format('d.m.Y') . ')');
+                $tmp['title'] = htmlspecialchars($e->getEventType()->getTitle());
+                $tmp['begin_date'] = htmlspecialchars($e->getDate()->format('d.m.Y'));
+                $tmp['start'] = $this->getStartTime($e);
+                $tmp['end'] = $this->getEndTime($e);
+                $data[] = $tmp;
+            }
         }
         $return['data'] = $data;
         return $return;
+    }
+
+    private function getStartTime(Event $event): \DateTime
+    {
+        $date = $event->getDate();
+        $time = $event->getTime();
+        $return = new \DateTimeImmutable();
+        $return = $return->setDate($date->format('Y'), $date->format('m'), $date->format('d'))->setTime($time->format('H'), $time->format('i'), $time->format('s'));
+        return \DateTime::createFromImmutable($return);
+    }
+
+    private function getEndTime(Event $event): \DateTime
+    {
+        $date = $event->getDate();
+        $time = $event->getTime();
+        $return = new \DateTimeImmutable();
+        $return = $return->setDate($date->format('Y'), $date->format('m'), $date->format('d'))->setTime($time->format('H'), $time->format('i'), $time->format('s'))->add(new \DateInterval("PT{$event->getDuration()}H"));
+        return \DateTime::createFromImmutable($return);
     }
 
 }

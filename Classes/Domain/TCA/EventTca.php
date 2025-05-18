@@ -12,11 +12,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2024 C.Gogolin <service@cylancer.net>
+ * (c) 2025 C. Gogolin <service@cylancer.net>
  *
- * This class contains a tca configuration function.
  * 
- * @package Cylancer\Participants\Domain\TCA
  */
 class EventTca
 {
@@ -36,7 +34,7 @@ class EventTca
             ->where($qb->expr()
                 ->eq('tx_participants_domain_model_event.uid', $qb->createNamedParameter(intval($parameters['row']['uid']))))
             ->executeQuery();
-          
+
         while ($row = $statement->fetchAssociative()) {
             $description = strip_tags($row['description']);
             if (strlen($description) > 10) {
@@ -59,7 +57,7 @@ class EventTca
     private static function formatDate(string $sqlDate): string
     {
         $e = explode('-', $sqlDate);
-        return $e[2] . '.' . $e[1] . '.' . $e[0];
+        return "$e[2].$e[1].$e[0]";
     }
 
 }

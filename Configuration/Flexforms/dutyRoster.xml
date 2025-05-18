@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<sheetTitle>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.title
+				</sheetTitle>
+				<type>array</type>
+				<el>
+					<settings.renderType>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.renderType</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0">
+									<numIndex index="0">LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.renderType.small
+									</numIndex>
+									<numIndex index="1">little</numIndex>
+								</numIndex>
+								<numIndex index="1">
+									<numIndex index="0">LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.renderType.large
+									</numIndex>
+									<numIndex index="1">big</numIndex>
+								</numIndex>
+							</items>
+						</config>
+					</settings.renderType>
+					<settings.smallEventCount>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.smallEventCount</label>
+						<config>
+							<type>input</type>
+							<eval>num</eval>
+							<default>5</default>
+						</config>
+					</settings.smallEventCount>
+					<settings.hiddenTargetGroups>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.hiddenTargetGroups</label>
+						<default>0</default>
+						<config>
+							<type>check</type>
+							<renderType>checkboxToggle</renderType>
+						</config>
+					</settings.hiddenTargetGroups>
+					<settings.autoScroll>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.autoScroll</label>
+						<default>0</default>
+						<config>
+							<type>check</type>
+							<renderType>checkboxToggle</renderType>
+						</config>
+					</settings.autoScroll>
+					<!-- end of settings -->
+
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

@@ -20,7 +20,7 @@
 
 <f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.footer" />
 <f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.personalDutyRosterPage" />
-<f:uri.action linkAccessRestrictedPages="true"  absolute="true" pageUid="{pageUid}" noCache="true" />
+<f:uri.page linkAccessRestrictedPages="true"  absolute="true" pageUid="{pageUid}" noCache="true" />
  
 <f:translate key="LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.updateMail.regards" />
 </f:section>

@@ -15,34 +15,23 @@ use Cylancer\Participants\Domain\Repository\EventRepository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * (c) 2024 C.Gogolin <service@cylancer.net>
+ * (c) 2025 C. Gogolin <service@cylancer.net>
  *
- * @package Cylancer\Participants\Controller
  */
 class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
-    const LIST_TYPE = 'participants_dutyroster';
+    private const LIST_TYPE = 'participants_dutyroster';
 
-    const DATE_PATTERN = '/^\d{4}-(((0[13578]|1[02])-(([012]\d)|3[01]))|((0[469]|11)-(([012]\d)|30))|02-[012]\d)$/m';
+    private const DATE_PATTERN = '/^\d{4}-(((0[13578]|1[02])-(([012]\d)|3[01]))|((0[469]|11)-(([012]\d)|30))|02-[012]\d)$/m';
 
-    /**
-     *
-     * @var EventRepository
-     */
-    private $eventRepository;
 
-    public function __construct(EventRepository $eventRepository)
-    {
-        $this->eventRepository = $eventRepository;
+    public function __construct(
+        private readonly EventRepository $eventRepository
+    ) {
     }
 
-    /**
-     *
-     * @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array $events
-     * @return array
-     */
-    private function prepareEvents(array $events)
+    private function prepareEvents(array $events): array
     {
         $now = time();
         $c = count($events);
@@ -85,22 +74,11 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         return $events;
     }
 
-    /**
-     *
-     * @param string $table
-     * @return QueryBuilder
-     */
     private function getQueryBuilder(string $table): QueryBuilder
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
     }
 
-    /**
-     *
-     * @param string $id
-     * @throws \Exception
-     * @return array
-     */
     private function getStorageUid(string $id): array
     {
         $qb = $this->getQueryBuilder('tt_content');
@@ -123,10 +101,6 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         return [];
     }
 
-    /**
-     *
-     * @return void
-     */
     public function showAction(): ResponseInterface
     {
         $events = array();
@@ -144,11 +118,6 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         return $this->htmlResponse();
     }
 
-    /**
-     *
-     * @param string $id
-     * @return void
-     */
     public function downloadIcsAction(string $id): ResponseInterface
     {
         $normalizedParams = $this->request->getAttribute('normalizedParams');
@@ -159,9 +128,5 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
         return $this->htmlResponse();
     }
-
-
-    
-
 
 }

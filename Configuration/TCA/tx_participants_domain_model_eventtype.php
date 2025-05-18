@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * This file is part of the "Participants" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * (c) 2025 C. Gogolin <service@cylancer.net>
+ *
+ */
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event_type.title',
