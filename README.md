@@ -2,6 +2,7 @@
 
 ## Change log
 
+* 5.0.2   :: FIX : Fix and update the TCA fe_groups and fe_users integration
 * 5.0.1   :: UPD : Update (cleaning) TCA configuration
 * 5.0.0   :: UPD : Update to TYPO3 13.4.0
 * 4.1.1   :: FIX : Personal duty roster: Added missing gray line if the event is cancelled.
