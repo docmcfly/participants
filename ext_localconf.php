@@ -88,7 +88,7 @@ ExtensionUtility::configurePlugin(
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Cylancer\Participants\Task\PersonalDutyRosterPlanningTask::class] = [
     'extension' => 'participants',
     'title' => 'LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.title',
-    'description' => 'LLL:EXT:usertools/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.description',
+    'description' => 'LLL:EXT:participants/Resources/Private/Language/locallang.xlf:task.personalDutyRosterPlanning.description',
     'additionalFields' => \Cylancer\Participants\Task\PersonalDutyRosterPlanningAdditionalFieldProvider::class
 ];
 
