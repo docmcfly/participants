@@ -63,12 +63,16 @@ return [
         'crdate' => [
             'label' => 'crdate',
             'config' => [
-                'type' => 'datetime',
-                'format' => 'datetime',
+                'type' => 'number',
             ]
         ],
-
-        'event_type' => [
+        'tstamp' => [
+            'label' => 'tstamp',
+            'config' => [
+                'type' => 'number',
+            ]
+        ],
+         'event_type' => [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.eventType',
             'config' => [
                 'type' => 'select',

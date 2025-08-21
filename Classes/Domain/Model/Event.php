@@ -115,13 +115,13 @@ class Event extends AbstractEntity
 
     /**
      *
-     * @var \DateTime
+     * @var int
      */
     protected $crdate;
 
     /**
      *
-     * @var \DateTime
+     * @var int
      */
     protected $tstamp;
 
@@ -496,7 +496,7 @@ class Event extends AbstractEntity
      *
      * @return int
      */
-    public function getCrdate()
+    public function getCrdate(): int
     {
         return $this->crdate;
     }
@@ -506,17 +506,27 @@ class Event extends AbstractEntity
      *
      * @param int $crdate
      */
-    public function setCrdate($crdate)
+    public function setCrdate(int $crdate): void
     {
         $this->crdate = $crdate;
     }
 
-    public function getTstamp()
+    /**
+     * Get creation date
+     *
+     * @return int
+     */
+    public function getTstamp(): int
     {
         return $this->tstamp;
     }
 
-    public function setTstamp($tstamp): void
+     /**
+     * Set creation date
+     *
+     * @param int $tstamp
+     */
+    public function setTstamp(int $tstamp): void
     {
         $this->tstamp = $tstamp;
     }
