@@ -51,6 +51,10 @@
 			<trans-unit id="personalDutyRoster.list.notScheduled">
 				<source>Not scheduled.</source>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.externalPlanning">
+				<source>External planning</source>
+			</trans-unit>
+
 			<trans-unit id="personalDutyRoster.list.unknown">
 				<source>Not yet set.</source>
 			</trans-unit>

@@ -170,6 +170,10 @@
 				<source>Website user groups (alternative for the public view)</source>
 				<target state="tanslated">Website - Benutzergruppen (Alternative für die öffentliche Anzeige)</target>
 			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.externalPlanningLink">
+				<source>Link to an external event planning</source>
+				<target state="tanslated">Link zu einer externen Veranstaltungsplanung</target>
+			</trans-unit>
 
 			<trans-unit id="tx_participants_domain_model_event.date">
 				<source>Date</source>

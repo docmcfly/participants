@@ -61,6 +61,10 @@
 				<source>Automatic scrolling to the next event</source>
 				<target state="tanslated">Automatisches Scrollen zum nächsten Termin</target>
 			</trans-unit>
+			<trans-unit	id="flexforms_general.settings.displayScheduledStateIfExternalPlanningUse">
+				<source>Displays the scheduled state if a external planning links exists</source>
+				<target state="tanslated">Anzeige des Einplanungststatus, auch wenn ein externer Planungslink angebeben wurde</target>
+			</trans-unit>		
 		</body>
 	</file>
 </xliff>

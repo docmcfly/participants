@@ -66,6 +66,11 @@
 				<source>Not scheduled.</source>
 				<target state="tanslated">Nicht eingeplant</target>
 			</trans-unit>
+			<trans-unit id="personalDutyRoster.list.externalPlanning">
+				<source>External planning</source>
+				<target state="tanslated">Externe Planung</target>
+			</trans-unit>
+
 			<trans-unit id="personalDutyRoster.list.unknown">
 				<source>Not yet set.</source>
 				<target state="tanslated">Noch nicht festgelegt.</target>

@@ -139,6 +139,9 @@
 			<trans-unit id="tx_participants_domain_model_event.publicUsergroups">
 				<source>Website user groups (alternative for the public view)</source>
 			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.externalPlanningLink">
+				<source>Link to an external event planning</source>
+			</trans-unit>
 
 			<trans-unit id="tx_participants_domain_model_event.date">
 				<source>Date</source>

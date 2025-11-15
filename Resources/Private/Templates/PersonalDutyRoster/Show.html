@@ -130,12 +130,12 @@
 							<div class="row">
 								<div class="col p-0 ">
 									<h4>
-										<f:translate key="personalDutyRoster.list.date" />		
+										<f:translate key="personalDutyRoster.list.date" />
 									</h4>
 								</div>
 								<div class="col-sm ">
 									<h4>
-										<f:translate key="personalDutyRoster.list.event" />		
+										<f:translate key="personalDutyRoster.list.event" />
 									</h4>
 								</div>
 								<div class="col-sm">
@@ -165,10 +165,10 @@
 								<div class="d-flex justify-content-between align-items-center">
 									<f:form.radio property="present" class="d-none"
 										id="event_{commitment.event.uid}_radioUnknown" value="-1"
-										disabled="{f:if(condition:'({commitment.isNotChangable} || {commitment.event.canceled}',then:'disabled')}" />
+										disabled="{f:if(condition:'({commitment.isNotChangable} || {commitment.event.canceled} || {commitment.event.externalPlanningLink}',then:'disabled')}" />
 									<f:form.radio property="present" class="btn-check "
 										id="event_{commitment.event.uid}_radioNotPresent" value="1"
-										disabled="{f:if(condition:'({commitment.isNotChangable} || {commitment.event.canceled}',then:'disabled')}"
+										disabled="{f:if(condition:'({commitment.isNotChangable} || {commitment.event.canceled} || {commitment.event.externalPlanningLink}',then:'disabled')}"
 										additionalAttributes="{onchange:'presentAjaxSubmit({commitment.event.uid})'}" />
 									<label style="width:49%" class="btn btn-outline-success"
 										for="event_{commitment.event.uid}_radioNotPresent"
@@ -176,28 +176,30 @@
 
 									<f:form.radio property="present" class="btn-check "
 										id="event_{commitment.event.uid}_radioPresent" value="0"
-										disabled="{f:if(condition:'{commitment.isNotChangable} || {commitment.event.canceled}',then:'disabled')}"
+										disabled="{f:if(condition:'{commitment.isNotChangable} || {commitment.event.canceled} || {commitment.event.externalPlanningLink}',then:'disabled')}"
 										additionalAttributes="{onchange:'presentAjaxSubmit({commitment.event.uid})'}" />
 									<label style="width:49%" class="btn btn-outline-primary "
 										for="event_{commitment.event.uid}_radioPresent"
 										title="{f:translate(key:'personalDutyRoster.list.absent')}">{f:translate(key:'personalDutyRoster.list.absentSymbol')}</label>
 								</div>
-								<div class="badge bg-info mt-1 w-100 presentDescription" id="event_{commitment.event.uid}_radioDescription">
-									<f:switch expression="{commitment.present}">
-										<f:case value="-1">
-											<f:translate key="personalDutyRoster.list.unknownSymbol" />&nbsp;
-											<f:translate key="personalDutyRoster.list.unknown" />
-										</f:case>
-										<f:case value="0">
-											<f:translate key="personalDutyRoster.list.absentSymbol" />&nbsp;
-											<f:translate key="personalDutyRoster.list.absent" />
-										</f:case>
-										<f:case value="1">
-											<f:translate key="personalDutyRoster.list.inSymbol" />&nbsp;
-											<f:translate key="personalDutyRoster.list.in" />
-										</f:case>
-									</f:switch>
-								</div>
+								<f:if condition="!{commitment.event.externalPlanningLink}">
+									<div class="badge bg-info mt-1 w-100 presentDescription" id="event_{commitment.event.uid}_radioDescription">
+										<f:switch expression="{commitment.present}">
+											<f:case value="-1">
+												<f:translate key="personalDutyRoster.list.unknownSymbol" />&nbsp;
+												<f:translate key="personalDutyRoster.list.unknown" />
+											</f:case>
+											<f:case value="0">
+												<f:translate key="personalDutyRoster.list.absentSymbol" />&nbsp;
+												<f:translate key="personalDutyRoster.list.absent" />
+											</f:case>
+											<f:case value="1">
+												<f:translate key="personalDutyRoster.list.inSymbol" />&nbsp;
+												<f:translate key="personalDutyRoster.list.in" />
+											</f:case>
+										</f:switch>
+									</div>
+								</f:if>
 							</f:form>
 						</td>
 						<td  class="pt-3"  style="border: 0">
@@ -252,59 +254,76 @@
 						<f:then>
 							<tr>
 								<td style="border: 0">
-									<f:if condition="{commitment.presentDefault}">
+									<f:if condition="{commitment.event.externalPlanningLink} && !{displayScheduledStateIfExternalPlanningUse}">
 										<f:then>
-											<div class="badge bg-success" style="display: block">
-												<f:translate key="personalDutyRoster.list.scheduled" />
+											<div class="badge bg-info" style="display: block">
+												<f:translate key="personalDutyRoster.list.externalPlanning" />
 											</div>
+
 										</f:then>
 										<f:else>
-											<div class="badge bg-light text-dark" style="display: block">
-												<f:translate key="personalDutyRoster.list.notScheduled" />
-											</div>
+											<f:if condition="{commitment.presentDefault}">
+												<f:then>
+													<div class="badge bg-success" style="display: block">
+														<f:translate key="personalDutyRoster.list.scheduled" />
+													</div>
+												</f:then>
+												<f:else>
+													<div class="badge bg-light text-dark" style="display: block">
+														<f:translate key="personalDutyRoster.list.notScheduled" />
+													</div>
+												</f:else>
+											</f:if>
 										</f:else>
 									</f:if>
 								</td>
 								<td style="border: 0">
-									<div class="progress">
-										<div class="progress-bar {progressColor}" id="progressbar_{commitment.event.uid}"
-											role="progressbar" style="width:{counts.{commitment.event.uid}.presentPercent}%"
-											aria-valuenow="{counts.{commitment.event.uid}.presentPercent}" aria-valuemin="0"
-											aria-valuemax="{counts.{commitment.event.uid}.presentDefaultPercent}">
-											{counts.{commitment.event.uid}.displayPercent}%</div>
-										<div class="progress-bar {progressOverloadColor}"
-											id="overProgressbar_{commitment.event.uid}" role="progressbar"
-											style="width:{counts.{commitment.event.uid}.presentOverPercent}%;"
-											aria-valuenow="{counts.{commitment.event.uid}.presentOverPercent}"
-											aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<f:translate key="personalDutyRoster.list.members" />: <span
-										id="presentCount_{commitment.event.uid}">{counts.{commitment.event.uid}.presentCount}</span>
-									( {counts.{commitment.event.uid}.presentDefaultCount} ) <f:if
-										condition="{canViewMembers}">
-										<f:form style="display:inline" absolute="true" action="getMembers" name="commitment"
-											hiddenFieldClassName="d-none" object="{commitment}"
-											arguments="{commitment:commitment, id=uid}"
-											id="member_list_{commitment.event.uid}" pageType="103"
-											enctype="multipart/form-data">
-											<button id="getMemberBtn_{commitment.event.uid}"
-												class="getMemberBtn text-primary lnkBtn" type="button"
-												data-toggle="collapse" data-target="#members_list_{commitment.event.uid}"
-												data-bs-toggle="collapse"
-												data-bs-target="#members_list_{commitment.event.uid}" aria-expanded="true"
-												aria-controls="members_list_{commitment.event.uid}"
-												onclick="getMembersAjaxSubmit({commitment.event.uid})">
-												&nbsp; :: &nbsp;
-												<f:translate key="personalDutyRoster.list.listOfMembers" />
-											</button>
-										</f:form>
+									<f:if condition="{commitment.event.externalPlanningLink}">
+										<f:then>
+											<f:link.typolink parameter="{commitment.event.externalPlanningLink}"><c:pageTitle parameter="{commitment.event.externalPlanningLink}"/></f:link.typolink>
+										</f:then>
+										<f:else>
+											<div class="progress">
+												<div class="progress-bar {progressColor}" id="progressbar_{commitment.event.uid}"
+													role="progressbar" style="width:{counts.{commitment.event.uid}.presentPercent}%"
+													aria-valuenow="{counts.{commitment.event.uid}.presentPercent}" aria-valuemin="0"
+													aria-valuemax="{counts.{commitment.event.uid}.presentDefaultPercent}">
+													{counts.{commitment.event.uid}.displayPercent}%</div>
+												<div class="progress-bar {progressOverloadColor}"
+													id="overProgressbar_{commitment.event.uid}" role="progressbar"
+													style="width:{counts.{commitment.event.uid}.presentOverPercent}%;"
+													aria-valuenow="{counts.{commitment.event.uid}.presentOverPercent}"
+													aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+											<f:translate key="personalDutyRoster.list.members" />: <span
+												id="presentCount_{commitment.event.uid}">{counts.{commitment.event.uid}.presentCount}</span>
+											( {counts.{commitment.event.uid}.presentDefaultCount} ) <f:if
+												condition="{canViewMembers} && !{commitment.event.externalPlanningLink}">
+												<f:form style="display:inline" absolute="true" action="getMembers" name="commitment"
+													hiddenFieldClassName="d-none" object="{commitment}"
+													arguments="{commitment:commitment, id=uid}"
+													id="member_list_{commitment.event.uid}" pageType="103"
+													enctype="multipart/form-data">
+													<button id="getMemberBtn_{commitment.event.uid}"
+														class="getMemberBtn text-primary lnkBtn" type="button"
+														data-toggle="collapse" data-target="#members_list_{commitment.event.uid}"
+														data-bs-toggle="collapse"
+														data-bs-target="#members_list_{commitment.event.uid}" aria-expanded="true"
+														aria-controls="members_list_{commitment.event.uid}"
+														onclick="getMembersAjaxSubmit({commitment.event.uid})">
+														&nbsp; :: &nbsp;
+														<f:translate key="personalDutyRoster.list.listOfMembers" />
+													</button>
+												</f:form>
+											</f:if>
+										</f:else>
 									</f:if>
 								</td>
 							</tr>
 							<tr>
 								<td></td>
 								<td>
-									<f:if condition="{canViewMembers}">
+									<f:if condition="{canViewMembers} ">
 										<div id="members_list_{commitment.event.uid}" class="collapse "
 											aria-labelledby="headingOne" data-parent="#accordionExample">
 											<div class="card-body spinner-border members-spinner" role="status">
@@ -348,8 +367,6 @@
 			</script>
 		</f:format.raw>
 		<script defer>
-
-
 			function presentAjaxSubmit(id) {
 				var form = $('#event_' + id);
 				var u = form.attr('action');
@@ -376,10 +393,8 @@
 									case -1: description = personalDutyRosterListUnknownDescription
 										break;
 								}
-
 								$("#event_" + id + "_radioDescription").html(description)
 								getMembersAjaxSubmit(id, true)
-
 							},
 							error: function (jqXHR, textStatus, errorThrow) {
 								console.log(jqXHR.responseText)
@@ -388,8 +403,6 @@
 					}
 				};
 				service.ajaxCall(form);
-
-
 			}
 
 			function getMembersAjaxSubmit(id, refresh = false) {

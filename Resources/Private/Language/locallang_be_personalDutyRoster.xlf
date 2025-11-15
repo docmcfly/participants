@@ -30,7 +30,9 @@
 			<trans-unit id="flexforms_general.settings.canViewCurrentlyOffDuty">
 				<source>Can view the currently off duty flag</source>
 			</trans-unit>
-
+			<trans-unit	id="flexforms_general.settings.displayScheduledStateIfExternalPlanningUse">
+				<source>Displays the scheduled state if a external planning links exists</source>
+			</trans-unit>		
 		</body>
 	</file>
 </xliff>
