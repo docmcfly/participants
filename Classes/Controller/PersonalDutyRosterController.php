@@ -148,6 +148,8 @@ class PersonalDutyRosterController extends ActionController
             $this->view->assign('commitments', $commitments);
             $this->view->assign('counts', $this->commitmentRepository->getEventCommitmentCounts($planningStorageUid));
             $this->view->assign('personalDutyRosterFilterSettings', $personalDutyRosterFilterSettings);
+
+            $this->view->assign('displayScheduledStateIfExternalPlanningUse', $this->settings['displayScheduledStateIfExternalPlanningUse'] ?? true);
             $this->view->assign('uid', $this->getContentObjectUid());
             // debug($this->view);
         } else {
@@ -243,6 +245,8 @@ class PersonalDutyRosterController extends ActionController
                 $settings = $this->getPreparedSettings(intval($this->request->getArgument('id')));
                 $this->commitmentRepository->update($commitment);
                 $this->persistenceManager->persistAll();
+            } else {
+                $settings = $this->settings;
             }
             $cc = $this->commitmentRepository->getEventCommitmentCounts($settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
             $return['counts'] = Utility::calculatePresentDatas($cc['presentCount'], $cc['presentDefaultCount']);

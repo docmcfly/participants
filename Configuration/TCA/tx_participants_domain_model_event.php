@@ -39,14 +39,15 @@ return [
             'description' => 'description',
             'public_description' => 'public_description',
             'show_public_description' => 'show_public_description',
-            'canceled' => 'canceled'
+            'canceled' => 'canceled',
+            'external_planning_link' => 'external_planning_link',
         ],
         'searchFields' => '',
         'iconfile' => 'EXT:participants/Resources/Public/Icons/tx_participants_domain_model_event_type.gif'
     ],
     'types' => [
         '1' => [
-            'showitem' => ' canceled, event_type, public, date, full_day, time, duration,'
+            'showitem' => ' canceled, event_type, public, date, full_day, time, duration, external_planning_link,'
                 . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabGroupSettings, usergroups, show_public_usergroups, public_usergroups, '
                 . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabDescription, description, show_public_description, public_description, '
                 . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabMiscellaneous, '
@@ -72,7 +73,7 @@ return [
                 'type' => 'number',
             ]
         ],
-         'event_type' => [
+        'event_type' => [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.eventType',
             'config' => [
                 'type' => 'select',
@@ -207,6 +208,14 @@ return [
                 'foreign_table' => 'fe_groups',
                 'MM' => 'tx_participants_event_publicusergroup_mm'
             ]
-        ]
+        ],
+        'external_planning_link' => [
+            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.externalPlanningLink',
+            'config' => [
+                'type' => 'link',
+                'allowedTypes' => ['page', 'url'],
+                'nullable' => 'true',
+            ]
+        ],
     ]
 ];

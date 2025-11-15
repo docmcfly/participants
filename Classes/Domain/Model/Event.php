@@ -33,109 +33,115 @@ class Event extends AbstractEntity
      *
      * @var EventType
      */
-    protected $eventType = null;
+    protected ?EventType $eventType = null;
 
     /**
      *
      * @var string
      */
-    protected $description = true;
+    protected string $description = "";
 
     /**
      *
      * @var bool
      */
-    protected $showPublicDescription = false;
+    protected bool $showPublicDescription = false;
 
     /**
      *
      * @var string
      */
-    protected $publicDescription = true;
+    protected string $publicDescription = "";
 
     /**
      *
      * @var bool
      */
-    protected $showPublicUsergroups = false;
+    protected bool $showPublicUsergroups = false;
 
     /**
      *
      * @var bool
      */
-    protected $canceled = false;
+    protected bool $canceled = false;
 
     /**
      *
      * @var bool
      */
-    protected $fullDay = false;
+    protected bool $fullDay = false;
 
     /**
      *
      * @var string
      */
-    protected $date = '0000-00-00';
+    protected string $date = '0000-00-00';
 
     /**
      *
      * @var string
      */
-    protected $time = '00:00:00';
+    protected string $time = '00:00:00';
 
     /**
      *
      * @var int
      */
-    protected $current = - 1;
+    protected int $current = -1;
 
     /**
      *
      * @var int
      */
-    protected $duration = 3;
+    protected int $duration = 3;
 
     /**
      *
      * @var array
      */
-    protected $visiblePublicUsergroups = null;
+    protected ?array $visiblePublicUsergroups = null;
 
     /**
      *
      * @var array
      */
-    protected $visibleUsergroups = null;
+    protected ?array $visibleUsergroups = null;
 
     /**
      *
      * @var int
      */
-    protected $public;
+    protected int $public;
 
     /**
      *
      * @var int
      */
-    protected $crdate;
+    protected int $crdate;
 
     /**
      *
      * @var int
      */
-    protected $tstamp;
+    protected int $tstamp;
 
     /**
      *
      * @var bool
      */
-    protected $hidden;
+    protected bool $hidden = false;
 
     /**
      *
      * @var bool
      */
-    protected $deleted;
+    protected bool $deleted = false;
+
+    /**
+     *
+     * @var string|null
+     */
+    protected ?string $externalPlanningLink = null;
 
     /**
      * __construct
@@ -521,7 +527,7 @@ class Event extends AbstractEntity
         return $this->tstamp;
     }
 
-     /**
+    /**
      * Set creation date
      *
      * @param int $tstamp
@@ -534,9 +540,9 @@ class Event extends AbstractEntity
     /**
      * Get hidden flag
      *
-     * @return int
+     * @return bool
      */
-    public function getHidden()
+    public function getHidden():bool
     {
         return $this->hidden;
     }
@@ -544,10 +550,10 @@ class Event extends AbstractEntity
     /**
      * Set hidden flag
      *
-     * @param int $hidden
+     * @param bool $hidden
      *            hidden flag
      */
-    public function setHidden($hidden)
+    public function setHidden(bool $hidden)
     {
         $this->hidden = $hidden;
     }
@@ -555,9 +561,9 @@ class Event extends AbstractEntity
     /**
      * Get deleted flag
      *
-     * @return int
+     * @return bool
      */
-    public function getDeleted()
+    public function getDeleted():bool
     {
         return $this->deleted;
     }
@@ -565,10 +571,10 @@ class Event extends AbstractEntity
     /**
      * Set deleted flag
      *
-     * @param int $deleted
+     * @param bool $deleted
      *            deleted flag
      */
-    public function setDeleted($deleted)
+    public function setDeleted(bool $deleted)
     {
         $this->deleted = $deleted;
     }
@@ -650,6 +656,22 @@ class Event extends AbstractEntity
         $this->canceled = $canceled;
     }
 
+    /**
+     *
+     * @return string|null
+     */
+    public function getExternalPlanningLink(): ?string
+    {
+        return $this->externalPlanningLink;
+    }
 
-
+    /**
+     *
+     * @param string|null $externalPlanningLink
+     * @return void
+     */
+    public function setExternalPlanningLink(string $externalPlanningLink): void
+    {
+        $this->externalPlanningLink = $externalPlanningLink;
+    }
 }

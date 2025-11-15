@@ -84,6 +84,23 @@
 							<maxitems>1</maxitems>
 						</config>
 					</settings.planningStorageUid>
+					<settings.displayScheduledStateIfExternalPlanningUse>
+						<exclude>1</exclude>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_personalDutyRoster.xlf:flexforms_general.settings.displayScheduledStateIfExternalPlanningUse
+						</label>
+						<config>
+							<type>check</type>
+							<renderType>checkboxToggle</renderType>
+							<items >
+								<numIndex index="0">
+									<value index="1">1</value>
+									<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_personalDutyRoster.xlf:flexforms_general.settings.displayScheduledStateIfExternalPlanningUse.value.label</label>
+								</numIndex> 
+							</items>
+							<default>1</default>
+						</config>
+					</settings.displayScheduledStateIfExternalPlanningUse>
+
 				</el>
 			</ROOT>
 		</sDEF>
