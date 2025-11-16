@@ -2,6 +2,7 @@
 
 ## Change log
 
+* 5.1.1   :: FIX : The "set value" for "link to an external event planning" is not checked if you create a new event. 
 * 5.1.0   :: UPD : The personal duty roster supports external planning links.
 * 5.0.3   :: FIX : Add missing tstamp in the event model for ics export.
 * 5.0.2   :: FIX : Fix and update the TCA fe_groups and fe_users integration

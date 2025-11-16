@@ -214,7 +214,9 @@ return [
             'config' => [
                 'type' => 'link',
                 'allowedTypes' => ['page', 'url'],
-                'nullable' => 'true',
+                'nullable' => true,
+                'required' => false,
+                'default' =>  null,
             ]
         ],
     ]
