@@ -674,4 +674,9 @@ class Event extends AbstractEntity
     {
         $this->externalPlanningLink = $externalPlanningLink;
     }
+
+    public function getEndTime():\DateTime{
+        return $this->getDateTime()->add(\DateInterval::createFromDateString($this->getDuration().' hours'));
+    }
+
 }
