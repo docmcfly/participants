@@ -52,7 +52,11 @@
 				<source>Count of event on the small render type</source>
 				<target state="tanslated">Anzahl der Termine bei der kleinen Darstellungsform</target>
 			</trans-unit>
-			
+
+			<trans-unit id="flexforms_general.settings.displayEventEndtime">
+				<source>Display the endtime of events</source>
+				<target state="tanslated">Endzeit der Veranstaltungen anzeigen</target>
+			</trans-unit>
 			<trans-unit id="flexforms_general.settings.hiddenTargetGroups">
 				<source>Hide the target groups</source>
 				<target state="tanslated">Zielgruppen nicht anzeigen</target>

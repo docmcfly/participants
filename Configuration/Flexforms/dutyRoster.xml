@@ -42,6 +42,14 @@
 							<renderType>checkboxToggle</renderType>
 						</config>
 					</settings.hiddenTargetGroups>
+					<settings.displayEventEndtime>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.displayEventEndtime</label>
+						<default>0</default>
+						<config>
+							<type>check</type>
+							<renderType>checkboxToggle</renderType>
+						</config>
+					</settings.displayEventEndtime>
 					<settings.autoScroll>
 						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.autoScroll</label>
 						<default>0</default>

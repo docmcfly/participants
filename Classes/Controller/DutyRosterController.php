@@ -39,10 +39,6 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         if ($c == 0) {
             $afterNow = -1;
         } else {
-            /** @var Event $firstEvent */
-            $firstEvent = $events[0];
-
-            /** @var Event $firstEvent */
             $lastEvent = $events[count($events) - 1];
             if ($lastEvent->getDateTime()->getTimestamp() < $now) {
                 $afterNow = count($events) * (-1);
