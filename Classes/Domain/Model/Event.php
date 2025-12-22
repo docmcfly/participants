@@ -73,6 +73,12 @@ class Event extends AbstractEntity
 
     /**
      *
+     * @var bool
+     */
+    protected bool $openEnd = false;
+
+    /**
+     *
      * @var string
      */
     protected string $date = '0000-00-00';
@@ -329,6 +335,25 @@ class Event extends AbstractEntity
     public function setFullDay($fullDay): void
     {
         $this->fullDay = $fullDay;
+    }
+    
+    /**
+     *
+     * @return boolean
+     */
+    public function getOpenEnd(): bool
+    {
+        return $this->openEnd;
+    }
+
+    /**
+     *
+     * @param boolean $fullDay
+     * @return void
+     */
+    public function setOpenEnd($openEnd): void
+    {
+        $this->openEnd = $openEnd;
     }
 
     /**
