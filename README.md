@@ -2,6 +2,7 @@
 
 ## Change log
 
+* 5.3.0   :: ADD : You can mark an event as "open end event".
 * 5.2.0   :: ADD : New option: Display the endtime of the events.
 * 5.1.1   :: FIX : The "set value" for "link to an external event planning" is not checked if you create a new event.
 * 5.1.0   :: UPD : The personal duty roster supports external planning links.

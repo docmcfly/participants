@@ -183,6 +183,14 @@
 				<source>Full day</source>
 				<target state="tanslated">Ganztägig</target>
 			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.openEnd">
+				<source>Open end event</source>
+				<target state="tanslated">Offenes Ende</target>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.openEnd.description">
+				<source>This switch is primarily for visualizing the event. The duration is also taken into account for events without an end. This includes, for example, iCal export or the interface for checking scheduling conflicts.</source>
+				<target state="tanslated">Dieser Schalter ist vorrangig für die Visualisierung der Veranstaltung. Die Dauer wird auch bei Veranstaltungen ohne Ende berücksichtigt. Dazu zählt bspw. iCal-Export oder die Schnittstelle zur Überprüfungen von Terminkonflikten.</target>
+			</trans-unit>
 			<trans-unit id="tx_participants_domain_model_event.time">
 				<source>Time</source>
 				<target state="tanslated">Uhrzeit</target>

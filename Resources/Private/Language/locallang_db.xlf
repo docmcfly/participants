@@ -149,6 +149,12 @@
 			<trans-unit id="tx_participants_domain_model_event.fullDay">
 				<source>Full day</source>
 			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.openEnd">
+				<source>Open end event</source>
+			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event.openEnd.description">
+				<source>This switch is primarily for visualizing the event. The duration is also taken into account for events without an end. This includes, for example, iCal export or the interface for checking scheduling conflicts.</source>
+			</trans-unit>
 			<trans-unit id="tx_participants_domain_model_event.time">
 				<source>Time</source>
 			</trans-unit>

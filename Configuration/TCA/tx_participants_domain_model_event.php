@@ -47,7 +47,7 @@ return [
     ],
     'types' => [
         '1' => [
-            'showitem' => ' canceled, event_type, public, date, full_day, time, duration, external_planning_link,'
+            'showitem' => ' canceled, event_type, public, date, full_day, open_end, time, duration, external_planning_link,'
                 . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabGroupSettings, usergroups, show_public_usergroups, public_usergroups, '
                 . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabDescription, description, show_public_description, public_description, '
                 . '--div--;LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.tabMiscellaneous, '
@@ -134,6 +134,16 @@ return [
             ]
         ],
 
+        'open_end' => [
+            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.openEnd',
+            'description'=> 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.openEnd.description',
+            'config' => [
+                'type' => 'check',
+                'renderType' => 'checkboxToggle',
+                'default' => false
+            ]
+        ],
+
         'time' => [
             'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event.time',
             'config' => [
@@ -141,8 +151,6 @@ return [
                 'dbType' => 'time',
                 'format' => 'time',
                 'default' => '19:00:00',
-                //  68400 // <=> 19:00h
-                //   'mode' => 'useOrOverridePlaceholder'
             ]
         ],
 
