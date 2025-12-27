@@ -86,7 +86,6 @@ class EventRepository extends Repository
             $qb->andWhere($qb->expr()
                 ->in('tx_participants_domain_model_event.pid', $storageUids));
         }
-
         if ($limit != EventRepository::UNLIMITED) {
             $qb->setMaxResults($limit);
         }
@@ -173,10 +172,28 @@ class EventRepository extends Repository
             $debug['until'] = $until->format('Y-m-d');
             $return['debug'] = $debug;
         }
-        $data = [];
         while ($row = $s->fetchAssociative()) {
             /** @var Event $e */
-            $e = $this->findByUid($row['uid']);
+            $return[] = $this->findByUid($row['uid']);
+        }
+        return $return;
+    }
+
+    public function getEventsAt(\DateTime $from, \DateTime $until, int $visibility = PublicOption::ALL, int $limit = EventRepository::UNLIMITED, bool $inclusiveCanceledEvents = false): array
+    {
+
+        $return = [];
+        if (1 == 0) { // add debug infos
+            $debug = [];
+            $debug['inFrom'] = $from;
+            $debug['inUntil'] = $until;
+            $debug['from'] = $from->format('Y-m-d');
+            $debug['until'] = $until->format('Y-m-d');
+            $return['debug'] = $debug;
+        }
+        $data = [];
+        foreach ($this->findEventsAt($from, $until, $visibility, $limit, $inclusiveCanceledEvents) as $e) {
+            /** @var Event $e */
             if (!(($this->getEndTime($e) < $from) || ($this->getStartTime($e) > $until))) {
                 $tmp = [];
                 $tmp['description'] = htmlspecialchars($e->getEventType()->getTitle() . ' (' . $e->getDate()->format('d.m.Y') . ')');
@@ -190,6 +207,7 @@ class EventRepository extends Repository
         $return['data'] = $data;
         return $return;
     }
+
 
     private function getStartTime(Event $event): \DateTime
     {

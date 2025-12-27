@@ -3,6 +3,7 @@ namespace Cylancer\Participants\Controller;
 
 use Cylancer\Participants\Domain\Model\CommitmentSettings;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use Cylancer\Participants\Service\FrontendUserService;
 use Cylancer\Participants\Domain\Model\FrontendUser;
@@ -19,7 +20,7 @@ use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
  * (c) 2025 C. Gogolin <service@cylancer.net>
  * 
  */
-class CommitmentSettingsController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class CommitmentSettingsController extends ActionController
 {
 
     public function __construct(

@@ -1,35 +1,43 @@
-<!DOCTYPE html PUBLIC "-//WC//DTD XHTML . Strict//EN"
-	"http://www.w.org/TR/xhtml/DTD/xhtml-strict.dtd">
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:c="http://typo3.org/ns/Cylancer/Participants/ViewHelpers"
-	data-namespace-typo3-fluid="true" xmlns="http://www.w.org//xhtml" xml:lang="en" lang="en"
->
+<!DOCTYPE html PUBLIC "-//WC//DTD XHTML . Strict//EN" "http://www.w.org/TR/xhtml/DTD/xhtml-strict.dtd">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:c="http://typo3.org/ns/Cylancer/Participants/ViewHelpers" data-namespace-typo3-fluid="true"
+	xmlns="http://www.w.org//xhtml" xml:lang="en" lang="en">
+
 <head>
-<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 </head>
+
 <body>
 	<f:layout name="Default" />
 	<f:section name="content">
-		<f:if condition="{settings.autoScroll}">
-			<f:asset.script identifier="dutyRoster_jquery-3.7.1-min.js" src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.7.1-min.js" />
-			<f:asset.script identifier="dutyRoster_jumpToCurrentEvent.js" src="EXT:participants/Resources/Public/JavaScript/Src/jumpToCurrentEvent.js" defer="defer" />
-		</f:if>
-		<f:asset.css identifier="personalDutyRoster_custom_style" href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
+
+		<f:asset.css identifier="personalDutyRoster_custom_style"
+			href="EXT:participants/Resources/Public/Css/tx_participants_custom_style.css" />
 		<div class="dutyRoster {settings.renderType}">
 			<f:switch expression="{settings.renderType}">
 				<f:case value="big">
+					<f:if condition="{settings.autoScroll}">
+						<f:asset.script identifier="dutyRoster_jquery-3.7.1-min.js"
+							src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.7.1-min.js" />
+						<f:asset.script identifier="dutyRoster_jumpToCurrentEvent.js"
+							src="EXT:participants/Resources/Public/JavaScript/Src/jumpToCurrentEvent.js"
+							defer="defer" />
+					</f:if>
 					<table class="table">
 						<tr>
-							<th><h4 class="date">
-									<f:translate key="dutyRoster.large.header.date" />
-								</h4></th>
 							<th>
+								<h4 class="date">
+									<f:translate key="dutyRoster.large.header.date" />
+								</h4>
+							</th>
+							<th colspan="2" >
 								<div class="row">
 									<div class="col">
 										<h4 class="label-info eventName">
 											<f:translate key="dutyRoster.large.header.event" />
 										</h4>
 									</div>
-									<f:if	condition="!{settings.hiddenTargetGroups}">
+									<f:if condition="!{settings.hiddenTargetGroups}">
 										<div class="col-sm">
 											<h4 class="label-info eventName">
 												<f:translate key="dutyRoster.large.header.targetGroups" />
@@ -40,33 +48,40 @@
 							</th>
 						</tr>
 						<f:for each="{events}" as="event" iteration="iterator">
-							<tr
-								class="
+							<tr class="
 						{f:if(condition:'{iterator.index % 2} == 0', then: 'evenRow')}
-						{f:if(condition='{event.current} == -1', then:'upcomingDateBefore')} 
-						{f:if(condition='{event.current} == 0', then:'upcomingDate')} 
-						{f:if(condition='{event.current} == 1', then:'upcomingDateNext')} 
-						{f:if(condition='{event.current} == 2', then:'upcomingDateNextNext')}"
-							>
+						{f:if(condition:'{event.current} == -1', then:'upcomingDateBefore')} 
+						{f:if(condition:'{event.current} == 0', then:'upcomingDate')} 
+						{f:if(condition:'{event.current} == 1', then:'upcomingDateNext')} 
+						{f:if(condition:'{event.current} == 2', then:'upcomingDateNextNext')}">
 								<td><span class="date" style="white-space: nowrap;"> <time
-											datetime="{f:if(condition:event.fullDay,then:'{f:format.date(date:event.dateTime, format:\'Y-m-d\')}', else:'{f:format.date(date:event.dateTime, format:\'Y-m-d H:i\')}')}"
-										> <f:format.date format="d.m.Y">{event.date}</f:format.date> <f:if condition="!{event.fullDay}">
-											<f:if condition="{settings.displayEventEndtime} && !{event.openEnd}">
-												<f:then>
-													<br><f:format.date format="H:i">{event.time}</f:format.date>&nbsp;-&nbsp;<f:format.date format="H:i">{event.endtime}</f:format.date>
-												</f:then>
-												<f:else>
-													<f:format.date format="H:i">{event.time}</f:format.date>
-												</f:else>
+											datetime="{f:if(condition:event.fullDay ,then:'{f:format.date(date:event.dateTime, format:\'Y-m-d\')}', else:'{f:format.date(date:event.dateTime, format:\'Y-m-d H:i\')}')}">
+											<f:format.date format="d.m.Y">{event.date}</f:format.date>
+											<f:if condition="!{event.fullDay}">
+												<f:if condition="{settings.displayEventEndtime} && !{event.openEnd}">
+													<f:then>
+														<br>
+														<f:format.date format="H:i">{event.time}</f:format.date>
+														&nbsp;-&nbsp;<f:format.date format="H:i">{event.endtime}</f:format.date>
+													</f:then>
+													<f:else>
+														<f:format.date format="H:i">{event.time}</f:format.date>
+													</f:else>
+												</f:if>
 											</f:if>
-										</f:if></time>
-								</span></td>
+										</time>
+									</span></td>
+								<f:if condition="{settings.largeUseEventTypeColor}"> 
+									<td class="p-0" style="width:0.3em; background-color: {event.eventType.color};" />
+								</f:if>
 								<td>
 									<div class="row">
 										<div class="col ">
-											<span class="fw-bold label-info eventName {f:if(condition:event.canceled, then:'canceled')}">{event.eventType.title}</span>
+											<span
+												class="fw-bold label-info eventName {f:if(condition:event.canceled, then:'canceled')}">{event.eventType.title}</span>
 											<div class="fst-italic">
-												<span class="label-info teaser"><f:if condition="{event.canceled}">
+												<span class="label-info teaser">
+													<f:if condition="{event.canceled}">
 														<f:then>
 															<f:translate key="dutyRoster.large.event.canceled" />
 														</f:then>
@@ -75,7 +90,8 @@
 																<f:then>
 																	<f:if condition="{event.publicDescription}">
 																		<f:then>
-																			<f:format.html>{event.publicDescription}</f:format.html>
+																			<f:format.html>{event.publicDescription}
+																			</f:format.html>
 																		</f:then>
 																		<f:else>&nbsp;</f:else>
 																	</f:if>
@@ -83,21 +99,25 @@
 																<f:else>
 																	<f:if condition="{event.description}">
 																		<f:then>
-																			<f:format.html>{event.description}</f:format.html>
+																			<f:format.html>{event.description}
+																			</f:format.html>
 																		</f:then>
 																		<f:else>&nbsp;</f:else>
 																	</f:if>
 																</f:else>
 															</f:if>
 														</f:else>
-													</f:if> </span>
+													</f:if>
+												</span>
 											</div>
 										</div>
-										<f:if	condition="!{settings.hiddenTargetGroups}">
+										<f:if condition="!{settings.hiddenTargetGroups}">
 											<div class="col-sm">
 												<ul class="commalist">
 													<f:for each="{event.visiblePublicUserGroups}" as="usergroup">
-														<li><span class="label-info targetGroup" style="white-space: nowrap;">{usergroup.title}</span></li>
+														<li><span class="label-info targetGroup"
+																style="white-space: nowrap;">{usergroup.title}</span>
+														</li>
 													</f:for>
 												</ul>
 											</div>
@@ -107,7 +127,7 @@
 							</tr>
 						</f:for>
 					</table>
-					<f:link.action action="downloadIcs" pageType="102" arguments="{id:uid}">
+					<f:link.action controller="ICal" action="downloadICal" arguments="{id:uid}">
 						<f:translate key="dutyRoster.large.link.download.iCalendar" />
 					</f:link.action>
 				</f:case>
@@ -115,23 +135,107 @@
 					<f:for each="{events}" as="event" iteration="iterator">
 						<div class="row">
 							<!-- date -->
-							<div class="col-2 mx-0">
-								<time datetime="{f:format.date(date:event.date, format:'Y-m-d')}"> <f:format.date format="d.m">{event.date}</f:format.date> </time>
+							<div class="col-3 mx-0 pe-2">
+								<time datetime="{f:format.date(date:event.date, format:'Y-m-d')}">
+									<f:format.date format="d.m">{event.date}</f:format.date>
+								</time>
 							</div>
 							<!-- category -->
-							<div class="col-10 mx-0">
-								&nbsp; <span class="label label-info"><span class=" {f:if(condition:event.canceled, then:'canceled')}"
-									title="{f:if(condition:event.canceled, then:'{f:translate(key:\'dutyRoster.small.event.canceled\')}')}"
-								>{event.eventType.title}</span> 
-								<f:if condition="{f:count(subject:event.visiblePublicUsergroups)} > 0"><ul class="commalist withBrackets fs-6"><f:for each="{event.visiblePublicUsergroups}" as="ug" iteration="iter"><f:if condition="{ug.accronym}"><li><abbr title="{ug.title}">{ug.accronym}</abbr></li></f:if></f:for></ul></f:if>
-							 </span>
+							<div class="col-9 mx-0 ps-0 border-start border-5 border-white" style="{f:if(condition:settings.smallUseEventTypeColor, then:'border-color: {event.eventType.color}!important; ')}" >
+								&nbsp; <span class="label label-info"><span
+										class=" {f:if(condition:event.canceled, then:'canceled')}"
+										title="{f:if(condition:event.canceled, then:'{f:translate(key:\'dutyRoster.small.event.canceled\')}')}">{event.eventType.title}</span>
+									<f:if condition="{f:count(subject:event.visiblePublicUsergroups)} > 0">
+										<ul class="commalist withBrackets fs-6">
+											<f:for each="{event.visiblePublicUsergroups}" as="ug" iteration="iter">
+												<f:if condition="{ug.accronym}">
+													<li><abbr title="{ug.title}">{ug.accronym}</abbr></li>
+												</f:if>
+											</f:for>
+										</ul>
+									</f:if>
+								</span>
 							</div>
 						</div>
 						<!-- row -->
 					</f:for>
 				</f:case>
+				<f:case value="calendar">
+					<div class="mt-4" id='dutyRosterCalendar_{ceUid}' class="calendar">calendar...</div>
+					<f:asset.script identifier="dutyRoster_jquery-3.7.1-min.js" priority="true"
+						src="EXT:participants/Resources/Public/JavaScript/Dist/jquery-3.7.1-min.js" />
+					<f:asset.script identifier="dutyRoster_calendar.js" priority="true"
+						src="EXT:participants/Resources/Public/JavaScript/Dist/calendar.js" />
+
+					<f:format.raw>
+
+						<script>
+
+							let language = "{language}";
+							let translation = {
+								daysOfWeek: [<f:translate key='dutyRoster.calendar.label.weekDays' />],
+								daysOfWeekShort: [<f:translate key='dutyRoster.calendar.label.weekDaysShort' />],
+								btnNextButton: "<f:translate key='dutyRoster.calendar.label.nextMount'/>",
+								btnPreviousMonth: "<f:translate key='dutyRoster.calendar.label.previousMonth' />",
+								btnToday: "<f:translate key='dutyRoster.calendar.label.today' />",
+								appointmentsOfTheDay: "<f:translate key='dutyRoster.calendar.label.appointmentsOfTheDay' />",
+								monthNames: [<f:translate key='dutyRoster.calendar.label.monthNames' />],
+							}
+							let currentMonthEvents = {currentMonthEvents}
+							let ajaxConnect = '{f:uri.action(controller:"AjaxConnect",absolute:1, action:"getEvents",  arguments="{ceUid:ceUid}")}'
+							let _maxPastMonth = {calendarMaxPastMonth}
+							let _maxFutureMonth = {calendarMaxFutureMonth}
+							let _appointmentSymbol = '{appointmentSymbol}'
+							let _currentDay = new Date('{currentDay}')
+							let _monthSelectorsReference =  {monthSelectorsReferenceFunction}
+							let _ceUid = {ceUid}
+
+						</script>
+					</f:format.raw>
+
+					<script defer="defer">
+						//   <f:format.cdata>
+						let selector = '#dutyRosterCalendar_' + _ceUid 
+
+						new Calendar(selector, language, {
+				            appointmentSymbol: ' ' + _appointmentSymbol,
+							maxPastMonth: _maxPastMonth,
+							maxFutureMonth: _maxFutureMonth,
+							monthSelectorsReference: function (c) { 
+								return c.properties.currentDay 
+							},
+							currentDay: _currentDay,
+							updateMonthButtonHook: function (calendar, offset) {
+
+								let _month = Calendar.calculateOtherMonth(selector, offset);
+								$.ajax({
+									url: ajaxConnect,
+									method: "POST",
+									data: { year: _month.getFullYear(), month: _month.getMonth() + 1, ceUid: _ceUid},
+								}
+								)
+									.fail(function (error) {
+										console.log(error.responseText)
+									})
+									.done(function (response) {
+										//  console.log(result)
+										calendar.importEvents(response)// alert(result)
+										calendar.renderEvents()
+									})
+							},
+							texts: {
+								[language]: translation
+							},
+
+						})
+							.importEvents(currentMonthEvents)
+							.renderCalendar();
+						//    </f:format.cdata>
+					</script>
+				</f:case>
 			</f:switch>
 		</div>
 	</f:section>
 </body>
+
 </html>

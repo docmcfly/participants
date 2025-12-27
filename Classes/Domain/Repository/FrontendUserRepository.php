@@ -17,7 +17,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
  *
  * (c) 2025 C. Gogolin <service@cylancer.net>
  *
- *         
+ *
  */
 class FrontendUserRepository extends Repository
 {

@@ -17,5 +17,8 @@ return [
     ],
     \Cylancer\Participants\Domain\Model\FrontendUserGroup::class => [
         'tableName' => 'fe_groups'
+    ],
+     \Cylancer\Participants\Domain\Model\ContentElement::class => [
+        'tableName' => 'tt_content'
     ]
 ];  

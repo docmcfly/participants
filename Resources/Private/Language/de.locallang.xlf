@@ -506,11 +506,39 @@ Dein Webserviceteam
 			</trans-unit>
 			<trans-unit id="dutyRoster.large.link.download.iCalendar">
 				<source>📆 Download the duty roster in the iCal format</source>
-				<target>📆 Dienstplan im iCal-Format als Downalod</target>
+				<target>📆 Dienstplan im iCal-Format als Download</target>
 			</trans-unit>
 			<trans-unit id="dutyRoster.small.event.canceled">
 				<source>⛔ Canceled</source>
 				<target>⛔ Abgesagt</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.weekDays">
+				<source>"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"</source>
+				<target state="tanslated">"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.weekDaysShort">
+				<source>"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"</source>
+				<target state="tanslated">"Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.nextMount">
+				<source>"Next month"</source>
+				<target state="tanslated">Nächster Monat</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.previousMonth">
+				<source>Previous month</source>
+				<target state="tanslated">Vorheriger Monat</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.today">
+				<source>Today</source>
+				<target state="tanslated">Heute</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.appointmentsOfTheDay">
+				<source>Appointments of the day</source>
+				<target state="tanslated">Termine des Tages</target>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.monthNames">
+				<source>"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"</source>
+				<target state="tanslated">"Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"</target>
 			</trans-unit>
 
 		</body>

@@ -33,7 +33,7 @@ class ReasonsForPreventionService
         $querySettings->setStoragePageIds($storageUids);
         $eventRepository->setDefaultQuerySettings($querySettings);
 
-        return $eventRepository->findEventsAt($from, $until, ReasonsForPreventionService::mapVisiblity($visibility));
+        return $eventRepository->getEventsAt($from, $until, ReasonsForPreventionService::mapVisiblity($visibility));
 
     }
 

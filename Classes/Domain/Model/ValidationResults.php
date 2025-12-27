@@ -17,13 +17,13 @@ class ValidationResults
      *
      * @var string
      */
-    protected $infos = array();
+    protected $infos = [];
 
     /**
      *
      * @var string
      */
-    protected $errors = array();
+    protected $errors = [];
 
     /**
      *

@@ -28,20 +28,26 @@ class EventType extends AbstractEntity
      *
      * @var string
      */
-    protected $title = true;
+    protected string $title = '';
 
     /**
      *
      * @var string
      */
-    protected $description = true;
+    protected string $description = '';
+
+    /**
+     *
+     * @var string|null
+     */
+    protected ?string $color = null;
 
     /**
      * public
      *
      * @var bool
      */
-    protected $public;
+    protected bool $public = true;
 
     /**
      * __construct
@@ -81,7 +87,7 @@ class EventType extends AbstractEntity
      * Removes a user group
      *
      * @param FrontendUserGroup $usergroupToRemove
-     *           
+     *
      * @return void
      */
     public function removeUsergroup(FrontendUserGroup $usergroupToRemove)
@@ -114,7 +120,7 @@ class EventType extends AbstractEntity
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -123,7 +129,7 @@ class EventType extends AbstractEntity
      *
      * @param string $s
      */
-    public function setTitle(string $s)
+    public function setTitle(string $s): void
     {
         $this->title = $s;
     }
@@ -132,7 +138,7 @@ class EventType extends AbstractEntity
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -141,17 +147,37 @@ class EventType extends AbstractEntity
      *
      * @param string $s
      */
-    public function setDescription(string $s)
+    public function setDescription(string $s): void
     {
         $this->description = $s;
     }
+
+    /**
+     *
+     * @return string|null
+     */
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    /**
+     *
+     * @param string|null $c
+     */
+    public function setColor(?string $c): void
+    {
+        $this->color = $c;
+    }
+
+
 
     /**
      * Returns the public
      *
      * @return int $public
      */
-    public function getPublic()
+    public function getPublic(): bool
     {
         return $this->public;
     }
@@ -162,7 +188,7 @@ class EventType extends AbstractEntity
      * @param int $public
      * @return void
      */
-    public function setPublic($public)
+    public function setPublic($public): void
     {
         $this->public = $public;
     }

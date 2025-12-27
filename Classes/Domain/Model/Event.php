@@ -336,7 +336,7 @@ class Event extends AbstractEntity
     {
         $this->fullDay = $fullDay;
     }
-    
+
     /**
      *
      * @return boolean
@@ -358,11 +358,19 @@ class Event extends AbstractEntity
 
     /**
      *
-     * @return \DateTime
+     * @return bool|\DateTime
      */
-    public function getDate(): \DateTime
+    public function getDate(): bool|\DateTime
     {
         return \DateTime::createFromFormat('Y-m-d', $this->date);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateString(): string
+    {
+        return $this->date;
     }
 
     /**
@@ -377,11 +385,19 @@ class Event extends AbstractEntity
 
     /**
      *
-     * @return \DateTime
+     * @return bool|\DateTime
      */
-    public function getTime(): \DateTime
+    public function getTime(): bool|\DateTime
     {
         return $this->time == null ? \DateTime::createFromFormat('H:i:s', '00:00:00') : \DateTime::createFromFormat('H:i:s', $this->time);
+    }
+    /**
+     *
+     * @return string
+     */
+    public function getTimeString(): string
+    {
+        return $this->time == null ? '00:00:00' : $this->time;
     }
 
     /**
@@ -567,7 +583,7 @@ class Event extends AbstractEntity
      *
      * @return bool
      */
-    public function getHidden():bool
+    public function getHidden(): bool
     {
         return $this->hidden;
     }
@@ -588,7 +604,7 @@ class Event extends AbstractEntity
      *
      * @return bool
      */
-    public function getDeleted():bool
+    public function getDeleted(): bool
     {
         return $this->deleted;
     }
@@ -664,6 +680,15 @@ class Event extends AbstractEntity
 
     /**
      *
+     * @return string
+     */
+    public function getPublicVisibleDescription(): string
+    {
+        return $this->showPublicDescription ? $this->publicDescription : $this->description;
+    }
+
+    /**
+     *
      * @return boolean
      */
     public function getCanceled(): bool
@@ -700,8 +725,9 @@ class Event extends AbstractEntity
         $this->externalPlanningLink = $externalPlanningLink;
     }
 
-    public function getEndTime():\DateTime{
-        return $this->getDateTime()->add(\DateInterval::createFromDateString($this->getDuration().' hours'));
+    public function getEndTime(): \DateTime
+    {
+        return $this->getDateTime()->add(\DateInterval::createFromDateString($this->getDuration() . ' hours'));
     }
 
 }

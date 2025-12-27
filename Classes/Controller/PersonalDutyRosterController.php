@@ -1,27 +1,20 @@
 <?php
 namespace Cylancer\Participants\Controller;
 
-use Cylancer\Participants\Domain\PresentState;
+use Cylancer\Participants\Service\MiscService;
+use Cylancer\Participants\Service\PersonalDutyRosterService;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Cylancer\Participants\Utility\Utility;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use Cylancer\Participants\Domain\Model\PersonalDutyRosterGroupFilterSettings;
 use Cylancer\Participants\Domain\Model\PersonalDutyRosterGroupFilterSet;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use Cylancer\Participants\Domain\Repository\CommitmentRepository;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use Cylancer\Participants\Domain\Repository\FrontendUserGroupRepository;
 use Cylancer\Participants\Service\FrontendUserService;
-use Cylancer\Participants\Domain\Model\FrontendUserGroup;
-use Cylancer\Participants\Domain\Model\Commitment;
 use TYPO3\CMS\Extbase\Mvc\Controller\MvcPropertyMappingConfiguration;
 use Cylancer\Participants\Domain\Model\FrontendUser;
 use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
-use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 
 /**
  *
@@ -33,7 +26,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
  * (c) 2025 C. Gogolin <service@cylancer.net>
  *
  */
-class PersonalDutyRosterController extends ActionController
+class PersonalDutyRosterController extends AbstractController
 {
 
     // SETTINGS -------------------------------------------
@@ -41,24 +34,32 @@ class PersonalDutyRosterController extends ActionController
 
     private const CAN_VIEW_CURRENTLY_OFF_DUTY = 'canViewCurrentlyOffDuty';
 
-    private const PERSONAL_DUTY_ROSTER_GROUPS = 'personalDutyRosterGroups';
+    public const PERSONAL_DUTY_ROSTER_GROUPS = 'personalDutyRosterGroups';
 
-    private const OPTIONAL_HIDDEN_PERSONAL_DUTY_ROSTER_GROUPS = 'optionalHiddenPersonalDutyRosterGroups';
+    public const OPTIONAL_HIDDEN_PERSONAL_DUTY_ROSTER_GROUPS = 'optionalHiddenPersonalDutyRosterGroups';
 
-    private const DUTY_ROSTER_STORAGE_UIDS = 'dutyRosterStorageUids';
+    public const DUTY_ROSTER_STORAGE_UIDS = 'dutyRosterStorageUids';
 
-    private const PLANNING_STORAGE_UID = 'planningStorageUid';
+    public const PLANNING_STORAGE_UID = 'planningStorageUid';
 
     // ----------------------------------------------------
     private const LIST_TYPE = 'participants_personaldutyroster';
 
     public function __construct(
+        private MiscService $miscService,
         private readonly FrontendUserService $frontendUserService,
+        private SiteFinder $siteFinder,
+        private Context $context,
         private readonly CommitmentRepository $commitmentRepository,
         private readonly FrontendUserRepository $frontendUserRepository,
-        private readonly FrontendUserGroupRepository $frontendUserGroupRepository,
-        private readonly PersistenceManager $persistenceManager
+        private readonly PersonalDutyRosterService $personalDutyRosterService,
     ) {
+        parent::__construct(
+            $miscService,
+            $frontendUserService,
+            $siteFinder,
+            $context
+        );
     }
 
     public function initializeSetPersonalDutyRosterFilterAction(): void
@@ -79,7 +80,7 @@ class PersonalDutyRosterController extends ActionController
              * @var PersonalDutyRosterGroupFilterSet $entry
              */
             // remove old settings
-            $u = $this->frontendUserRepository->findByUid($this->frontendUserService->getCurrentUserUid());
+            $u = $this->frontendUserService->getCurrentUser();
             foreach ($u->getHiddenPersonalDutyRosterGroups()->toArray() as $ug) {
                 $u->removeHiddenPersonalDutyRosterGroups($ug);
             }
@@ -100,22 +101,17 @@ class PersonalDutyRosterController extends ActionController
     public function showAction(): ResponseInterface
     {
         if ($this->frontendUserService->isLogged()) {
-            $this->prepareSettings($this->settings);
-            // debug($this->settings);
             /**
              *
              * @var PersonalDutyRosterGroupFilterSettings $personalDutyRosterFilterSettings
              * @var array $personalDutyRosterGroups
              */
-            list($personalDutyRosterGroups, $personalDutyRosterFilterSettings) = $this->getPersonalDutyRosterFilterSettings();
-            // debug($personalDutyRosterGroups);
-            // debug($personalDutyRosterFilterSettings);
-
-            $dutyRosterStorageUids = $this->settings[PersonalDutyRosterController::DUTY_ROSTER_STORAGE_UIDS];
-            $planningStorageUid = $this->settings[PersonalDutyRosterController::PLANNING_STORAGE_UID];
+            list($personalDutyRosterGroups, $personalDutyRosterFilterSettings) = $this->personalDutyRosterService->getPersonalDutyRosterFilterSettings($this->settings);
+            $dutyRosterStorageUids = GeneralUtility::intExplode(',', $this->settings[PersonalDutyRosterController::DUTY_ROSTER_STORAGE_UIDS], true);
+            $planningStorageUid = intval($this->settings[PersonalDutyRosterController::PLANNING_STORAGE_UID]);
 
             /** @var FrontendUser $user       */
-            $user = $this->frontendUserRepository->findByUid($this->frontendUserService->getCurrentUserUid());
+            $user = $this->frontendUserService->getCurrentUser();
 
             $personalDutyRosterFilterSettings->setOnlyScheduledEvents($user->getOnlyScheduledEvents());
 
@@ -161,253 +157,7 @@ class PersonalDutyRosterController extends ActionController
     private function getContentObjectUid(): int
     {
         return $this->request->getAttribute('currentContentObject')->data['uid'];
-    } 
-
-    private function getUrl(): string
-    {
-        return GeneralUtility::makeInstance(SiteFinder::class)
-            ->getSiteByPageId($this->getContentObjectUid())
-            ->getBase()
-            ->__toString();
     }
 
 
-    public function downloadAllVisibleCalendarEntriesAction(int $id): ResponseInterface
-    {
-        $this->view->assign('commitments', $this->getCurrentUserCommitments($id));
-        $this->view->assign('domain', $this->getUrl());
-        return $this->htmlResponse();
-    }
-
-    public function downloadCalendarEntryAction(int $id, int $commitmentUid): ResponseInterface
-    {
-
-        if ($this->frontendUserService->isLogged()) {
-            $this->settings = $this->getPreparedSettings($id);
-
-            $planningStorageUid = $this->settings[PersonalDutyRosterController::PLANNING_STORAGE_UID];
-            /** @var \TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface $querySettings */
-            $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
-            $querySettings->setStoragePageIds([$planningStorageUid]);
-            $this->commitmentRepository->setDefaultQuerySettings($querySettings);
-
-            $this->commitmentRepository->findByUid($commitmentUid);
-
-            $this->view->assign('commitments', [$this->commitmentRepository->findByUid($commitmentUid)]);
-            $this->view->assign('domain', $this->getUrl());
-        } else {
-            throw new \Exception('You ar not logged in');
-        }
-        return $this->htmlResponse();
-    }
-
-
-    public function downloadAllPromisedVisibleCalendarEntriesAction(int $id): ResponseInterface
-    {
-        $commitments = array();
-        $tmp = $this->getCurrentUserCommitments($id);
-
-        // debug($tmp);:void
-        foreach ($tmp as $c) {
-            if ($c->isPresent()) {
-                $commitments[] = $c;
-            }
-        }
-
-        $this->view->assign('commitments', $commitments);
-        $this->view->assign('domain', $this->getUrl());
-
-        return $this->htmlResponse();
-    }
-
-    public function downloadAllPromisedCalendarEntriesAction(int $id): ResponseInterface
-    {
-        $commitments = array();
-        $tmp = $this->getCurrentUserCommitments($id, true);
-        foreach ($tmp as $c) {
-            if ($c->isPresent()) {
-                $commitments[] = $c;
-            }
-        }
-        $this->view->assign('commitments', $commitments);
-        $this->view->assign('domain', $this->getUrl());
-        return $this->htmlResponse();
-    }
-
-    public function setPresentAction(Commitment $commitment): ResponseInterface
-    {
-        $return = array();
-        if ($commitment->getUser()->getUid() == $this->frontendUserService->getCurrentUserUid() && $this->request->hasArgument('id')) {
-            $eventUid = $commitment->getEvent()->getUid();
-            $return['eventUid'] = $eventUid;
-            $return['present'] = $commitment->getPresent();
-            if (!$commitment->_isNew() && $commitment->_isDirty('present')) {
-                $settings = $this->getPreparedSettings(intval($this->request->getArgument('id')));
-                $this->commitmentRepository->update($commitment);
-                $this->persistenceManager->persistAll();
-            } else {
-                $settings = $this->settings;
-            }
-            $cc = $this->commitmentRepository->getEventCommitmentCounts($settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
-            $return['counts'] = Utility::calculatePresentDatas($cc['presentCount'], $cc['presentDefaultCount']);
-        } else {
-            $return['present'] = false;
-            $return['counts'] = [
-                'presentCount' => 0,
-                'presentDefaultCount' => 0,
-                'presentOverCount' => 0,
-                'presentPercent' => 0,
-                'presentOverPercent' => 0,
-                'displayPercent' => 0
-            ];
-        }
-        return $this->jsonResponse(json_encode($return));
-    }
-
-    public function getMembersAction(Commitment $commitment): ResponseInterface
-    {
-        $return = array();
-
-        $return['args'] = $this->request->getArguments();
-        $return['c_user'] = $commitment->getUser()->getUid();
-        $return['fe_user'] = $this->frontendUserService->getCurrentUserUid();
-        $return['id'] = $this->request->getArgument('id');
-
-        if ($commitment->getUser()->getUid() == $this->frontendUserService->getCurrentUserUid()) {
-            $eventUid = $commitment->getEvent()->getUid();
-            $settings = $this->request->hasArgument('id') ? $this->getPreparedSettings(intval($this->request->getArgument('id'))) : $this->getPreparedSettings();
-            $return['event_uid'] = $eventUid;
-            $return['members'] = $this->commitmentRepository->getEventCommitments(PresentState::PRESENT, $settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid, null);
-            $return['dropouts'] = $this->commitmentRepository->getEventCommitments(PresentState::NOT_PRESENT, $settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
-            $return['undecideds'] = $this->commitmentRepository->getEventCommitments(PresentState::UNKNOWN, $settings[PersonalDutyRosterController::PLANNING_STORAGE_UID], $eventUid);
-            return $this->jsonResponse(json_encode($return));
-        } else {
-            $return['members'] = [];
-        }
-        return $this->jsonResponse(json_encode($return));
-    }
-
-    private function prepareSettings(array &$settings): array
-    {
-        $settings[PersonalDutyRosterController::CAN_VIEW_MEMBERS] = intval($settings[PersonalDutyRosterController::CAN_VIEW_MEMBERS]);
-        $settings[PersonalDutyRosterController::CAN_VIEW_CURRENTLY_OFF_DUTY] = intval($settings[PersonalDutyRosterController::CAN_VIEW_CURRENTLY_OFF_DUTY]);
-        $settings[PersonalDutyRosterController::PERSONAL_DUTY_ROSTER_GROUPS] = $this->toIntArray($settings[PersonalDutyRosterController::PERSONAL_DUTY_ROSTER_GROUPS]);
-        $settings[PersonalDutyRosterController::OPTIONAL_HIDDEN_PERSONAL_DUTY_ROSTER_GROUPS] = $this->toIntArray($settings[PersonalDutyRosterController::OPTIONAL_HIDDEN_PERSONAL_DUTY_ROSTER_GROUPS]);
-        $settings[PersonalDutyRosterController::DUTY_ROSTER_STORAGE_UIDS] = $this->toIntArray($settings[PersonalDutyRosterController::DUTY_ROSTER_STORAGE_UIDS]);
-        $settings[PersonalDutyRosterController::PLANNING_STORAGE_UID] = intval($settings[PersonalDutyRosterController::PLANNING_STORAGE_UID]);
-        return $settings;
-    }
-
-    private function getPreparedSettings(int $id = null): array
-    {
-        $piFlexform = null;
-        if ($id == null) {
-            return $this->prepareSettings($this->settings);
-        } else {
-            $qb = $this->getQueryBuilder('tt_content');
-            $s = $qb->select('list_type', 'pi_flexform')
-                ->from('tt_content')
-                ->where($qb->expr()
-                    ->eq('uid', $qb->createNamedParameter($id)))
-                ->executeQuery();
-            // debug($qb->getSql());
-            if ($row = $s->fetchAssociative()) {
-                $contentElement = $row;
-            } else {
-                throw new \Exception("Content element $id found.");
-            }
-            if ($row = $s->fetchAssociative()) {
-                throw new \Exception("Two content elements with $id found? Database corrupt?");
-            }
-
-            if ($contentElement['list_type'] == PersonalDutyRosterController::LIST_TYPE) {
-                $piFlexform = $contentElement['pi_flexform'];
-            }
-        }
-
-        $settings = GeneralUtility::xml2array($piFlexform)['data']['sDEF']['lDEF'];
-        $return = [];
-        $return[PersonalDutyRosterController::CAN_VIEW_MEMBERS] = $settings['settings.' . PersonalDutyRosterController::CAN_VIEW_MEMBERS]['vDEF'];
-        $return[PersonalDutyRosterController::CAN_VIEW_CURRENTLY_OFF_DUTY] = $settings['settings.' . PersonalDutyRosterController::CAN_VIEW_CURRENTLY_OFF_DUTY]['vDEF'];
-        $return[PersonalDutyRosterController::PERSONAL_DUTY_ROSTER_GROUPS] = $settings['settings.' . PersonalDutyRosterController::PERSONAL_DUTY_ROSTER_GROUPS]['vDEF'];
-        $return[PersonalDutyRosterController::OPTIONAL_HIDDEN_PERSONAL_DUTY_ROSTER_GROUPS] = $settings['settings.' . PersonalDutyRosterController::OPTIONAL_HIDDEN_PERSONAL_DUTY_ROSTER_GROUPS]['vDEF'];
-        $return[PersonalDutyRosterController::DUTY_ROSTER_STORAGE_UIDS] = $settings['settings.' . PersonalDutyRosterController::DUTY_ROSTER_STORAGE_UIDS]['vDEF'];
-        $return[PersonalDutyRosterController::PLANNING_STORAGE_UID] = $settings['settings.' . PersonalDutyRosterController::PLANNING_STORAGE_UID]['vDEF'];
-
-        return $this->prepareSettings($return);
-    }
-
-    private function getPersonalDutyRosterFilterSettings(array $personalDutyRosterGroups = null, array $optionalHiddenPersonalDutyRosterGroups = null, bool $ignoreCurrentUserSettings = false): array
-    {
-        if ($personalDutyRosterGroups == null) {
-            $personalDutyRosterGroups = $this->settings[PersonalDutyRosterController::PERSONAL_DUTY_ROSTER_GROUPS];
-        }
-        if ($optionalHiddenPersonalDutyRosterGroups == null) {
-            $optionalHiddenPersonalDutyRosterGroups = $this->settings[PersonalDutyRosterController::OPTIONAL_HIDDEN_PERSONAL_DUTY_ROSTER_GROUPS];
-        }
-        // debug($personalDutyRosterGroups, '$personalDutyRosterGroups');
-        // debug($optionalUserHiddenTargetGroups, '$optionalUserHiddenTargetGroups');
-        /**
-         *
-         * @var FrontendUserGroup $ug
-         * @var FrontendUser $u
-         */
-        $u = $this->frontendUserRepository->findByUid($this->frontendUserService->getCurrentUserUid());
-
-        $userHiddenDutyRosterGroups = [];
-        foreach ($u->getHiddenPersonalDutyRosterGroups() as $ug) {
-            if (in_array($ug->getUid(), $personalDutyRosterGroups)) {
-                $userHiddenDutyRosterGroups[$ug->getUid()] = $ug;
-            }
-        }
-
-        /**
-         *
-         * @var PersonalDutyRosterGroupFilterSettings $personalDutyRosterFilterSettings
-         */
-        $personalDutyRosterFilterSettings = GeneralUtility::makeInstance(PersonalDutyRosterGroupFilterSettings::class);
-        if (!$ignoreCurrentUserSettings) {
-            foreach ($optionalHiddenPersonalDutyRosterGroups as $optionalGroups) {
-                if (in_array($optionalGroups, $personalDutyRosterGroups)) {
-                    $ug = $this->frontendUserGroupRepository->findByUid($optionalGroups);
-                    $personalDutyRosterFilterSettings->add($ug, !array_key_exists($ug->getUid(), $userHiddenDutyRosterGroups));
-                }
-            }
-        }
-        // debug($u);
-        return [
-            $personalDutyRosterGroups,
-            $personalDutyRosterFilterSettings
-        ];
-    }
-
-    private function getCurrentUserCommitments(int $id, bool $ignoreCurrentUserSettings = false): array
-    {
-        if ($this->frontendUserService->isLogged()) {
-            $this->settings = $this->getPreparedSettings($id);
-
-            $personalDutyRosterGroups = $this->settings[PersonalDutyRosterController::PERSONAL_DUTY_ROSTER_GROUPS];
-            $optionalHiddenPersonalDutyRosterGroups = $this->settings[PersonalDutyRosterController::OPTIONAL_HIDDEN_PERSONAL_DUTY_ROSTER_GROUPS];
-            $planningStorageUid = $this->settings[PersonalDutyRosterController::PLANNING_STORAGE_UID];
-            $dutyRosterStorageUids = $this->settings[PersonalDutyRosterController::DUTY_ROSTER_STORAGE_UIDS];
-
-            list($personalDutyRosterGroups, $personalDutyRosterFilterSettings) = $this->getPersonalDutyRosterFilterSettings($personalDutyRosterGroups, $optionalHiddenPersonalDutyRosterGroups, $ignoreCurrentUserSettings);
-
-            // debug($hiddenTargetGroups);
-            // debug($this->getTargetGroups($settings));
-            return $this->commitmentRepository->findCurrentEventCommitments($this->frontendUserService->getCurrentUser(), $dutyRosterStorageUids, $planningStorageUid, $personalDutyRosterGroups, $personalDutyRosterFilterSettings, new \DateTime(), false);
-        } else {
-            throw new \Exception('You ar not logged in');
-        }
-    }
-
-    private function getQueryBuilder(string $table): QueryBuilder
-    {
-        return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
-    }
-
-    private function toIntArray(string $value): array
-    {
-        return GeneralUtility::intExplode(',', $value);
-    }
 }

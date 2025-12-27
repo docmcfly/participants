@@ -3,7 +3,6 @@ namespace Cylancer\Participants\Controller;
 
 use Cylancer\Participants\Domain\Repository\FrontendUserGroupRepository;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use Cylancer\Participants\Domain\Repository\TimeOutRepository;
 use Cylancer\Participants\Domain\Repository\CommitmentRepository;
 use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
@@ -11,6 +10,7 @@ use Cylancer\Participants\Domain\Model\TimeOut;
 use Cylancer\Participants\Service\FrontendUserService;
 use Cylancer\Participants\Domain\Model\FrontendUser;
 use Cylancer\Participants\Domain\Model\FrontendUserGroup;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -23,7 +23,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  * (c) 2025 C. Gogolin <service@cylancer.net>
  *
  */
-class TaskForceOverviewController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class TaskForceOverviewController extends ActionController
 {
 
     private const TASK_FORCE_LIST = 'taskForceList';

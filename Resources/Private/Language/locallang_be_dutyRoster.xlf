@@ -37,9 +37,25 @@
 			<trans-unit id="flexforms_general.settings.renderType.large">
 				<source>Large</source>
 			</trans-unit>
+			<trans-unit id="flexforms_general.settings.renderType.calendar">
+				<source>Calendar</source>
+			</trans-unit>
+
+			<trans-unit id="flexforms_general.small.settings">
+				<source>Settings of small rendering</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.large.settings">
+				<source>Settings of large rendering</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.calendar.settings">
+				<source>Settings of calendar rendering</source>
+			</trans-unit>
 
 			<trans-unit id="flexforms_general.settings.smallEventCount">
 				<source>Count of event on the small render type</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.small.useEventTypeColor">
+				<source>Use the event type color</source>
 			</trans-unit>
 
 			<trans-unit id="flexforms_general.settings.displayEventEndtime">
@@ -51,6 +67,54 @@
 			<trans-unit id="flexforms_general.settings.autoScroll">
 				<source>Automatic scrolling to the next event</source>
 			</trans-unit>
+			<trans-unit id="flexforms_general.settings.large.useEventTypeColor">
+				<source>Use the event type color</source>
+			</trans-unit>
+			
+			<trans-unit id="flexforms_general.settings.calendar.initialMode">
+				<source>Calendar initial settings</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.initialMode.description">
+				<source>Determines which date the calendar is initially displayed with and how the month-switch buttons should behave.</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.initialMode.startTodayMonthRelative">
+				<source>Starts with today's date / the month-switch button settings are relative to today.</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.initialMode.startTodayMonthCurrentYear">
+				<source>Starts with today's date / with the month switcher you can only select months of the current year.</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.initialMode.startFixDateMonthRelative">
+				<source>Fixed calendar start date / the month switch settings are relative to the fixed date.</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.initialMode.startFixDateMonthCurrentYear">
+				<source>Fixed calendar start date / with the month switcher you can only select months of the current year..</source>
+			</trans-unit>
+
+			<trans-unit id="flexforms_general.settings.calendar.startFixDate">
+				<source>Fixed calendar start date</source>
+			</trans-unit>
+
+			<trans-unit id="flexforms_general.settings.calendar.maxMonthsBack">
+				<source>How many months back can you navigate?</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.maxMonthsBack.description">
+				<source>-1 means unlimited.</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.maxMonthsForward">
+				<source>How many months forward can you navigate?</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.maxMonthsForward.description">
+				<source>-1 means unlimited.</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.useEventTypeColor">
+				<source>Use the event type color</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.appointmentSymbol">
+				<source>Appointment symbol</source>
+			</trans-unit>
+
+
+
 
 		</body>
 	</file>
