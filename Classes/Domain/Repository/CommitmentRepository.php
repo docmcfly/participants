@@ -51,7 +51,7 @@ class CommitmentRepository extends Repository
     public function findCurrentEventCommitments(FrontendUser $user, array $dutyRosterStrorageUids, int $planningStorageUid, array $personalDutyRosterGroups, PersonalDutyRosterGroupFilterSettings $personalDutyRosterFilterSettings, \DateTime $startMoment, bool $withCanceledEvents = true)
     {
         if (empty($dutyRosterStrorageUids) || empty($personalDutyRosterGroups)) {
-            return array();
+            return [];
         }
         $getUid = function ($object): int {
             return $object->getUid();
@@ -90,7 +90,7 @@ class CommitmentRepository extends Repository
 
         // debug($qb->getSQL());
 
-        $return = array();
+        $return = [];
 
         while ($row = $s->fetchAssociative()) {
             // minute-by-minute calculation
@@ -171,7 +171,7 @@ class CommitmentRepository extends Repository
 
         // debug($qb->getSQL());
         $s = $qb->executeQuery();
-        $return = array();
+        $return = [];
         while ($row = $s->fetchAssociative()) {
             $return[] = $row['uid'];
         }
@@ -211,7 +211,7 @@ class CommitmentRepository extends Repository
 
         // debug($qb->getSql());
         $s = $qb->executeQuery();
-        $return = array();
+        $return = [];
         while ($row = $s->fetchAssociative()) {
             $return[] = [
                 'commitment' => $row['cuid'],
@@ -250,7 +250,7 @@ class CommitmentRepository extends Repository
             ->groupBy('tx_participants_domain_model_commitment.event');
 
         $s = $qb->executeQuery();
-        $counts = array();
+        $counts = [];
         // $counts['sql'] = $qb->getSql();
         while ($row = $s->fetchAssociative()) {
             $counts[intval($row['event'])] = Utility::calculatePresentDatas($row['present_count'], $row['present_default_count']);
@@ -292,7 +292,7 @@ class CommitmentRepository extends Repository
         if($userIsScheduled != null) {
             $qb->andWhere($qb->expr()->eq('tx_participants_domain_model_commitment.present_default', $qb->createNamedParameter($userIsScheduled)));
         }
-        $users = array();
+        $users = [];
        //  $sql = $qb->getSql();
         $s = $qb->executeQuery();
         while ($row = $s->fetchAssociative()) {

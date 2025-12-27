@@ -23,9 +23,25 @@
 									</numIndex>
 									<numIndex index="1">big</numIndex>
 								</numIndex>
+								<numIndex index="2">
+									<numIndex index="0">LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.renderType.calendar
+									</numIndex>
+									<numIndex index="1">calendar</numIndex>
+								</numIndex>
 							</items>
 						</config>
 					</settings.renderType>
+					<!-- end of settings -->
+
+				</el>
+			</ROOT>
+		</sDEF>
+		<sSMALL>
+			<ROOT>
+				<sheetTitle>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.small.settings
+				</sheetTitle>
+				<type>array</type>
+				<el>
 					<settings.smallEventCount>
 						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.smallEventCount</label>
 						<config>
@@ -34,6 +50,24 @@
 							<default>5</default>
 						</config>
 					</settings.smallEventCount>
+					<settings.smallUseEventTypeColor>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.small.useEventTypeColor</label>
+						<default>0</default>
+						<config>
+							<type>check</type>
+							<renderType>checkboxToggle</renderType>
+						</config>
+					</settings.smallUseEventTypeColor>
+				</el>
+			</ROOT>
+
+		</sSMALL>
+		<sLARGE>
+			<ROOT>
+				<sheetTitle>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.large.settings
+				</sheetTitle>
+				<type>array</type>
+				<el>
 					<settings.hiddenTargetGroups>
 						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.hiddenTargetGroups</label>
 						<default>0</default>
@@ -58,10 +92,104 @@
 							<renderType>checkboxToggle</renderType>
 						</config>
 					</settings.autoScroll>
-					<!-- end of settings -->
-
+					<settings.largeUseEventTypeColor>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.large.useEventTypeColor</label>
+						<default>0</default>
+						<config>
+							<type>check</type>
+							<renderType>checkboxToggle</renderType>
+						</config>
+					</settings.largeUseEventTypeColor>
 				</el>
 			</ROOT>
-		</sDEF>
+
+		</sLARGE>
+		<sCALENDAR>
+			<ROOT>
+				<sheetTitle>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.calendar.settings
+				</sheetTitle>
+				<type>array</type>
+				<el>
+					<settings.calendarInitialMode>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.initialMode</label>
+						<description>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.initialMode.description</description>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0">
+									<numIndex index="0">LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.initialMode.startTodayMonthRelative
+									</numIndex>
+									<numIndex index="1">startTodayMonthRelative</numIndex>
+								</numIndex>
+								<numIndex index="1">
+									<numIndex index="0">LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.initialMode.startTodayMonthCurrentYear
+									</numIndex>
+									<numIndex index="1">startTodayMonthCurrentYear</numIndex>
+								</numIndex>
+								<numIndex index="2">
+									<numIndex index="0">LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.initialMode.startFixDateMonthRelative
+									</numIndex>
+									<numIndex index="1">startFixDateMonthRelative</numIndex>
+								</numIndex>
+								<numIndex index="3">
+									<numIndex index="0">LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.initialMode.startFixDateMonthCurrentYear
+									</numIndex>
+									<numIndex index="1">startFixDateMonthCurrentYear</numIndex>
+								</numIndex>
+							</items>
+						</config>
+					</settings.calendarInitialMode>
+					<settings.calendarFixStartDate>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.startFixDate</label>
+						<config>
+							<type>datetime</type>
+							<format>date</format>
+							<dbType>date</dbType>
+						</config>
+					</settings.calendarFixStartDate>
+					<settings.calendarMaxMonthsBack>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.maxMonthsBack</label>
+						<description>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.maxMonthsBack.description</description>
+						<config>
+							<type>number</type>
+							<range>
+								<lower>-1</lower>
+							</range>
+							<default>1</default>
+						</config>
+					</settings.calendarMaxMonthsBack>
+					<settings.calendarMaxMonthsForward>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.maxMonthsForward</label>
+						<description>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.maxMonthsForward.description</description>
+						<config>
+							<type>number</type>
+							<range>
+								<lower>-1</lower>
+							</range>
+							<default>12</default>
+						</config>
+					</settings.calendarMaxMonthsForward>
+					<settings.calendarUseEventTypeColor>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.useEventTypeColor</label>
+						<default>0</default>
+						<config>
+							<type>check</type>
+							<renderType>checkboxToggle</renderType>
+						</config>
+					</settings.calendarUseEventTypeColor>
+					<settings.calendarAppointmentSymbol>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.appointmentSymbol</label>
+						<description>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.appointmentSymbol.description</description>
+						<config>
+							<type>input</type>
+							<max>2</max>
+							<default>🕗</default>
+						</config>
+					</settings.calendarAppointmentSymbol>
+				</el>
+			</ROOT>
+
+		</sCALENDAR>
 	</sheets>
 </T3DataStructure>

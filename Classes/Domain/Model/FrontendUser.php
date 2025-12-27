@@ -302,7 +302,7 @@ class FrontendUser extends AbstractEntity
      *
      * @param string $password
      */
-    public function setPassword(string $password): string
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
@@ -438,8 +438,8 @@ class FrontendUser extends AbstractEntity
      */
     public function getAllSortedUserGroups(): array
     {
-        $return = array();
-        $duplicateProtection = array();
+        $return = [];
+        $duplicateProtection = [];
 
         /** @var FrontendUserGroup $frontendUserGroup **/
         foreach ($this->getUsergroup() as $frontendUserGroup) {
@@ -459,7 +459,7 @@ class FrontendUser extends AbstractEntity
      */
     private function getSubUserGroups(FrontendUserGroup $frontendUserGroup, array &$duplicateProtection): array
     {
-        $return = array();
+        $return = [];
         foreach ($frontendUserGroup->getSubgroup() as $sg) {
             if (! in_array($sg->getUid(), $duplicateProtection)) {
                 $duplicateProtection[] = $sg->getUid();

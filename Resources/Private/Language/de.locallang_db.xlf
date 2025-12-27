@@ -106,9 +106,13 @@
 				<source>Description</source>
 				<target state="tanslated">Beschreibung</target>
 			</trans-unit>
+			<trans-unit id="tx_participants_domain_model_event_type.color">
+				<source>Color</source>
+				<target state="tanslated">Farbe</target>
+			</trans-unit>
 			<trans-unit id="tx_participants_domain_model_event_type.public">
 				<source>Public</source>
-				<target state="tanslated">Öffentlich</target>
+				<target state="tanslated">Farbe</target>
 			</trans-unit>
 			<trans-unit id="tx_participants_domain_model_event_type.usergroups">
 				<source>Website user group</source>

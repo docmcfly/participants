@@ -2,10 +2,13 @@
 namespace Cylancer\Participants\Controller;
 
 use Cylancer\Participants\Domain\Model\Event;
+use Cylancer\Participants\Service\EventService;
+use Cylancer\Participants\Service\FrontendUserService;
+use Cylancer\Participants\Service\ICalService;
+use Cylancer\Participants\Service\MiscService;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use Cylancer\Participants\Domain\Repository\EventRepository;
 
 /**
@@ -18,8 +21,10 @@ use Cylancer\Participants\Domain\Repository\EventRepository;
  * (c) 2025 C. Gogolin <service@cylancer.net>
  *
  */
-class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class DutyRosterController extends AbstractController
 {
+
+    private const CONTENT_ELEMENT = 'contentElement';
 
     private const LIST_TYPE = 'participants_dutyroster';
 
@@ -27,21 +32,33 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 
     public function __construct(
-        private readonly EventRepository $eventRepository
+        private MiscService $miscService,
+        private FrontendUserService $frontendUserService,
+        private SiteFinder $siteFinder,
+        private Context $context,
+        private readonly EventRepository $eventRepository,
+        private readonly EventService $eventService,
+        private readonly ICalService $icalService,
     ) {
+        parent::__construct(
+            $miscService,
+            $frontendUserService,
+            $siteFinder,
+            $context
+        );
     }
 
     private function prepareEvents(array $events): array
     {
         $now = time();
-        $c = count($events);
+        $c = \count($events);
 
         if ($c == 0) {
             $afterNow = -1;
         } else {
-            $lastEvent = $events[count($events) - 1];
+            $lastEvent = $events[\count($events) - 1];
             if ($lastEvent->getDateTime()->getTimestamp() < $now) {
-                $afterNow = count($events) * (-1);
+                $afterNow = \count($events) * (-1);
             } else {
                 $afterNow = -1;
                 $c = 0;
@@ -70,48 +87,85 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         return $events;
     }
 
-    private function getQueryBuilder(string $table): QueryBuilder
+    private function getContentElementUid(): int
     {
-        return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
+        return $this->request->getAttribute('currentContentObject')->data['uid'];
     }
 
-    private function getStorageUid(string $id): array
-    {
-        $qb = $this->getQueryBuilder('tt_content');
-        $s = $qb->select('list_type', 'pages', 'pi_flexform')
-            ->from('tt_content')
-            ->where($qb->expr()
-                ->eq('uid', $qb->createNamedParameter($id)))
-            ->executeQuery();
-        if ($row = $s->fetchAssociative()) {
-            $contentElement = $row;
-        } else {
-            throw new \Exception("Content element $id found.");
-        }
-        if ($row = $s->fetchAssociative()) {
-            throw new \Exception("Two content elements with $id found? Database corrupt?");
-        }
-        if ($contentElement['list_type'] == DutyRosterController::LIST_TYPE) {
-            return GeneralUtility::intExplode(',', $contentElement['pages'], TRUE);
-        }
-        return [];
-    }
 
     public function showAction(): ResponseInterface
     {
-        $events = array();
-        switch ($this->settings['renderType']) {
-            case 'little':
-                $events = $this->eventRepository->findPublicEvents(intval($this->settings['smallEventCount']), null, true, true);
-                break;
-            case 'big':
-            default:
-                $events = $this->eventRepository->findPublicEvents();
-        }
+
+        $ceUid = $this->getContentElementUid();
+        $flexformSettings = $this->getFlexformSettings($ceUid);
+
         $this->view->assign('settings', $this->settings);
-        $this->view->assign('events', $this->prepareEvents($events));
-        $this->view->assign('uid', $this->request->getAttribute('currentContentObject')->data['uid']);
-        return $this->htmlResponse();
+        $events = [];
+        switch ($this->settings['renderType'] ?? 'big') {
+            case 'little':
+                $events = $this->eventRepository->findPublicEvents(
+                    limit: intval(value: $this->settings['smallEventCount'] ?? '5'),
+                    storageUids: $flexformSettings['_pages'],
+                    inclusiveCanceledEvents: true,
+                    startWithToday: true
+                );
+
+                $this->view->assign('events', $this->prepareEvents($events));
+                $this->view->assign('uid', $this->request->getAttribute('currentContentObject')->data['uid']);
+                return $this->htmlResponse();
+
+            case 'big':
+                $events = $this->eventRepository->findPublicEvents();
+                $this->view->assign('events', $this->prepareEvents($events));
+                $this->view->assign('uid', $this->request->getAttribute('currentContentObject')->data['uid']);
+                return $this->htmlResponse();
+            case 'calendar':
+                $this->view->assign('ceUid', $ceUid);
+                $this->view->assign('appointmentSymbol', $flexformSettings['calendarAppointmentSymbol'] ?? ' 🕗');
+
+                $mode = $this->settings['calendarInitialMode'] ?? 'startTodayMonthRelative';
+                if (str_starts_with($mode, 'startFixDate')) {
+                    $currentDay = $this->settings['calendarFixStartDate'] ?? date('Y-m-d');
+                    if ($currentDay === '0') {
+                        $currentDay = date('Y-m-d');
+                    }
+                    $this->view->assign('monthSelectorsReferenceFunction', 'function (c) {  return c.properties.currentDay  }');
+                } else {
+                    $currentDay = date('Y-m-d');
+                    $this->view->assign('monthSelectorsReferenceFunction', 'function(calendar) { calendar.today }');
+                }
+                $this->view->assign('currentDay', $currentDay);
+
+                $currentYear = substr($currentDay, 0, 4);
+                $currentMonth = substr($currentDay, 5, 2);
+
+                $calendarMaxMonthsBack = intval($this->settings['calendarMaxMonthsBack'] ?? 1);
+                if (str_ends_with($mode, 'CurrentYear')) {
+                    $this->view->assign('calendarMaxPastMonth', $currentMonth - 1);
+                } else {
+                    $this->view->assign('calendarMaxPastMonth', $calendarMaxMonthsBack);
+                }
+                $calendarMaxMonthsForward = intval($this->settings['calendarMaxMonthsForward'] ?? 12);
+                if (str_ends_with($mode, 'CurrentYear')) {
+                    $this->view->assign('calendarMaxFutureMonth', 12 - $currentMonth);
+                } else {
+                    $this->view->assign('calendarMaxFutureMonth', $calendarMaxMonthsForward);
+                }
+
+                $this->view->assign('language', $this->getLanguage());
+                $this->view->assign(
+                    'currentMonthEvents',
+                    json_encode($this->eventService->getCalendarEvents(
+                        $currentYear,
+                        $currentMonth,
+                        $ceUid,
+                        !$this->frontendUserService->isLogged()
+                    ))
+                );
+                return $this->htmlResponse();
+            default:
+                throw new \Exception('Unkonw render type: ' . $this->settings['renderType']);
+        }
     }
 
     public function downloadIcsAction(string $id): ResponseInterface
@@ -119,10 +173,22 @@ class DutyRosterController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $normalizedParams = $this->request->getAttribute('normalizedParams');
         $baseUri = $normalizedParams->getSiteUrl();
 
-        $this->view->assign('domain', parse_url($baseUri, PHP_URL_HOST));
-        $this->view->assign('events', $this->prepareEvents($this->eventRepository->findPublicEvents(EventRepository::UNLIMITED, $this->getStorageUid($id), false)));
+        $ical = $this->icalService->createICal(
+            parse_url($baseUri, PHP_URL_HOST),
+            $this->eventRepository->findPublicEvents(
+                EventRepository::UNLIMITED,
+                $this->getFlexformSettings($id)['_pages'],
+                false,
+                false
+            )
+        );
 
-        return $this->htmlResponse();
+        $response = $this->responseFactory->createResponse();
+        $response = $response->withAddedHeader('Content-Type', 'text/text;charset=utf-8');
+        $response = $response->withAddedHeader('Content-Disposition', 'inline; filename="export.txt"');
+        $response->getBody()->write($ical);
+
+        return $response;
     }
 
 }

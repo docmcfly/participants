@@ -41,8 +41,7 @@
 			<trans-unit id="personalDutyRoster.list.members.nobody">
 				<source>None members</source>
 			</trans-unit>
-			<trans-unit id="personalDutyRoster.list.members.currentlyOffDuty">
-				<source>( &#128683; Currently off duty )</source>
+			<trans-unit id="personalDutyRoster.list.members.currentlyOffDuty"><source>( &#128683; Currently off duty )</source>
 			</trans-unit>
 
 			<trans-unit id="personalDutyRoster.list.scheduled">
@@ -379,6 +378,27 @@
 			</trans-unit>
 			<trans-unit id="dutyRoster.small.event.canceled">
 				<source>⛔ Canceled</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.weekDays">
+				<source>"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.weekDaysShort">
+				<source>"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.nextMount">
+				<source>"Next month"</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.previousMonth">
+				<source>Previous month</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.today">
+				<source>Today</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.appointmentsOfTheDay">
+				<source>Appointments of the day</source>
+			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.monthNames">
+				<source>"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"</source>
 			</trans-unit>
 
 		</body>

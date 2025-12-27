@@ -1,5 +1,7 @@
 <?php
+use Cylancer\Participants\Controller\AjaxConnectController;
 use Cylancer\Participants\Controller\CommitmentSettingsController;
+use Cylancer\Participants\Controller\ICalController;
 use Cylancer\Participants\Controller\TimeOutManagementController;
 use Cylancer\Participants\Controller\TaskForceOverviewController;
 use Cylancer\Participants\Controller\DutyRosterController;
@@ -36,11 +38,11 @@ ExtensionUtility::configurePlugin(
     'Participants',
     'TimeOutManagement',
     [
-        TimeOutManagementController::class => 'list,delete, create'
+        TimeOutManagementController::class => ['list', 'delete', 'create']
     ],
     // non-cacheable actions
     [
-        TimeOutManagementController::class => 'list,delete, create'
+        TimeOutManagementController::class => ['list', 'delete', 'create']
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
@@ -49,11 +51,11 @@ ExtensionUtility::configurePlugin(
     'Participants',
     'TaskForceOverview',
     [
-        TaskForceOverviewController::class => 'show'
+        TaskForceOverviewController::class => ['show']
     ],
     // non-cacheable actions
     [
-        TaskForceOverviewController::class => 'show'
+        TaskForceOverviewController::class => ['show']
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
@@ -62,11 +64,27 @@ ExtensionUtility::configurePlugin(
     'Participants',
     'DutyRoster',
     [
-        DutyRosterController::class => 'show, downloadIcs'
+        DutyRosterController::class => [
+            'show',
+        ],
+        AjaxConnectController::class => [
+            'getEvents', // for the calendar view
+        ],
+        ICalController::class => [
+            'downloadICal' 
+        ]
     ],
     // non-cacheable actions
     [
-        DutyRosterController::class => 'show, downloadIcs'
+        DutyRosterController::class => [
+            'show',
+        ],
+        AjaxConnectController::class => [
+            'getEvents', // for the calendar view
+        ],
+        ICalController::class => [
+            'downloadICal'
+        ],
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
@@ -75,11 +93,38 @@ ExtensionUtility::configurePlugin(
     'Participants',
     'PersonalDutyRoster',
     [
-        PersonalDutyRosterController::class => 'show, setPresent, setPersonalDutyRosterFilter, downloadAllVisibleCalendarEntries, downloadAllPromisedCalendarEntries, downloadAllPromisedVisibleCalendarEntries, downloadCalendarEntry, getMembers'
+        PersonalDutyRosterController::class => [
+            'show',
+            'setPersonalDutyRosterFilter',
+        ],
+        AjaxConnectController::class => [
+            'setPresent',
+            'getMembers',
+        ],
+        ICalController::class => [
+            'downloadAllVisibleCalendarEntries',
+            'downloadAllPromisedCalendarEntries',
+            'downloadAllPromisedVisibleCalendarEntries',
+            'downloadCalendarEntry',
+        ]
+
     ],
     // non-cacheable actions
     [
-        PersonalDutyRosterController::class => 'show, setPresent, setPersonalDutyRosterFilter, downloadAllVisibleCalendarEntries, downloadAllPromisedCalendarEntries, downloadAllPromisedVisibleCalendarEntries, downloadCalendarEntry, getMembers'
+        PersonalDutyRosterController::class => [
+            'show',
+            'setPersonalDutyRosterFilter',
+        ],
+        AjaxConnectController::class => [
+            'setPresent',
+            'getMembers',
+        ],
+        ICalController::class => [
+            'downloadAllVisibleCalendarEntries',
+            'downloadAllPromisedCalendarEntries',
+            'downloadAllPromisedVisibleCalendarEntries',
+            'downloadCalendarEntry',
+        ]
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );

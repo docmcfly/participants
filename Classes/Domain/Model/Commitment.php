@@ -3,149 +3,163 @@ namespace Cylancer\Participants\Domain\Model;
 use Cylancer\Participants\Domain\PresentState;
 
 /**
-* This file is part of the 'Participants' Extension for TYPO3 CMS.
-*
-* For the full copyright and license information, please read the
-* LICENSE.txt file that was distributed with this source code.
-*
-* ( c ) 2022 C. Gogolin <service@cylancer.net>
-*/
+ * This file is part of the 'Participants' Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * ( c ) 2022 C. Gogolin <service@cylancer.net>
+ */
 
-class Commitment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class Commitment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+{
 
     /**
-    * @var int
-    */
+     * @var int
+     */
     protected $present = PresentState::UNKNOWN;
 
     /**
-    * @var bool
-    */
+     * @var bool
+     */
     protected $presentDefault = false;
 
     /**
-    * Event
-    *
-    * @var Event
-    */
+     * Event
+     *
+     * @var Event
+     */
     protected $event = null;
 
     /**
-    * @var FrontendUser
-    */
+     * @var FrontendUser
+     */
     protected $user = null;
 
     /**
-    * __construct
-    */
+     * __construct
+     */
 
-    public function __construct() {
+    public function __construct()
+    {
         // Do not remove the next line: It would break the functionality
         $this->initStorageObjects();
     }
 
     /**
-    * Initializes all ObjectStorage properties
-    * Do not modify this method!
-    * It will be rewritten on each save in the extension builder
-    * You may modify the constructor of this class instead
-    *
-    * @return void
-    */
-    protected function initStorageObjects() {
+     * Initializes all ObjectStorage properties
+     * Do not modify this method!
+     * It will be rewritten on each save in the extension builder
+     * You may modify the constructor of this class instead
+     *
+     * @return void
+     */
+    protected function initStorageObjects()
+    {
     }
 
     /**
-    * @return FrontendUser $user
-    */
+     * @return FrontendUser $user
+     */
 
-    public function getUser() {
+    public function getUser()
+    {
         return $this->user;
     }
 
     /**
-    * @param FrontendUser $user
-    * @return void
-    */
+     * @param FrontendUser $user
+     * @return void
+     */
 
-    public function setUser( FrontendUser $user ) {
+    public function setUser(FrontendUser $user): void
+    {
         $this->user = $user;
     }
 
     /**
-    * @return int $present
-    */
+     * @return int $present
+     */
 
-    public function getPresent() {
+    public function getPresent(): int
+    {
         return $this->present;
     }
 
     /**
-    * @param int $present
-    * @return void
-    */
+     * @param int $present
+     * @return void
+     */
 
-    public function setPresent( $present ) {
+    public function setPresent($present): void
+    {
         $this->present = $present;
     }
 
     /**
-    * @return bool
-    */
+     * @return bool
+     */
 
-    public function isPresent() {
-        return $this->present;
+    public function isPresent(): int
+    {
+        return $this->present == PresentState::PRESENT;
     }
 
     /**
-    * @return bool $presentDefault
-    */
+     * @return bool $presentDefault
+     */
 
-    public function getPresentDefault() {
+    public function getPresentDefault()
+    {
         return $this->presentDefault;
     }
 
     /**
-    * @param bool $presentDefault
-    * @return void
-    */
+     * @param bool $presentDefault
+     * @return void
+     */
 
-    public function setPresentDefault( $presentDefault ) {
+    public function setPresentDefault($presentDefault)
+    {
         $this->presentDefault = $presentDefault;
     }
 
     /**
-    * @return bool
-    */
+     * @return bool
+     */
 
-    public function isPresentDefault() {
+    public function isPresentDefault()
+    {
         return $this->presentDefault;
     }
 
     /**
-    * @return Event
-    */
+     * @return Event
+     */
 
-    public function getEvent(): Event {
+    public function getEvent(): Event
+    {
         return $this->event;
     }
 
     /**
-    * @param Event $event
-    * @return void
-    */
+     * @param Event $event
+     * @return void
+     */
 
-    public function setEvent( $event ): void {
+    public function setEvent($event): void
+    {
         $this->event = $event;
     }
 
     /**
-    * @return bool
-    */
+     * @return bool
+     */
 
-    public function getIsNotChangable(): bool {
-        return  $this->getEvent()
-        ->getDateTime()
-        ->getTimestamp() < time();
+    public function getIsNotChangable(): bool
+    {
+        return $this->getEvent()
+            ->getDateTime()
+            ->getTimestamp() < time();
     }
 }

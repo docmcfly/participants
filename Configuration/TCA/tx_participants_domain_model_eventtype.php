@@ -27,13 +27,14 @@ return [
             'public' => 'public',
             'description' => 'description',
             'usergroups' => 'usergroups',
+            'color' => 'color',
         ],
         'searchFields' => '',
         'iconfile' => 'EXT:participants/Resources/Public/Icons/tx_participants_domain_model_event_type.gif'
     ],
     'types' => [
         '1' => [
-            'showitem' => ' title, public, description, usergroups'
+            'showitem' => ' title, public, description, color, usergroups'
         ]
     ],
     'columns' => [
@@ -52,6 +53,14 @@ return [
                 'type' => 'input',
                 'dbType' => 'description',
                 'max' => 255
+            ],
+        ],
+        'color' => [
+            'label' => 'LLL:EXT:participants/Resources/Private/Language/locallang_db.xlf:tx_participants_domain_model_event_type.color',
+            'config' => [
+                'type' => 'color',
+                'default' => '#BBBBBB',
+                'nullable' => true,
             ],
         ],
         'public' => [

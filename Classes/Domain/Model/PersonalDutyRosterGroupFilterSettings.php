@@ -16,24 +16,25 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  */
 class PersonalDutyRosterGroupFilterSettings
 {
-    
-    public function __set(string $name ,  $value): void{
-        if($name === 'settings'){
+
+    public function __set(string $name, $value): void
+    {
+        if ($name === 'settings') {
             $persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
             /** @var FrontendUserGroupRepository $frontendUserGroupRepository */
             $frontendUserGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
             $frontendUserGroupRepository->injectPersistenceManager($persistenceManager);
-            foreach($value as  $k=>$v){
-                $isVisible = isset($v['visible']) &&  $v['visible'] === '1'; 
-                $this->add($frontendUserGroupRepository->findByUid(intval($k)) , $isVisible); 
+            foreach ($value as $k => $v) {
+                $isVisible = isset($v['visible']) && $v['visible'] === '1';
+                $this->add($frontendUserGroupRepository->findByUid(intval($k)), $isVisible);
             }
         }
     }
-    
 
-    /** @var bool */    
+
+    /** @var bool */
     protected $onlyScheduledEvents = false;
-    
+
     /** @var array */
     private $settings = [];
 
@@ -82,26 +83,28 @@ class PersonalDutyRosterGroupFilterSettings
      */
     public function usable(): bool
     {
-        return ! empty($this->settings);
+        return !empty($this->settings);
     }
 
-	
 
-	/**
-	 * 
-	 * @return bool
-	 */
-	public function getOnlyScheduledEvents() {
-		return $this->onlyScheduledEvents;
-	}
-	
-	/**
-	 * 
-	 * @param bool $onlyScheduledEvents 
-	 * @return self
-	 */
-	public function setOnlyScheduledEvents($onlyScheduledEvents): self {
-		$this->onlyScheduledEvents = $onlyScheduledEvents;
-		return $this;
-	}
+
+    /**
+     * 
+     * @return bool
+     */
+    public function getOnlyScheduledEvents()
+    {
+        return $this->onlyScheduledEvents;
+    }
+
+    /**
+     * 
+     * @param bool $onlyScheduledEvents 
+     * @return self
+     */
+    public function setOnlyScheduledEvents($onlyScheduledEvents): self
+    {
+        $this->onlyScheduledEvents = $onlyScheduledEvents;
+        return $this;
+    }
 }

@@ -47,10 +47,31 @@
 				<source>Large</source>
 				<target state="tanslated">Groß</target>
 			</trans-unit>
+			<trans-unit id="flexforms_general.settings.renderType.calendar">
+				<source>Calendar</source>
+				<target state="tanslated">Kalender</target>
+			</trans-unit>
+
+			<trans-unit id="flexforms_general.small.settings">
+				<source>Settings of small rendering</source>
+				<target state="tanslated">Einstellung der kleinen Darstellung</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.large.settings">
+				<source>Settings of large rendering</source>
+				<target state="tanslated">Einstellung der großen Darstellung</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.calendar.settings">
+				<source>Settings of calendar rendering</source>
+				<target state="tanslated">Einstellung der Kalender-Darstellung</target>
+			</trans-unit>
 
 			<trans-unit id="flexforms_general.settings.smallEventCount">
 				<source>Count of event on the small render type</source>
 				<target state="tanslated">Anzahl der Termine bei der kleinen Darstellungsform</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.small.useEventTypeColor">
+				<source>Use the event type color</source>
+				<target state="tanslated">Verwende die Frage der Veranstaltungsart</target>
 			</trans-unit>
 
 			<trans-unit id="flexforms_general.settings.displayEventEndtime">
@@ -68,7 +89,68 @@
 			<trans-unit	id="flexforms_general.settings.displayScheduledStateIfExternalPlanningUse">
 				<source>Displays the scheduled state if a external planning links exists</source>
 				<target state="tanslated">Anzeige des Einplanungststatus, auch wenn ein externer Planungslink angebeben wurde</target>
-			</trans-unit>		
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.large.useEventTypeColor">
+				<source>Use the event type color</source>
+				<target state="tanslated">Verwende die Frage der Veranstaltungsart</target>
+			</trans-unit>
+
+			<trans-unit id="flexforms_general.settings.calendar.initialMode">
+				<source>Calendar initial settings</source>
+				<target state="tanslated">Kalender-Initial-Einstellungen</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.initialMode.description">
+				<source>Determines which date the calendar is initially displayed with and how the month-switch buttons should behave.</source>
+				<target state="tanslated">Legt fest wie mit welchem Datum der Kalender initial angezeigt wird und wie die Monatsumschalter reagieren sollen.</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.initialMode.startTodayMonthRelative">
+				<source>Starts with today's date / the month-switch button settings are relative to today.</source>
+				<target state="tanslated">Startet mit dem heutigen Datum / die Monatsumschalter-Einstellungen sind relativ zu heute.</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.initialMode.startTodayMonthCurrentYear">
+				<source>Starts with today's date / with the month switcher you can only select months of the current year.</source>
+				<target state="tanslated">Startet mit dem heutigen Datum / mit Monatsumschalter kann man nur Monate des aktuellen Jahres wählen.</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.initialMode.startFixDateMonthRelative">
+				<source>Fixed calendar start date / the month switch settings are relative to the fixed date.</source>
+				<target state="tanslated">Fixes Kalenderstartdatum / die Monatsumschalter-Einstellungen sind relativ zum fixen Datum.</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.initialMode.startFixDateMonthCurrentYear">
+				<source>Fixed calendar start date / with the month switcher you can only select months of the current year..</source>
+				<target state="tanslated">Fixes Kalenderstartdatum / mit Monatsumschalter kann man nur Monate des aktuellen Jahres wählen.</target>
+			</trans-unit>
+
+			<trans-unit id="flexforms_general.settings.calendar.startFixDate">
+				<source>Fixed calendar start date</source>
+				<target state="tanslated">Fixes Kalenderstartdatum</target>
+			</trans-unit>
+
+			<trans-unit id="flexforms_general.settings.calendar.maxMonthsBack">
+				<source>How many months back can you navigate?</source>
+				<target state="tanslated">Wie viele kann man in die Vergangenheit blättern?</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.maxMonthsBack.description">
+				<source>-1 means unlimited.</source>
+				<target state="tanslated">-1 bedeutet ohne Limitierung</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.maxMonthsForward">
+				<source>How many months forward can you navigate?</source>
+				<target state="tanslated">Wie viele Monate kann man in die Zukunft blättern?</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.maxMonthsForward.description">
+				<source>-1 means unlimited.</source>
+				<target state="tanslated">-1 bedeutet ohne Limitierung</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.useEventTypeColor">
+				<source>Use the event type color</source>
+				<target state="tanslated">Verwende die Frage der Veranstaltungsart</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.appointmentSymbol">
+				<source>Appointment symbole</source>
+				<target state="tanslated">Terminsymbol</target>
+			</trans-unit>
+
+			
 		</body>
 	</file>
 </xliff>

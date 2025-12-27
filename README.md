@@ -2,6 +2,18 @@
 
 ## Change log
 
+* 5.7.0   :: UPD : The appointment symbol in the calendar view of the duty roster can be assigned.
+* 5.6.1   :: FIX : Remove public color value.
+* 5.6.0   :: ADD : The event types has a color.
+* 5.5.7   :: FIX : Fix the reasonsForPreventionAction hook.
+* 5.5.6   :: RMV : Remove the oldschool page types for ajax connections (personal duty roster).
+* 5.5.5   :: FIX : A commitment state is an int and not a bool.
+* 5.5.4   :: FIX : Fix the controller with a connect to the abstract action controller.
+* 5.5.3   :: FIX : Remove dummy headline.
+* 5.5.2   :: FIX : Calendar entry titles does not contains html tags.
+* 5.5.1   :: FIX : Fix the public description view in the calendar view.
+* 5.5.0   :: RMV : Remove the oldschool page types for ajax connections.
+* 5.4.0   :: ADD : Add a duty roster calendar view.
 * 5.3.1   :: UPD : Fix the dependency to the usertools extension.
 * 5.3.0   :: ADD : You can mark an event as "open end event".
 * 5.2.0   :: ADD : New option: Display the endtime of the events.
