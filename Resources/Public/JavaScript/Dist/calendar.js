@@ -28,7 +28,7 @@ class Calendar {
         // how many month you can switch in the future. (it exists no limit if the value less as one)
         maxFutureMonth: 12,
 
-        monthSelectorsReference: function (calendar) { calendar.today },
+        monthSelectorsReference: function (calendar) { return calendar.today },
 
         // default date formatter
         formatter: {
@@ -579,9 +579,8 @@ class Calendar {
                     } else {
                         add += 'background-color:' + backgroundColor + ';'
                     }
-                    add += '" ><div class="bg-white m-0 p-2">' + event.title + '</div></div>'
-
-                    let time = ''
+                    add += '" ><div class="bg-white mb-1 mx-0 p-2">' + event.title + '</div></div>'
+                    add += '<div style="hyphens: auto;" class="small overflowHidden p-2 bg-white ">'
                     let startDate = this.formatDate(event.start);
                     let endDate = this.formatDate(event.end);
                     if (startDate !== currentDay || endDate !== currentDay
@@ -589,56 +588,40 @@ class Calendar {
                         || event.end.getHours() !== 0 || event.end.getMinutes() !== 0) {
 
                         if (startDate !== currentDay || (event.start.getHours() === 0 && event.start.getMinutes() === 0)) {
-                            time += event.start.toLocaleDateString(this.language, this.properties.formatter.dateOptions) + ' '
+                            add += event.start.toLocaleDateString(this.language, this.properties.formatter.dateOptions) + ' '
                         }
                         if (event.start.getHours() !== 0 || event.start.getMinutes() !== 0) {
-                            time += event.start.toLocaleTimeString(this.language, this.properties.formatter.timeOptions)
+                            add += event.start.toLocaleTimeString(this.language, this.properties.formatter.timeOptions)
                         }
-                        time += "&nbsp;-&nbsp;"
+                        add += "&nbsp;-&nbsp;"
                         if (endDate !== currentDay) {
-                            time += event.end.toLocaleDateString(this.language, this.properties.formatter.dateOptions) + ' '
+                            add += event.end.toLocaleDateString(this.language, this.properties.formatter.dateOptions) + ' '
                         }
                         if (event.end.getHours() !== 0 || event.end.getMinutes() !== 0) {
-                            time += event.end.toLocaleTimeString(this.language, this.properties.formatter.timeOptions)
+                            add += event.end.toLocaleTimeString(this.language, this.properties.formatter.timeOptions)
                         }
                     }
-
-                    let description = ''
+                    add += '<hr>'
                     if (this.hasText(event.responsible)) {
-                        description += event.responsible
+                        add += event.responsible
                         if (!event.responsible.endsWith('</p>')) {
-                            description += '<br>'
+                            add += '<br>'
                         }
                     }
                     if (this.hasText(event.description)) {
-                        description += event.description
+                        add += event.description
                         if (!event.description.endsWith('</p>')) {
-                            description += '<br>'
+                            add += '<br>'
                         }
                     }
-
-                    if (this.hasText(time) || this.hasText(description)) {
-                        add += '<div style="hyphens: auto;" class="small overflowHidden mt-1 p-2 bg-white ">'
-                        if (this.hasText(time)) {
-                            add += time
-                        }
-                        if (this.hasText(time) && this.hasText(description)) {
-                            add += '<hr>'
-                        }
-                        if (this.hasText(description)) {
-                            add += description
-                        }
-                        add += '</div>' + "\n"
-                    }
-
+                    add += '</div>' + "\n"
+                    add += '</div>' + "\n"
                 }
-                add += '</div>' + "\n"
             }
             details.append(add)
+            $(".details").get(0).scrollIntoView({ block: 'center', behavior: 'smooth' });
         }
-        $(".details").get(0).scrollIntoView({ block: 'center', behavior: 'smooth' });
     }
-
 
     renderEvents() {
         let iter = this.events.entries()
