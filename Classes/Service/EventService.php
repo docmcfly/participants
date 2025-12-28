@@ -58,7 +58,7 @@ class EventService implements SingletonInterface
 
 
 
-            foreach ($this->eventRepository->findEventsAt($startDate, $endDate, PublicOption::PUBLIC , EventRepository::UNLIMITED, true) as $event) {
+            foreach ($this->eventRepository->findEventsAt($startDate, $endDate, $isPublic ? PublicOption::PUBLIC : PublicOption::ALL, EventRepository::UNLIMITED, true) as $event) {
                 /** @var Event $event*/
                 $tmp = [];
                 $tmp['idx'] = $event->getUid();

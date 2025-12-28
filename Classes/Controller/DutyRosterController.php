@@ -103,11 +103,12 @@ class DutyRosterController extends AbstractController
         $events = [];
         switch ($this->settings['renderType'] ?? 'big') {
             case 'little':
-                $events = $this->eventRepository->findPublicEvents(
+                $events = $this->eventRepository->findEvents(
                     limit: intval(value: $this->settings['smallEventCount'] ?? '5'),
                     storageUids: $flexformSettings['_pages'],
                     inclusiveCanceledEvents: true,
-                    startWithToday: true
+                    startWithToday: true,
+                    onlyPublic: !$this->frontendUserService->isLogged()
                 );
 
                 $this->view->assign('events', $this->prepareEvents($events));
@@ -115,7 +116,12 @@ class DutyRosterController extends AbstractController
                 return $this->htmlResponse();
 
             case 'big':
-                $events = $this->eventRepository->findPublicEvents();
+                $events = $this->eventRepository->findEvents(
+                    storageUids: $flexformSettings['_pages'],
+                    inclusiveCanceledEvents: true,
+                    startWithToday: true,
+                    onlyPublic: !$this->frontendUserService->isLogged(),
+                );
                 $this->view->assign('events', $this->prepareEvents($events));
                 $this->view->assign('uid', $this->request->getAttribute('currentContentObject')->data['uid']);
                 return $this->htmlResponse();
@@ -175,11 +181,13 @@ class DutyRosterController extends AbstractController
 
         $ical = $this->icalService->createICal(
             parse_url($baseUri, PHP_URL_HOST),
-            $this->eventRepository->findPublicEvents(
+            $this->eventRepository->findEvents(
                 EventRepository::UNLIMITED,
                 $this->getFlexformSettings($id)['_pages'],
                 false,
+                false,
                 false
+
             )
         );
 

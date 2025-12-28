@@ -487,7 +487,7 @@ class Event extends AbstractEntity
          *
          * @var FrontendUserGroup $ug
          */
-        $tmp = array();
+        $tmp = [];
 
         foreach ($this->getEventType()->getUsergroups() as $ug) {
             $tmp[$ug->getUid()] = $ug;

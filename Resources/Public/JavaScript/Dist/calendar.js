@@ -106,6 +106,13 @@ class Calendar {
     .content {\
         color: var(--bs-black);\
     }\
+    .container.details[data-date]  p {\
+        margin-bottom: 0;\
+    }\
+    .container.details[data-date]  hr {\
+        margin-top: 0.2em;\
+        margin-bottom: 0.2em;\
+    }\
     '
     }
 
@@ -539,6 +546,10 @@ class Calendar {
         this.updateDetails(details.attr('data-date'))
     }
 
+    hasText(s) {
+        return !!s && typeof s === 'string' && s.trim().length > 0;
+    }
+
     updateDetails(d) {
         if (this.hasDateFormat(d)) {
             let day = this.parseDate(d)
@@ -561,14 +572,16 @@ class Calendar {
                     }
                     //  add += 'color:' + this.idealTextColor(backgroundColor, event.striped) + ';'
                     add += '">' + "\n"
-                    add += '<div style="hyphens: auto;" class="fw-bold px-1 bg-white me-5" >' + event.title + '</div>'
-                    add += '<div style="hyphens: auto;" class="small overflowHidden  px-1 bg-white me-5">'
-                    if (event.responsible) {
-                        add += event.responsible + '<br>'
+                    add += '<div style="hyphens: auto;" class="fw-bold px-0" '
+                    add += 'style="'
+                    if (event.striped === true) {
+                        add += 'background-image: ' + this.getStripedBackground(backgroundColor) + ';'
+                    } else {
+                        add += 'background-color:' + backgroundColor + ';'
                     }
-                    if (event.description) {
-                        add += event.description + '<br>'
-                    }
+                    add += '" ><div class="bg-white m-0 p-2">' + event.title + '</div></div>'
+
+                    let time = ''
                     let startDate = this.formatDate(event.start);
                     let endDate = this.formatDate(event.end);
                     if (startDate !== currentDay || endDate !== currentDay
@@ -576,27 +589,56 @@ class Calendar {
                         || event.end.getHours() !== 0 || event.end.getMinutes() !== 0) {
 
                         if (startDate !== currentDay || (event.start.getHours() === 0 && event.start.getMinutes() === 0)) {
-                            add += event.start.toLocaleDateString(this.language, this.properties.formatter.dateOptions) + ' '
+                            time += event.start.toLocaleDateString(this.language, this.properties.formatter.dateOptions) + ' '
                         }
                         if (event.start.getHours() !== 0 || event.start.getMinutes() !== 0) {
-                            add += event.start.toLocaleTimeString(this.language, this.properties.formatter.timeOptions)
+                            time += event.start.toLocaleTimeString(this.language, this.properties.formatter.timeOptions)
                         }
-                        add += "&nbsp;-&nbsp;"
+                        time += "&nbsp;-&nbsp;"
                         if (endDate !== currentDay) {
-                            add += event.end.toLocaleDateString(this.language, this.properties.formatter.dateOptions) + ' '
+                            time += event.end.toLocaleDateString(this.language, this.properties.formatter.dateOptions) + ' '
                         }
                         if (event.end.getHours() !== 0 || event.end.getMinutes() !== 0) {
-                            add += event.end.toLocaleTimeString(this.language, this.properties.formatter.timeOptions)
+                            time += event.end.toLocaleTimeString(this.language, this.properties.formatter.timeOptions)
                         }
                     }
-                    add += '</div>' + "\n"
-                    add += '</div>' + "\n"
+
+                    let description = ''
+                    if (this.hasText(event.responsible)) {
+                        description += event.responsible
+                        if (!event.responsible.endsWith('</p>')) {
+                            description += '<br>'
+                        }
+                    }
+                    if (this.hasText(event.description)) {
+                        description += event.description
+                        if (!event.description.endsWith('</p>')) {
+                            description += '<br>'
+                        }
+                    }
+
+                    if (this.hasText(time) || this.hasText(description)) {
+                        add += '<div style="hyphens: auto;" class="small overflowHidden mt-1 p-2 bg-white ">'
+                        if (this.hasText(time)) {
+                            add += time
+                        }
+                        if (this.hasText(time) && this.hasText(description)) {
+                            add += '<hr>'
+                        }
+                        if (this.hasText(description)) {
+                            add += description
+                        }
+                        add += '</div>' + "\n"
+                    }
+
                 }
+                add += '</div>' + "\n"
             }
             details.append(add)
-            $(".details").get(0).scrollIntoView({ block: 'center', behavior: 'smooth' });
         }
+        $(".details").get(0).scrollIntoView({ block: 'center', behavior: 'smooth' });
     }
+
 
     renderEvents() {
         let iter = this.events.entries()

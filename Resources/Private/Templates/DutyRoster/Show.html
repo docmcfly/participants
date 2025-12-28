@@ -90,8 +90,7 @@
 																<f:then>
 																	<f:if condition="{event.publicDescription}">
 																		<f:then>
-																			<f:format.html>{event.publicDescription}
-																			</f:format.html>
+																			<f:format.html>{event.publicDescription}</f:format.html>
 																		</f:then>
 																		<f:else>&nbsp;</f:else>
 																	</f:if>
@@ -99,8 +98,7 @@
 																<f:else>
 																	<f:if condition="{event.description}">
 																		<f:then>
-																			<f:format.html>{event.description}
-																			</f:format.html>
+																			<f:format.html>{event.description}</f:format.html>
 																		</f:then>
 																		<f:else>&nbsp;</f:else>
 																	</f:if>
@@ -113,13 +111,8 @@
 										</div>
 										<f:if condition="!{settings.hiddenTargetGroups}">
 											<div class="col-sm">
-												<ul class="commalist">
-													<f:for each="{event.visiblePublicUserGroups}" as="usergroup">
-														<li><span class="label-info targetGroup"
-																style="white-space: nowrap;">{usergroup.title}</span>
-														</li>
-													</f:for>
-												</ul>
+												<ul class="commalist"><f:for each="{event.visiblePublicUserGroups}" as="usergroup"><li><span class="label-info targetGroup"
+																style="white-space: nowrap;">{usergroup.title}</span></li></f:for></ul>
 											</div>
 										</f:if>
 									</div>

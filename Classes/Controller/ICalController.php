@@ -52,10 +52,11 @@ class ICalController extends AbstractController
     {
         $ical = $this->icalService->createICal(
             $this->getDomain(),
-            $this->eventRepository->findPublicEvents(
-                EventRepository::UNLIMITED,
-                $this->getFlexformSettings($id)['_pages'],
-                false
+            $this->eventRepository->findEvents(
+                limit: EventRepository::UNLIMITED,
+                storageUids: $this->getFlexformSettings($id)['_pages'],
+                inclusiveCanceledEvents: false,
+                startWithToday: $this->frontendUserService->isLogged()
             )
         );
         throw new PropagateResponseException($this->createIcalResponse($ical), 200);
