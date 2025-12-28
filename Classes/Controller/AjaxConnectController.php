@@ -55,8 +55,7 @@ class AjaxConnectController extends AbstractController
             throw new PropagateResponseException(
                 $this->jsonResponse(
                     json_encode(
-                        $this->eventService->getCalendarEvents($year, $month, $ceUid)
-
+                        $this->eventService->getCalendarEvents($year, $month, $ceUid, !$this->frontendUserService->isLogged()) 
                     )
                 ),
                 200

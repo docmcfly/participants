@@ -110,7 +110,7 @@
 }
 
 .tx_participants ul.commalist li:not(:last-child)::after {
-	content: ',\0020';
+	content: ', ';
 }
 
 .tx_participants .canceled {

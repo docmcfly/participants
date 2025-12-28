@@ -112,7 +112,7 @@
 			</trans-unit>
 			<trans-unit id="tx_participants_domain_model_event_type.public">
 				<source>Public</source>
-				<target state="tanslated">Farbe</target>
+				<target state="tanslated">Öffentlich</target>
 			</trans-unit>
 			<trans-unit id="tx_participants_domain_model_event_type.usergroups">
 				<source>Website user group</source>

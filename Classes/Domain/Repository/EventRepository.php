@@ -61,21 +61,36 @@ class EventRepository extends Repository
         return $return;
     }
 
-    public function findPublicEvents(int $limit = EventRepository::UNLIMITED, array $storageUids = null, bool $inclusiveCanceledEvents = true, bool $startWithToday = false): array
+    public function findEvents(int $limit = EventRepository::UNLIMITED, array $storageUids = null, bool $inclusiveCanceledEvents = true, bool $startWithToday = false, bool $onlyPublic = true): array
     {
         $qb = $this->getQueryBuilder('tx_participants_domain_model_event');
         $qb->select('tx_participants_domain_model_event.uid')
             ->from('tx_participants_domain_model_event')
             ->join('tx_participants_domain_model_event', 'tx_participants_domain_model_eventtype', 'tx_participants_domain_model_eventtype', $qb->expr()
                 ->eq('tx_participants_domain_model_event.event_type', $qb->quoteIdentifier('tx_participants_domain_model_eventtype.uid')))
-            ->where($qb->expr()
-                ->or($qb->expr()
-                    ->eq('tx_participants_domain_model_event.public', PublicOption::PUBLIC), $qb->expr()
-                        ->and($qb->expr()
-                            ->eq('tx_participants_domain_model_event.public', PublicOption::INHERITED), $qb->expr()
-                                ->eq('tx_participants_domain_model_eventtype.public', PublicOption::PUBLIC))))
             ->orderBy('date', QueryInterface::ORDER_ASCENDING)
             ->addOrderBy('time', QueryInterface::ORDER_ASCENDING);
+
+        if ($onlyPublic) {
+            $qb->andWhere(
+                $qb->expr()->or(
+                    $qb->expr()->eq(
+                        'tx_participants_domain_model_event.public',
+                        PublicOption::PUBLIC
+                    ),
+                    $qb->expr()->and(
+                        $qb->expr()->eq(
+                            'tx_participants_domain_model_event.public',
+                            PublicOption::INHERITED
+                        ),
+                        $qb->expr()->eq(
+                            'tx_participants_domain_model_eventtype.public',
+                            PublicOption::PUBLIC
+                        )
+                    )
+                )
+            );
+        }
 
         if ($storageUids == null) {
             $qb->andWhere($qb->expr()

@@ -2,6 +2,12 @@
 
 ## Change log
 
+* 5.7.12  :: UPD : The duty roster event detail rendering in the calendar view.
+* 5.7.7   :: FIX : The duty roster event description rendering misstake.
+* 5.7.6   :: FIX : The duty roster (calendar) takes the login status into account.
+* 5.7.3   :: FIX : Remove copy paste misstake.
+* 5.7.2   :: UPD : The duty roster takes the login status into account.
+* 5.7.1   :: FIX : Optimize the layout of the duty roster target groups list.
 * 5.7.0   :: UPD : The appointment symbol in the calendar view of the duty roster can be assigned.
 * 5.6.1   :: FIX : Remove public color value.
 * 5.6.0   :: ADD : The event types has a color.
