@@ -71,7 +71,7 @@
 			</trans-unit>
 			<trans-unit id="flexforms_general.settings.small.useEventTypeColor">
 				<source>Use the event type color</source>
-				<target state="tanslated">Verwende die Frage der Veranstaltungsart</target>
+				<target state="tanslated">Verwende die Farbe der Veranstaltungsart</target>
 			</trans-unit>
 
 			<trans-unit id="flexforms_general.settings.displayEventEndtime">
@@ -92,7 +92,7 @@
 			</trans-unit>
 			<trans-unit id="flexforms_general.settings.large.useEventTypeColor">
 				<source>Use the event type color</source>
-				<target state="tanslated">Verwende die Frage der Veranstaltungsart</target>
+				<target state="tanslated">Verwende die Farbe der Veranstaltungsart</target>
 			</trans-unit>
 
 			<trans-unit id="flexforms_general.settings.calendar.initialMode">
@@ -143,7 +143,7 @@
 			</trans-unit>
 			<trans-unit id="flexforms_general.settings.calendar.useEventTypeColor">
 				<source>Use the event type color</source>
-				<target state="tanslated">Verwende die Frage der Veranstaltungsart</target>
+				<target state="tanslated">Verwende die Farbe der Veranstaltungsart</target>
 			</trans-unit>
 			<trans-unit id="flexforms_general.settings.calendar.appointmentSymbol">
 				<source>Appointment symbole</source>

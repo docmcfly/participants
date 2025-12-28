@@ -2,6 +2,8 @@
 
 ## Change log
 
+* 5.7.14  :: UPD : Update calendar.js
+* 5.7.13  :: FIX : Translation fix.
 * 5.7.12  :: UPD : The duty roster event detail rendering in the calendar view.
 * 5.7.7   :: FIX : The duty roster event description rendering misstake.
 * 5.7.6   :: FIX : The duty roster (calendar) takes the login status into account.
