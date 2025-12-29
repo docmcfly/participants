@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//WC//DTD XHTML . Strict//EN" "http://www.w.org/TR/xhtml/DTD/xhtml-strict.dtd">
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:c="http://typo3.org/ns/Cylancer/Participants/ViewHelpers" data-namespace-typo3-fluid="true"
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"
 	xmlns="http://www.w.org//xhtml" xml:lang="en" lang="en">
 
 <head>
@@ -120,7 +119,7 @@
 							</tr>
 						</f:for>
 					</table>
-					<f:link.action controller="ICal" action="downloadICal" arguments="{id:uid}">
+					<f:link.action controller="ICal" action="downloadICal" arguments="{ceUid:ceUid}">
 						<f:translate key="dutyRoster.large.link.download.iCalendar" />
 					</f:link.action>
 				</f:case>
@@ -181,7 +180,7 @@
 							let _appointmentSymbol = '{appointmentSymbol}'
 							let _currentDay = new Date('{currentDay}')
 							let _monthSelectorsReference =  {monthSelectorsReferenceFunction}
-							let _ceUid = {ceUid}
+							let _ceUid =  {ceUid}
 
 						</script>
 					</f:format.raw>
@@ -204,7 +203,7 @@
 								$.ajax({
 									url: ajaxConnect,
 									method: "POST",
-									data: { year: _month.getFullYear(), month: _month.getMonth() + 1, ceUid: _ceUid},
+									data: { year: _month.getFullYear(), month: _month.getMonth() + 1},
 								}
 								)
 									.fail(function (error) {

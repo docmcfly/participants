@@ -18,7 +18,7 @@ use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
  * LICENSE.txt file that was distributed with this source code.
  *
  * (c) 2025 C. Gogolin <service@cylancer.net>
- * 
+ *
  */
 class CommitmentSettingsController extends ActionController
 {
@@ -31,7 +31,7 @@ class CommitmentSettingsController extends ActionController
     }
 
     public function showAction(): ResponseInterface
- {
+    {
         /** @var FrontendUser $u */
         $u = $this->frontendUserService->getCurrentUser();
         if ($u !== false) {

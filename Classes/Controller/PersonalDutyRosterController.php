@@ -106,9 +106,9 @@ class PersonalDutyRosterController extends AbstractController
              * @var PersonalDutyRosterGroupFilterSettings $personalDutyRosterFilterSettings
              * @var array $personalDutyRosterGroups
              */
-            list($personalDutyRosterGroups, $personalDutyRosterFilterSettings) = $this->personalDutyRosterService->getPersonalDutyRosterFilterSettings($this->settings);
+            [$personalDutyRosterGroups, $personalDutyRosterFilterSettings] = $this->personalDutyRosterService->getPersonalDutyRosterFilterSettings($this->settings);
             $dutyRosterStorageUids = GeneralUtility::intExplode(',', $this->settings[PersonalDutyRosterController::DUTY_ROSTER_STORAGE_UIDS], true);
-            $planningStorageUid = intval($this->settings[PersonalDutyRosterController::PLANNING_STORAGE_UID]);
+            $planningStorageUid = \intval($this->settings[PersonalDutyRosterController::PLANNING_STORAGE_UID]);
 
             /** @var FrontendUser $user       */
             $user = $this->frontendUserService->getCurrentUser();
@@ -146,7 +146,7 @@ class PersonalDutyRosterController extends AbstractController
             $this->view->assign('personalDutyRosterFilterSettings', $personalDutyRosterFilterSettings);
 
             $this->view->assign('displayScheduledStateIfExternalPlanningUse', $this->settings['displayScheduledStateIfExternalPlanningUse'] ?? true);
-            $this->view->assign('uid', $this->getContentObjectUid());
+            $this->view->assign('ceUid', $this->getContentObjectUid());
             // debug($this->view);
         } else {
             $this->view->assign('counts', []);

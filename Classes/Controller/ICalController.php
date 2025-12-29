@@ -48,15 +48,16 @@ class ICalController extends AbstractController
         );
     }
 
-    public function downloadICalAction(string $id): ResponseInterface
+    public function downloadICalAction(string $ceUid): ResponseInterface
     {
         $ical = $this->icalService->createICal(
             $this->getDomain(),
             $this->eventRepository->findEvents(
                 limit: EventRepository::UNLIMITED,
-                storageUids: $this->getFlexformSettings($id)['_pages'],
+                storageUids: $this->getFlexformSettings($ceUid)['_pages'],
                 inclusiveCanceledEvents: false,
-                startWithToday: $this->frontendUserService->isLogged()
+                startWithToday: false,
+                onlyPublic: !$this->frontendUserService->isLogged()
             )
         );
         throw new PropagateResponseException($this->createIcalResponse($ical), 200);
@@ -69,23 +70,23 @@ class ICalController extends AbstractController
         return parse_url($baseUri, PHP_URL_HOST);
     }
 
-    public function downloadAllVisibleCalendarEntriesAction(int $id): ResponseInterface
+    public function downloadAllVisibleCalendarEntriesAction(int $ceUid): ResponseInterface
     {
         throw new PropagateResponseException(
             $this->createIcalResponse(
                 $this->toICal(
-                    $this->getCurrentUserCommitments($id)
+                    $this->getCurrentUserCommitments($ceUid)
                 )
             ),
             200
         );
     }
 
-    public function downloadCalendarEntryAction(int $id, int $commitmentUid): ResponseInterface
+    public function downloadCalendarEntryAction(int $ceUid, int $commitmentUid): ResponseInterface
     {
 
         if ($this->frontendUserService->isLogged()) {
-            $planningStorageUid = $this->settings[PersonalDutyRosterController::PLANNING_STORAGE_UID];
+            $planningStorageUid = $this->miscService->getFlexformSettings($ceUid)[PersonalDutyRosterController::PLANNING_STORAGE_UID];
             /** @var \TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface $querySettings */
             $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
             $querySettings->setStoragePageIds([$planningStorageUid]);
@@ -118,22 +119,22 @@ class ICalController extends AbstractController
         return $events;
     }
 
-    public function downloadAllPromisedVisibleCalendarEntriesAction(int $id): ResponseInterface
+    public function downloadAllPromisedVisibleCalendarEntriesAction(int $ceUid): ResponseInterface
     {
         throw new PropagateResponseException($this->createIcalResponse(
             $this->icalService->createICal(
                 $this->getDomain(),
-                $this->getPresentEvents($this->getCurrentUserCommitments($id))
+                $this->getPresentEvents($this->getCurrentUserCommitments($ceUid))
             )
         ), 200);
     }
 
-    public function downloadAllPromisedCalendarEntriesAction(int $id): ResponseInterface
+    public function downloadAllPromisedCalendarEntriesAction(int $ceUid): ResponseInterface
     {
         throw new PropagateResponseException($this->createIcalResponse(
             $this->icalService->createICal(
                 $this->getDomain(),
-                $this->getPresentEvents($this->getCurrentUserCommitments($id, true))
+                $this->getPresentEvents($this->getCurrentUserCommitments($ceUid, true))
             )
         ), 200);
     }
@@ -165,16 +166,16 @@ class ICalController extends AbstractController
         return $this->icalService->createICal($this->getDomain(), $events);
     }
 
-    private function getCurrentUserCommitments(int $id, bool $ignoreCurrentUserSettings = false): array
+    private function getCurrentUserCommitments(int $ceUid, bool $ignoreCurrentUserSettings = false): array
     {
         if ($this->frontendUserService->isLogged()) {
-            $flexSettings = $this->getFlexformSettings($id);
+            $flexSettings = $this->getFlexformSettings($ceUid);
 
             $personalDutyRosterGroups = $flexSettings[PersonalDutyRosterController::PERSONAL_DUTY_ROSTER_GROUPS];
             $planningStorageUid = $flexSettings[PersonalDutyRosterController::PLANNING_STORAGE_UID];
             $dutyRosterStorageUids = GeneralUtility::intExplode(',', $flexSettings[PersonalDutyRosterController::DUTY_ROSTER_STORAGE_UIDS], true);
 
-            list($personalDutyRosterGroups, $personalDutyRosterFilterSettings) = $this->personalDutyRosterService->getPersonalDutyRosterFilterSettings($flexSettings, $ignoreCurrentUserSettings);
+            [$personalDutyRosterGroups, $personalDutyRosterFilterSettings] = $this->personalDutyRosterService->getPersonalDutyRosterFilterSettings($flexSettings, $ignoreCurrentUserSettings);
             return $this->commitmentRepository->findCurrentEventCommitments(
                 $this->frontendUserService->getCurrentUser(),
                 $dutyRosterStorageUids,

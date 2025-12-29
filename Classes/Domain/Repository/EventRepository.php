@@ -21,10 +21,10 @@ use Cylancer\Participants\Domain\Model\Event;
 class EventRepository extends Repository
 {
 
-    protected $defaultOrderings = array(
+    protected $defaultOrderings = [
         'date' => QueryInterface::ORDER_ASCENDING,
         'time' => QueryInterface::ORDER_ASCENDING
-    );
+    ];
 
     public const UNLIMITED = -1;
 

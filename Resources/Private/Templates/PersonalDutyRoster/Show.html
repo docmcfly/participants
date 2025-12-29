@@ -82,7 +82,7 @@
 									title="{f:translate(key:'personalDutyRoster.list.download.visibleCalendarEntries')}{paragraph -> f:format.htmlentitiesDecode(encoding: 'utf-8')}{f:translate(key:'personalDutyRoster.list.download.calendarEntriesFileHelp')}"
 									class="btn btn-outline-primary"
 									controller="ICal"
-									action="downloadAllVisibleCalendarEntries" arguments="{id:uid}">
+									action="downloadAllVisibleCalendarEntries" arguments="{ceUid:ceUid}">
 									<f:translate
 										key="personalDutyRoster.list.download.visibleCalendarEntries.symbols" />
 								</f:link.action>
@@ -92,7 +92,7 @@
 									title="{f:translate(key:'personalDutyRoster.list.download.visiblePromisedCalendarEntries')}{paragraph -> f:format.htmlentitiesDecode(encoding: 'utf-8')}{f:translate(key:'personalDutyRoster.list.download.calendarEntriesFileHelp')}"
 									class="btn btn-outline-primary"
 									controller="ICal"
-									action="downloadAllPromisedVisibleCalendarEntries" arguments="{id:uid}">
+									action="downloadAllPromisedVisibleCalendarEntries" arguments="{ceUid:ceUid}">
 									<f:translate
 										key="personalDutyRoster.list.download.visiblePromisedCalendarEntries.symbols" />
 								</f:link.action>
@@ -102,7 +102,7 @@
 									title="{f:translate(key:'personalDutyRoster.list.download.promisedCalendarEntries')}{paragraph -> f:format.htmlentitiesDecode(encoding: 'utf-8')}{f:translate(key:'personalDutyRoster.list.download.calendarEntriesFileHelp')}"
 									class="btn btn-outline-primary" 
 									controller="ICal"
-									action="downloadAllPromisedCalendarEntries" arguments="{id:uid}">
+									action="downloadAllPromisedCalendarEntries" arguments="{ceUid:ceUid}">
 									<f:translate
 										key="personalDutyRoster.list.download.promisedCalendarEntries.symbols" />
 								</f:link.action>
@@ -163,7 +163,7 @@
 					<tr>
 						<td class="pt-3" style="border: 0">
 							<f:form absolute="true" action="setPresent" name="commitment" object="{commitment}"
-								arguments="{commitment:commitment, id:uid}" id="event_{commitment.event.uid}"
+								arguments="{commitment:commitment, ceUid:ceUid}" id="event_{commitment.event.uid}"
 								controller="AjaxConnect" enctype="multipart/form-data">
 								<div class="d-flex justify-content-between align-items-center">
 									<f:form.radio property="present" class="d-none"
@@ -213,7 +213,7 @@
 										title="{f:translate(key:'personalDutyRoster.list.download.calendarEntryTitle')}{paragraph -> f:format.htmlentitiesDecode(encoding: 'utf-8')}{f:translate(key:'personalDutyRoster.list.download.calendarEntriesFileHelp')}"
 										class="btn btn-outline-primary" 
 										controller="ICal"
-										action="downloadCalendarEntry" arguments="{id:uid, commitmentUid:commitment.uid}">
+										action="downloadCalendarEntry" arguments="{ceUid:ceUid, commitmentUid:commitment.uid}">
 											<f:translate
 												key="personalDutyRoster.list.download.calendarEntry.symbol" />
 												<f:format.date format="j.m.Y">{commitment.event.date}</f:format.date>
@@ -305,7 +305,7 @@
 												condition="{canViewMembers} && !{commitment.event.externalPlanningLink}">
 												<f:form style="display:inline" absolute="true" action="getMembers" name="commitment"
 													hiddenFieldClassName="d-none" object="{commitment}"
-													arguments="{commitment:commitment, id=uid}" controller="AjaxConnect"
+													arguments="{commitment:commitment, ceUid:ceUid}" controller="AjaxConnect"
 													id="member_list_{commitment.event.uid}" enctype="multipart/form-data">
 													<button id="getMemberBtn_{commitment.event.uid}"
 														class="getMemberBtn text-primary lnkBtn" type="button"
