@@ -73,17 +73,17 @@ class TaskForceOverviewController extends ActionController
         $dlfc = $this->frontendUserRepository->findByUserGroups($this->settings[TaskForceOverviewController::DEPUTY_LOCAL_FIRE_CHIEF])[0];
         $this->view->assign(TaskForceOverviewController::DEPUTY_LOCAL_FIRE_CHIEF, $dlfc);
 
-        $usersWithTimeout = array();
-        $tmp = array();
+        $usersWithTimeout = [];
+        $tmp = [];
         foreach ($this->timeOutRepository->getTimeOuts() as $to) {
             $usersWithTimeout[] = $to->getUser()->getUid();
             $tmp[$to->getReason()][] = $to;
         }
 
-        $usersWithTimeout = array_unique($usersWithTimeout);
-        $timeOuts = array();
+        $usersWithTimeout = \array_unique($usersWithTimeout);
+        $timeOuts = [];
         foreach ($tmp as $reason => $to) {
-            $tmpUsersTimeOuts = array();
+            $tmpUsersTimeOuts = [];
             foreach ($to as $_to) {
                 if (array_key_exists($_to->getUser()->getUid(), $tmpUsersTimeOuts)) {
                     if ($_to->getUntil() > $tmpUsersTimeOuts[$_to->getUser()->getUid()]->getUntil()) {
@@ -102,7 +102,7 @@ class TaskForceOverviewController extends ActionController
         if ($this->frontendUserService->isLogged() && $this->settings[TaskForceOverviewController::CAN_VIEW_CURRENTLY_OFF_DUTY] != null) {
             /** @var FrontendUserGroup $frontendUserGroup */
             foreach ($this->frontendUserService->getCurrentUser()->getUsergroup() as $frontendUserGroup) {
-                if (in_array($this->settings[TaskForceOverviewController::CAN_VIEW_CURRENTLY_OFF_DUTY], $this->frontendUserService->getSubGroups($frontendUserGroup))) {
+                if (\in_array($this->settings[TaskForceOverviewController::CAN_VIEW_CURRENTLY_OFF_DUTY], $this->frontendUserService->getSubGroups($frontendUserGroup))) {
                     $canViewCurrentlyOfDuty = true;
                     break;
                 }
@@ -125,7 +125,7 @@ class TaskForceOverviewController extends ActionController
         $wdsu = TaskForceOverviewController::filter($this->frontendUserRepository->findByUserGroups($this->settings[TaskForceOverviewController::WITHOUT_DIGITAL_SIGNAL_UNIT]), $usersWithTimeout);
 
         $this->view->assign(TaskForceOverviewController::WITHOUT_DIGITAL_SIGNAL_UNIT . 'All', $wdsu);
-        $usersWithTimeout = array_merge($usersWithTimeout, TaskForceOverviewController::getUids($wdsu));
+        $usersWithTimeout = \array_merge($usersWithTimeout, TaskForceOverviewController::getUids($wdsu));
 
         if ($lfc != null) {
             $usersWithTimeout[] = $lfc->getUid();
@@ -136,7 +136,7 @@ class TaskForceOverviewController extends ActionController
         $fdgl = TaskForceOverviewController::filter($this->frontendUserRepository->findByUserGroups($this->settings[TaskForceOverviewController::FIRE_DEPARTMENT_GROUP_LEADER]), $usersWithTimeout);
         $this->view->assign(TaskForceOverviewController::FIRE_DEPARTMENT_GROUP_LEADER . 's', $fdgl);
 
-        $usersWithTimeout = array_merge($usersWithTimeout, TaskForceOverviewController::getUids($fdgl));
+        $usersWithTimeout = \array_merge($usersWithTimeout, TaskForceOverviewController::getUids($fdgl));
 
         $this->view->assign(TaskForceOverviewController::FIRE_DEPARTMENT_GROUP_1, TaskForceOverviewController::filter($this->frontendUserRepository->findByUserGroups($this->settings[TaskForceOverviewController::FIRE_DEPARTMENT_GROUP_1]), $usersWithTimeout));
         $this->view->assign(TaskForceOverviewController::FIRE_DEPARTMENT_GROUP_2, TaskForceOverviewController::filter($this->frontendUserRepository->findByUserGroups($this->settings[TaskForceOverviewController::FIRE_DEPARTMENT_GROUP_2]), $usersWithTimeout));
@@ -149,7 +149,7 @@ class TaskForceOverviewController extends ActionController
             background-color: ' . $this->settings[TaskForceOverviewController::SPECIAL_FORCES_COLOR] . ' !important
         }
         </style>');
-        $cg = intval(date('m')) % 2;
+        $cg = \intval(date('m')) % 2;
         $this->view->assign(TaskForceOverviewController::CURRENT_FIRE_DEPARTMENT_GROUP, $cg);
         $this->view->assign(TaskForceOverviewController::FIRE_DEPARTMENT_GROUP_1 . 'Marker', $cg == 1 ? 'background-color: ' . $this->settings[TaskForceOverviewController::CURRENT_FIRE_DEPARTMENT_GROUP_COLOR] . ';' : '');
         $this->view->assign(TaskForceOverviewController::FIRE_DEPARTMENT_GROUP_2 . 'Marker', $cg == 0 ? 'background-color: ' . $this->settings[TaskForceOverviewController::CURRENT_FIRE_DEPARTMENT_GROUP_COLOR] . ';' : '');
@@ -171,10 +171,10 @@ class TaskForceOverviewController extends ActionController
 
     private static function filter($users, array $userUids): array
     {
-        $return = array();
+        $return = [];
         /** @var FrontendUser $u */
         foreach ($users as $u) {
-            if (!$u->getCurrentlyOffDuty() && !in_array($u->getUid(), $userUids)) {
+            if (!$u->getCurrentlyOffDuty() && !\in_array($u->getUid(), $userUids)) {
                 $return[] = $u;
             }
         }

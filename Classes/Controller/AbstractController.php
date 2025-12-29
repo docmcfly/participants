@@ -31,7 +31,7 @@ class AbstractController extends ActionController
 
     protected function getFlexformSettings($ceUid): array
     {
-        return array_merge($this->settings, $this->miscService->getFlexformSettings($ceUid));
+        return \array_merge($this->settings, $this->miscService->getFlexformSettings($ceUid));
     }
 
     private function getPageId(): int

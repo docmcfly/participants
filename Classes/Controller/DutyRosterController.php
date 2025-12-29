@@ -104,7 +104,7 @@ class DutyRosterController extends AbstractController
         switch ($this->settings['renderType'] ?? 'big') {
             case 'little':
                 $events = $this->eventRepository->findEvents(
-                    limit: intval(value: $this->settings['smallEventCount'] ?? '5'),
+                    limit: \intval(value: $this->settings['smallEventCount'] ?? '5'),
                     storageUids: $flexformSettings['_pages'],
                     inclusiveCanceledEvents: true,
                     startWithToday: true,
@@ -112,25 +112,24 @@ class DutyRosterController extends AbstractController
                 );
 
                 $this->view->assign('events', $this->prepareEvents($events));
-                $this->view->assign('uid', $this->request->getAttribute('currentContentObject')->data['uid']);
                 return $this->htmlResponse();
 
             case 'big':
                 $events = $this->eventRepository->findEvents(
                     storageUids: $flexformSettings['_pages'],
                     inclusiveCanceledEvents: true,
-                    startWithToday: true,
+                    startWithToday: false,
                     onlyPublic: !$this->frontendUserService->isLogged(),
                 );
                 $this->view->assign('events', $this->prepareEvents($events));
-                $this->view->assign('uid', $this->request->getAttribute('currentContentObject')->data['uid']);
+                $this->view->assign('ceUid', $ceUid);
                 return $this->htmlResponse();
             case 'calendar':
                 $this->view->assign('ceUid', $ceUid);
                 $this->view->assign('appointmentSymbol', $flexformSettings['calendarAppointmentSymbol'] ?? ' 🕗');
 
                 $mode = $this->settings['calendarInitialMode'] ?? 'startTodayMonthRelative';
-                if (str_starts_with($mode, 'startFixDate')) {
+                if (\str_starts_with($mode, 'startFixDate')) {
                     $currentDay = $this->settings['calendarFixStartDate'] ?? date('Y-m-d');
                     if ($currentDay === '0') {
                         $currentDay = date('Y-m-d');
@@ -172,31 +171,6 @@ class DutyRosterController extends AbstractController
             default:
                 throw new \Exception('Unkonw render type: ' . $this->settings['renderType']);
         }
-    }
-
-    public function downloadIcsAction(string $id): ResponseInterface
-    {
-        $normalizedParams = $this->request->getAttribute('normalizedParams');
-        $baseUri = $normalizedParams->getSiteUrl();
-
-        $ical = $this->icalService->createICal(
-            parse_url($baseUri, PHP_URL_HOST),
-            $this->eventRepository->findEvents(
-                EventRepository::UNLIMITED,
-                $this->getFlexformSettings($id)['_pages'],
-                false,
-                false,
-                false
-
-            )
-        );
-
-        $response = $this->responseFactory->createResponse();
-        $response = $response->withAddedHeader('Content-Type', 'text/text;charset=utf-8');
-        $response = $response->withAddedHeader('Content-Disposition', 'inline; filename="export.txt"');
-        $response->getBody()->write($ical);
-
-        return $response;
     }
 
 }

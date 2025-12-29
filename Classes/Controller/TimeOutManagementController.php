@@ -58,7 +58,7 @@ class TimeOutManagementController extends ActionController
 
             // settings: reasons
             $tmp = explode("\n", str_replace("\r", "\n", str_replace("\r\n", "\n", $this->settings[TimeOutManagementController::REASONS])));
-            $reasons = array();
+            $reasons = [];
             foreach ($tmp as &$value) {
                 if (!empty($value)) {
                     $reasons[$value] = $value;
