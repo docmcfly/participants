@@ -2,7 +2,8 @@
 
 ## Change log
 
-* 5.7.16  :: FIX : Duty roster does not start with today and the duty roster ical download worsk as expected. 
+* 5.7.17  :: FIX : Personal duty roster getMemebers worsk as expected.
+* 5.7.16  :: FIX : Duty roster does not start with today and the duty roster ical download worsk as expected.
 * 5.7.15  :: CLN : Clean the code.
 * 5.7.14  :: UPD : Update calendar.js
 * 5.7.13  :: FIX : Translation fix.

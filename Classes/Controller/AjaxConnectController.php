@@ -49,13 +49,10 @@ class AjaxConnectController extends AbstractController
         if (\is_array($parsedBody)) {
             $year = \intval($parsedBody['year']);
             $month = \intval($parsedBody['month']);
-
-            $flexformSettings = $this->getFlexformSettings($ceUid);
-
             throw new PropagateResponseException(
                 $this->jsonResponse(
                     json_encode(
-                        $this->eventService->getCalendarEvents($year, $month, $ceUid, !$this->frontendUserService->isLogged()) 
+                        $this->eventService->getCalendarEvents($year, $month, $ceUid, !$this->frontendUserService->isLogged())
                     )
                 ),
                 200
@@ -64,21 +61,21 @@ class AjaxConnectController extends AbstractController
         return throw new PropagateResponseException($this->jsonResponse(json_encode([])), 500);
     }
 
-    public function setPresentAction(Commitment $commitment): ResponseInterface
+    public function setPresentAction(Commitment $commitment, int $ceUid): ResponseInterface
     {
         $return = [];
-        if ($commitment->getUser()->getUid() == $this->frontendUserService->getCurrentUserUid() && $this->request->hasArgument('id')) {
+        if ($commitment->getUser()->getUid() == $this->frontendUserService->getCurrentUserUid()) {
             $eventUid = $commitment->getEvent()->getUid();
             $return['eventUid'] = $eventUid;
             $return['present'] = $commitment->getPresent();
             if (!$commitment->_isNew() && $commitment->_isDirty('present')) {
-                $settings = $this->getFlexformSettings(intval($this->request->getArgument('id')));
+                $settings = $this->getFlexformSettings($ceUid);
                 $this->commitmentRepository->update($commitment);
                 $this->persistenceManager->persistAll();
             } else {
                 $settings = $this->settings;
             }
-            $cc = $this->commitmentRepository->getEventCommitmentCounts(intval($settings[PersonalDutyRosterController::PLANNING_STORAGE_UID]), $eventUid);
+            $cc = $this->commitmentRepository->getEventCommitmentCounts(\intval($settings[PersonalDutyRosterController::PLANNING_STORAGE_UID]), $eventUid);
             $return['counts'] = Utility::calculatePresentDatas($cc['presentCount'], $cc['presentDefaultCount']);
         } else {
             $return['present'] = false;
@@ -98,20 +95,13 @@ class AjaxConnectController extends AbstractController
         );
     }
 
-    public function getMembersAction(Commitment $commitment): ResponseInterface
+    public function getMembersAction(Commitment $commitment, int $ceUid): ResponseInterface
     {
         $return = [];
-
-        $return['args'] = $this->request->getArguments();
-        $return['c_user'] = $commitment->getUser()->getUid();
-        $return['fe_user'] = $this->frontendUserService->getCurrentUserUid();
-        $return['id'] = $this->request->getArgument('id');
-
         if ($commitment->getUser()->getUid() == $this->frontendUserService->getCurrentUserUid()) {
             $eventUid = $commitment->getEvent()->getUid();
-            $settings = $this->request->hasArgument('id') ? $this->getFlexformSettings(intval($this->request->getArgument('id'))) : $this->settings;
+            $settings = $this->getFlexformSettings($ceUid);
             $planningStorageUid = intval($settings[PersonalDutyRosterController::PLANNING_STORAGE_UID]);
-            $return['event_uid'] = $eventUid;
             $return['members'] = $this->commitmentRepository->getEventCommitments(PresentState::PRESENT, $planningStorageUid, $eventUid, null);
             $return['dropouts'] = $this->commitmentRepository->getEventCommitments(PresentState::NOT_PRESENT, $planningStorageUid, $eventUid);
             $return['undecideds'] = $this->commitmentRepository->getEventCommitments(PresentState::UNKNOWN, $planningStorageUid, $eventUid);
