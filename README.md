@@ -2,6 +2,8 @@
 
 ## Change log
 
+* 5.8.0   :: ADD : Add  the duplicate button for events.
+* 5.7.18  :: UPD : Update calendar.js
 * 5.7.17  :: FIX : Personal duty roster getMemebers worsk as expected.
 * 5.7.16  :: FIX : Duty roster does not start with today and the duty roster ical download worsk as expected.
 * 5.7.15  :: CLN : Clean the code.
