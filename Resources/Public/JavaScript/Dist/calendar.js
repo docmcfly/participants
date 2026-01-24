@@ -19,7 +19,7 @@ class Calendar {
         // font color of the weekend days
         weekendColor: 'var(--bs-primary)',
 
-        // is the 
+        // is the appointment symbol
         appointmentSymbol: ' 🕗',
 
         // how many month you can switch in the past. (it exists no limit if the value less as one)
@@ -272,6 +272,7 @@ class Calendar {
             let event = events[i]
 
             let start = this.parseMoment(event.start)
+            event.openEnd = this.hasDateFormat(event.end)
             let end = this.parseMoment(event.end)
 
             if (start === null || end === null) {
@@ -594,12 +595,14 @@ class Calendar {
                         if (event.start.getHours() !== 0 || event.start.getMinutes() !== 0) {
                             time += event.start.toLocaleTimeString(this.language, this.properties.formatter.timeOptions)
                         }
-                        time += "&nbsp;-&nbsp;"
-                        if (endDate !== currentDay) {
-                            time += event.end.toLocaleDateString(this.language, this.properties.formatter.dateOptions) + ' '
-                        }
-                        if (event.end.getHours() !== 0 || event.end.getMinutes() !== 0) {
-                            time += event.end.toLocaleTimeString(this.language, this.properties.formatter.timeOptions)
+                        if (!event.openEnd) {
+                            time += "&nbsp;-&nbsp;"
+                            if (endDate !== currentDay) {
+                                time += event.end.toLocaleDateString(this.language, this.properties.formatter.dateOptions) + ' '
+                            }
+                            if (event.end.getHours() !== 0 || event.end.getMinutes() !== 0) {
+                                time += event.end.toLocaleTimeString(this.language, this.properties.formatter.timeOptions)
+                            }
                         }
                     }
 
@@ -668,14 +671,24 @@ class Calendar {
             return;
         }
 
-        if (start.getTime() > end.getTime()) {
-            return;
+        if (event.openEnd) {
+            // opened-end event: same day - time doesn't matter
+            if (start.getFullYear() !== end.getFullYear() || start.getMonth() !== end.getMonth() || start.getDate() !== end.getDate()) {
+                return;
+            }
+        } else {
+            if (start.getTime() > end.getTime()) {
+                return;
+            }
         }
-        if (start.getTime() > this.monthEndDate.getTime() || end.getTime() < this.monthStartDate.getTime()) {
+        // the event does not overlap the current month
+        if( this.toDate(end).getTime() < this.toDate(this.monthStartDate).getTime() || this.toDate(start).getTime() > this.toDate(this.monthEndDate).getTime()) {
             return;
         }
 
-        // end time is specified and it is 0:00 
+        if(end.getFullYear() < this.monthStartDate.getFullYear())
+
+        // end time is specified and it is 0:00
         if (event.end.length > 10 && end.getHours() === 0 && end.getMinutes() === 0) {
             end.setDate(end.getDate() - 1) // display the event only to the day before.
         }

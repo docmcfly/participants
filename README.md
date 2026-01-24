@@ -2,6 +2,7 @@
 
 ## Change log
 
+* 5.8.1   :: FIX : The duty calendar displays open-ended events correctly. 
 * 5.8.0   :: ADD : Add  the duplicate button for events.
 * 5.7.18  :: UPD : Update calendar.js
 * 5.7.17  :: FIX : Personal duty roster getMemebers worsk as expected.
@@ -28,7 +29,7 @@
 * 5.5.0   :: RMV : Remove the oldschool page types for ajax connections.
 * 5.4.0   :: ADD : Add a duty roster calendar view.
 * 5.3.1   :: UPD : Fix the dependency to the usertools extension.
-* 5.3.0   :: ADD : You can mark an event as "open end event".
+* 5.3.0   :: ADD : You can mark an event as "open-ended event".
 * 5.2.0   :: ADD : New option: Display the endtime of the events.
 * 5.1.1   :: FIX : The "set value" for "link to an external event planning" is not checked if you create a new event.
 * 5.1.0   :: UPD : The personal duty roster supports external planning links.
