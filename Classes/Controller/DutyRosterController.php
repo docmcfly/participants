@@ -126,7 +126,9 @@ class DutyRosterController extends AbstractController
                 return $this->htmlResponse();
             case 'calendar':
                 $this->view->assign('ceUid', $ceUid);
-                $this->view->assign('appointmentSymbol', $flexformSettings['calendarAppointmentSymbol'] ?? ' 🕗');
+                $this->view->assign('withAppointmentSymbol', $flexformSettings['calendarAppointmentSymbol'] ?? '🕗');
+                $this->view->assign('withAppointmentColor', $flexformSettings['calendarWithAppointmentColor'] ?? '#ff98b4ff');
+                $this->view->assign('displayAppointmentCounter', $flexformSettings['calendarDisplayAppointmentCounter'] ?? true);
 
                 $mode = $this->settings['calendarInitialMode'] ?? 'startTodayMonthRelative';
                 if (\str_starts_with($mode, 'startFixDate')) {

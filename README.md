@@ -2,7 +2,9 @@
 
 ## Change log
 
-* 5.8.1   :: FIX : The duty calendar displays open-ended events correctly. 
+* 5.9.1   :: UPD : Update of the calendar library.
+* 5.9.0   :: UPD : The duty calendar: You can set the 'date has an appointment' color and choose whether to display the appointment count.
+* 5.8.1   :: FIX : The duty calendar displays open-ended events correctly.
 * 5.8.0   :: ADD : Add  the duplicate button for events.
 * 5.7.18  :: UPD : Update calendar.js
 * 5.7.17  :: FIX : Personal duty roster getMemebers worsk as expected.

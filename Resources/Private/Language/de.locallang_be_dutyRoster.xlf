@@ -149,6 +149,22 @@
 				<source>Appointment symbole</source>
 				<target state="tanslated">Terminsymbol</target>
 			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.appointmentSymbol.description">
+				<source>Is displayed on the calendar day if there is an appointment on this day.</source>
+				<target state="tanslated">Wird am Kalendertag angezeigt, wenn ein Termin an diesem Tag vorliegt</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.withAppointmentColor">
+				<source>Appointment color</source>
+				<target state="tanslated">Terminfarbe</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.withAppointmentColor.description">
+				<source>Calendar day highlighted with this color when an appointment is scheduled on that day.</source>
+				<target state="tanslated">Kalendertag mit dieser Farbe umrahmt, wenn ein Termin an diesem Tag vorliegt</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.settings.calendar.displayAppointmentCounter">
+				<source>Display the appointment counter</source>
+				<target state="tanslated">Anzeigen der Terminanzahl</target>
+			</trans-unit>
 
 			
 		</body>
