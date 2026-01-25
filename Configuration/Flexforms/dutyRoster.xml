@@ -179,14 +179,31 @@
 						</config>
 					</settings.calendarUseEventTypeColor>
 					<settings.calendarAppointmentSymbol>
-						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.appointmentSymbol</label>
-						<description>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.appointmentSymbol.description</description>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.withAppointmentSymbol</label>
+						<description>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.withAppointmentSymbol.description</description>
 						<config>
 							<type>input</type>
 							<max>2</max>
 							<default>🕗</default>
 						</config>
 					</settings.calendarAppointmentSymbol>
+					<settings.calendarWithAppointmentColor>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.withAppointmentCounter</label>
+						<description>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.withAppointmentCounter.description</description>
+						<config>
+							<type>color</type>
+							<nullable>true</nullable>
+							<default>#d8937e</default>
+						</config>
+					</settings.calendarWithAppointmentColor>
+					<settings.calendardisplayAppointmentCounter>
+						<label>LLL:EXT:participants/Resources/Private/Language/locallang_be_dutyRoster.xlf:flexforms_general.settings.calendar.displayAppointmentCounter</label>
+						<config>
+							<type>check</type>
+							<renderType>checkboxToggle</renderType>
+     						<default>1</default>
+						</config>
+					</settings.calendardisplayAppointmentCounter>
 				</el>
 			</ROOT>
 

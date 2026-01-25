@@ -177,7 +177,9 @@
 							let ajaxConnect = '{f:uri.action(controller:"AjaxConnect",absolute:1, action:"getEvents",  arguments="{ceUid:ceUid}")}'
 							let _maxPastMonth = {calendarMaxPastMonth}
 							let _maxFutureMonth = {calendarMaxFutureMonth}
-							let _appointmentSymbol = '{appointmentSymbol}'
+           					let _withAppointmentSymbol = '{withAppointmentSymbol}'
+           					let _withAppointmentColor = '{withAppointmentColor}'
+           					let _displayAppointmentCounter = <f:if condition="{displayAppointmentCounter}"><f:then>true</f:then><f:else>false</f:else></f:if>
 							let _currentDay = new Date('{currentDay}')
 							let _monthSelectorsReference =  {monthSelectorsReferenceFunction}
 							let _ceUid =  {ceUid}
@@ -187,14 +189,17 @@
 
 					<script defer="defer">
 						//   <f:format.cdata>
-						let selector = '#dutyRosterCalendar_' + _ceUid 
+						let selector = '#dutyRosterCalendar_' + _ceUid
 
 						new Calendar(selector, language, {
-				            appointmentSymbol: ' ' + _appointmentSymbol,
+           					withAppointmentSymbol: _withAppointmentSymbol,
+           					withAppointmentColor: _withAppointmentColor,
+           					displayAppointmentCounter: _displayAppointmentCounter,
 							maxPastMonth: _maxPastMonth,
 							maxFutureMonth: _maxFutureMonth,
-							monthSelectorsReference: function (c) { 
-								return c.properties.currentDay 
+							dayBoxHeight:'9.2em',
+							monthSelectorsReference: function (c) {
+								return c.properties.currentDay
 							},
 							currentDay: _currentDay,
 							updateMonthButtonHook: function (calendar, offset) {
