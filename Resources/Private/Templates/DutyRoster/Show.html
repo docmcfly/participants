@@ -49,9 +49,9 @@
 						<f:for each="{events}" as="event" iteration="iterator">
 							<tr class="
 						{f:if(condition:'{iterator.index % 2} == 0', then: 'evenRow')}
-						{f:if(condition:'{event.current} == -1', then:'upcomingDateBefore')} 
-						{f:if(condition:'{event.current} == 0', then:'upcomingDate')} 
-						{f:if(condition:'{event.current} == 1', then:'upcomingDateNext')} 
+						{f:if(condition:'{event.current} == -1', then:'upcomingDateBefore')}
+						{f:if(condition:'{event.current} == 0', then:'upcomingDate')}
+						{f:if(condition:'{event.current} == 1', then:'upcomingDateNext')}
 						{f:if(condition:'{event.current} == 2', then:'upcomingDateNextNext')}">
 								<td><span class="date" style="white-space: nowrap;"> <time
 											datetime="{f:if(condition:event.fullDay ,then:'{f:format.date(date:event.dateTime, format:\'Y-m-d\')}', else:'{f:format.date(date:event.dateTime, format:\'Y-m-d H:i\')}')}">
@@ -70,7 +70,7 @@
 											</f:if>
 										</time>
 									</span></td>
-								<f:if condition="{settings.largeUseEventTypeColor}"> 
+								<f:if condition="{settings.largeUseEventTypeColor}">
 									<td class="p-0" style="width:0.3em; background-color: {event.eventType.color};" />
 								</f:if>
 								<td>
@@ -84,24 +84,22 @@
 														<f:then>
 															<f:translate key="dutyRoster.large.event.canceled" />
 														</f:then>
-														<f:else>
-															<f:if condition="{event.showPublicDescription}">
+													</f:if>
+													<f:if condition="{event.showPublicDescription}">
+														<f:then>
+															<f:if condition="{event.publicDescription}">
 																<f:then>
-																	<f:if condition="{event.publicDescription}">
-																		<f:then>
-																			<f:format.html>{event.publicDescription}</f:format.html>
-																		</f:then>
-																		<f:else>&nbsp;</f:else>
-																	</f:if>
+																	<f:format.html>{event.publicDescription}</f:format.html>
 																</f:then>
-																<f:else>
-																	<f:if condition="{event.description}">
-																		<f:then>
-																			<f:format.html>{event.description}</f:format.html>
-																		</f:then>
-																		<f:else>&nbsp;</f:else>
-																	</f:if>
-																</f:else>
+																<f:else>&nbsp;</f:else>
+															</f:if>
+														</f:then>
+														<f:else>
+															<f:if condition="{event.description}">
+																<f:then>
+																	<f:format.html>{event.description}</f:format.html>
+																</f:then>
+																<f:else>&nbsp;</f:else>
 															</f:if>
 														</f:else>
 													</f:if>
@@ -172,14 +170,15 @@
 								btnToday: "<f:translate key='dutyRoster.calendar.label.today' />",
 								appointmentsOfTheDay: "<f:translate key='dutyRoster.calendar.label.appointmentsOfTheDay' />",
 								monthNames: [<f:translate key='dutyRoster.calendar.label.monthNames' />],
+								canceledAdditionalNote: "<f:translate key='dutyRoster.calendar.label.canceledAdditionalNote' />",
 							}
 							let currentMonthEvents = {currentMonthEvents}
 							let ajaxConnect = '{f:uri.action(controller:"AjaxConnect",absolute:1, action:"getEvents",  arguments="{ceUid:ceUid}")}'
 							let _maxPastMonth = {calendarMaxPastMonth}
 							let _maxFutureMonth = {calendarMaxFutureMonth}
-           					let _withAppointmentSymbol = '{withAppointmentSymbol}'
-           					let _withAppointmentColor = '{withAppointmentColor}'
-           					let _displayAppointmentCounter = <f:if condition="{displayAppointmentCounter}"><f:then>true</f:then><f:else>false</f:else></f:if>
+							let _withAppointmentSymbol = '{withAppointmentSymbol}'
+							let _withAppointmentColor = '{withAppointmentColor}'
+							let _displayAppointmentCounter = <f:if condition="{displayAppointmentCounter}"><f:then>true</f:then><f:else>false</f:else></f:if>
 							let _currentDay = new Date('{currentDay}')
 							let _monthSelectorsReference =  {monthSelectorsReferenceFunction}
 							let _ceUid =  {ceUid}
@@ -192,9 +191,9 @@
 						let selector = '#dutyRosterCalendar_' + _ceUid
 
 						new Calendar(selector, language, {
-           					withAppointmentSymbol: _withAppointmentSymbol,
-           					withAppointmentColor: _withAppointmentColor,
-           					displayAppointmentCounter: _displayAppointmentCounter,
+							withAppointmentSymbol: _withAppointmentSymbol,
+							withAppointmentColor: _withAppointmentColor,
+							displayAppointmentCounter: _displayAppointmentCounter,
 							maxPastMonth: _maxPastMonth,
 							maxFutureMonth: _maxFutureMonth,
 							dayBoxHeight:'9.2em',

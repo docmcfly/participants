@@ -540,6 +540,10 @@ Dein Webserviceteam
 				<source>"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"</source>
 				<target state="tanslated">"Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"</target>
 			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.canceledAdditionalNote">
+				<source>Canceled</source>
+				<target>Abgesagt</target>
+			</trans-unit>
 
 		</body>
 	</file>

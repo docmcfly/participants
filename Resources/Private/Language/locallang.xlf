@@ -400,6 +400,9 @@
 			<trans-unit id="dutyRoster.calendar.label.monthNames">
 				<source>"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"</source>
 			</trans-unit>
+			<trans-unit id="dutyRoster.calendar.label.canceledAdditionalNote">
+				<source>Canceled</source>
+			</trans-unit>
 
 		</body>
 	</file>
