@@ -91,6 +91,7 @@ class EventService implements SingletonInterface
                     $tmp['cssClass'] = 'dutyRosterCalendarEvent';
                 }
                 $tmp['striped'] = false;
+                $tmp['canceled'] = $event->getCanceled();
 
                 $events[] = $tmp;
             }
