@@ -229,9 +229,9 @@
 				<source>Specified user uids are not valid. (Not a number or not a valid page: %1)</source>
 				<target state="tanslated">Die UIDs der Nutzereinschränkung ist ungültig: %1.</target>
 			</trans-unit>
-			<trans-unit id="task.personalDutyRosterPlanning.error.invalidUrl.personalDutyRosterPageUid">
+			<trans-unit id="task.personalDutyRosterPlanning.error.invalidPage.personalDutyRosterPageUid">
 				<source>The specified target page uid is not a valid page.</source>
-				<target>Die angegebene Zielseite ist keine gültige Seite. </target>
+				<target>Seiten UI der angegebene Zielseite ist keine gültige Seite.</target>
 			</trans-unit>
 			<trans-unit id="task.personalDutyRosterPlanning.error.siteNotFound.siteIdentifier">
 				<source>Site with specified identifier not found.</source>

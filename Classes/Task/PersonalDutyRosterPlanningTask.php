@@ -275,19 +275,21 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         }
         foreach ($reminderUsers as $frontendUserUid => $data) {
             $frontendUser = $data['user'];
-            $fluidEmail = GeneralUtility::makeInstance(FluidEmail::class);
-            $fluidEmail
-                ->setRequest($this->createRequest($this->siteIdentifier))
-                ->to(new Address($frontendUser->getEmail(), $frontendUser->getFirstName() . ' ' . $frontendUser->getLastName()))
-                ->from(new Address(MailUtility::getSystemFromAddress(), LocalizationUtility::translate('task.personalDutyRosterPlanning.reminderMail.senderName', PersonalDutyRosterPlanningTask::EXTENSION_NAME)))
-                ->subject(LocalizationUtility::translate('task.personalDutyRosterPlanning.reminderMail.subject', PersonalDutyRosterPlanningTask::EXTENSION_NAME))
-                ->format(FluidEmail::FORMAT_BOTH) // send HTML and plaintext mail
-                ->setTemplate('TommorrowsEventsReminderMail')
-                ->assign('user', $frontendUser)
-                ->assign('events', $data['events'])
-                ->assign('pageUid', $this->personalDutyRosterPageUid)
-            ;
-            GeneralUtility::makeInstance(MailerInterface::class)->send($fluidEmail);
+            if (filter_var($frontendUser->getEmail(), FILTER_VALIDATE_EMAIL)) {
+                $fluidEmail = GeneralUtility::makeInstance(FluidEmail::class);
+                $fluidEmail
+                    ->setRequest($this->createRequest($this->siteIdentifier))
+                    ->to(new Address($frontendUser->getEmail(), $frontendUser->getFirstName() . ' ' . $frontendUser->getLastName()))
+                    ->from(new Address(MailUtility::getSystemFromAddress(), LocalizationUtility::translate('task.personalDutyRosterPlanning.reminderMail.senderName', PersonalDutyRosterPlanningTask::EXTENSION_NAME)))
+                    ->subject(LocalizationUtility::translate('task.personalDutyRosterPlanning.reminderMail.subject', PersonalDutyRosterPlanningTask::EXTENSION_NAME))
+                    ->format(FluidEmail::FORMAT_BOTH) // send HTML and plaintext mail
+                    ->setTemplate('TommorrowsEventsReminderMail')
+                    ->assign('user', $frontendUser)
+                    ->assign('events', $data['events'])
+                    ->assign('pageUid', $this->personalDutyRosterPageUid)
+                ;
+                GeneralUtility::makeInstance(MailerInterface::class)->send($fluidEmail);
+            }
         }
     }
 
@@ -556,8 +558,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                     break;
                 case PersonalDutyRosterPlanningTask::PERSONAL_DUTY_ROSTER_PAGE_UID:
                     $this->personalDutyRosterPageUid = intval($value);
-                    break;
-
+                    break; 
                 case PersonalDutyRosterPlanningTask::SPECIFIED_USER_UIDS:
                     $this->specifiedUserUids = $this->intExplode($value);
                     break;
