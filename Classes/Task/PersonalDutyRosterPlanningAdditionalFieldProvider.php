@@ -24,11 +24,11 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
                 return false;
             case PersonalDutyRosterPlanningTask::PLANNING_STORAGE_UID:
             case PersonalDutyRosterPlanningTask::PERSONAL_DUTY_ROSTER_PAGE_UID:
-            case PersonalDutyRosterPlanningTask::SPECIFIED_USER_UIDS:
             case PersonalDutyRosterPlanningTask::DUTY_ROSTER_STORAGE_UIDS:
             case PersonalDutyRosterPlanningTask::FE_USER_STORAGE_UIDS:
             case PersonalDutyRosterPlanningTask::FE_USERGROUP_STORAGE_UIDS:
                 return 0;
+            case PersonalDutyRosterPlanningTask::SPECIFIED_USER_UIDS:
             default:
                 return '';
         }
