@@ -12,9 +12,7 @@ use Cylancer\Participants\Domain\Model\FrontendUserGroup;
 use Cylancer\Participants\Domain\Model\FrontendUser;
 use Cylancer\Participants\Domain\Repository\FrontendUserRepository;
 
-
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 use Psr\Http\Message\ServerRequestFactoryInterface;
@@ -103,7 +101,6 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
 
     // ------------------------------------------------------
     // internal constants
-    private const CURRENTLY_OFF_DUTY = 'currentlyOfDuty';
 
     private const EXTENSION_NAME = 'Participants';
 
@@ -116,42 +113,42 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
 
     private ?CommitmentRepository $commitmentRepository = null;
 
-    private ?PageRepository $pageRepository = null;
     private ?FrontendUserGroupRepository $frontendUserGroupRepository = null;
 
     private ?PersistenceManager $persistenceManager = null;
 
     private ?array $frontendUserGroupStructure = [];
 
-    private ?array $targetGroups = [];
-
     private function initialize()
     {
-        $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
 
-        $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+        $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
 
         $this->frontendUserRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
         $this->frontendUserRepository->injectPersistenceManager($this->persistenceManager);
         $querySettings = $this->frontendUserRepository->createQuery()->getQuerySettings();
+        $querySettings->setIgnoreEnableFields(true);
         $querySettings->setStoragePageIds($this->getFeUserStorageUids());
         $this->frontendUserRepository->setDefaultQuerySettings($querySettings);
 
         $this->frontendUserGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
         $this->frontendUserGroupRepository->injectPersistenceManager($this->persistenceManager);
         $querySettings = $this->frontendUserGroupRepository->createQuery()->getQuerySettings();
+        $querySettings->setIgnoreEnableFields(true);
         $querySettings->setStoragePageIds($this->getFeUsergroupStorageUids());
         $this->frontendUserGroupRepository->setDefaultQuerySettings($querySettings);
 
         $this->eventRepository = GeneralUtility::makeInstance(EventRepository::class);
         $this->eventRepository->injectPersistenceManager($this->persistenceManager);
         $querySettings = $this->eventRepository->createQuery()->getQuerySettings();
+        $querySettings->setIgnoreEnableFields(true);
         $querySettings->setStoragePageIds($this->getDutyRosterStorageUids());
         $this->eventRepository->setDefaultQuerySettings($querySettings);
 
         $this->commitmentRepository = GeneralUtility::makeInstance(CommitmentRepository::class);
         $this->commitmentRepository->injectPersistenceManager($this->persistenceManager);
         $querySettings = $this->commitmentRepository->createQuery()->getQuerySettings();
+        $querySettings->setIgnoreEnableFields(true);
         $querySettings->setStoragePageIds([
             $this->planningStorageUid
         ]);
@@ -175,7 +172,6 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
     {
         $valid = true;
 
-        $valid &= $this->pageRepository != null;
         $valid &= $this->commitmentRepository != null;
         $valid &= $this->frontendUserRepository != null;
         $valid &= $this->frontendUserGroupRepository != null;
@@ -183,17 +179,17 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         $valid &= $this->frontendUserService != null;
 
         if ($valid) {
-            $valid &= $this->isPageUidValid($this->planningStorageUid);
-            $valid &= $this->isPageUidValid($this->personalDutyRosterPageUid);
+            $valid &= $this->existsPage($this->planningStorageUid);
+            $valid &= $this->existsPage($this->personalDutyRosterPageUid);
             $valid &= $this->isSiteIdentifierValid($this->siteIdentifier);
             foreach ($this->getDutyRosterStorageUids() as $dr) {
-                $valid &= $this->isPageUidValid($dr);
+                $valid &= $this->existsPage($dr);
             }
             foreach ($this->getFeUserStorageUids() as $p) {
-                $valid &= $this->isPageUidValid($p);
+                $valid &= $this->existsPage($p);
             }
             foreach ($this->getFeUsergroupStorageUids() as $p) {
-                $valid &= $this->isPageUidValid($p);
+                $valid &= $this->existsPage($p);
             }
             foreach ($this->getSpecifiedUserUids() as $u) {
                 $valid &= $this->isUserUidValid($u);
@@ -202,11 +198,25 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         return $valid;
     }
 
-    private function isPageUidValid(int $id): bool
+    private function existsPage(int $pageUid): bool
     {
-
-        return $this->pageRepository->getPage($id) != null;
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable('pages');
+        $uid = $queryBuilder
+            ->select('uid')
+            ->from('pages')
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($pageUid))
+            )
+            ->andWhere(
+                $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0))
+            )
+            ->setMaxResults(1)
+            ->executeQuery()
+            ->fetchOne();
+        return $uid === $pageUid;
     }
+
 
     private function isUserUidValid(int $uid): bool
     {
@@ -262,9 +272,9 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         $reminderUsers = [];
         /** @var Event $event **/
         foreach ($this->eventRepository->findTomorrowsEvents() as $event) {
-            /** @var FrontendUser $frontendUser **/
             foreach ($this->commitmentRepository->getEventCommitments(PresentState::PRESENT, $this->planningStorageUid, $event->getUid()) as $frontendUserUid => $data) {
 
+                /** @var FrontendUser $frontendUser **/
                 $frontendUser = $this->frontendUserRepository->findByUid($frontendUserUid);
                 // debug($frontendUser, 'eventReminder()');
                 if ($frontendUser->getPersonalDutyEventReminder()) {
@@ -331,9 +341,6 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
             // debug($users);
 
             // debug($this->resetUser);
-            /** @var FrontendUser $u */
-            /** @var Event $e */
-
             foreach ($users as $u) {
                 $userCount++;
                 // $pages = $this->getPages();
@@ -346,15 +353,14 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                     $loadedData++;
                     // debug($uids);
                     $createdCount = 0;
-                    /**
-                     *
-                     * @var Commitment $c
-                     */
+                    /** @var Commitment $c */
                     $c = $this->commitmentRepository->findByUid($uids['commitment']);
+
+                    /** @var Event $e */
                     $e = $this->eventRepository->findByUid(intval($uids['event']));
 
                     if ($e != null && $e->getDatetime() > $now) {
-
+                        /** @var FrontendUser $u */
                         $planningPresent = $u->getCurrentlyOffDuty() ? false : $this->calculatePlanningPresent($u, $e);
 
                         // debug($ds);
@@ -391,6 +397,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
 
                 // create
                 foreach ($this->commitmentRepository->findMissingCommitmentsOf($u->getUid(), $this->planningStorageUid, $this->getDutyRosterStorageUids()) as $eventUid) {
+                    /** @var Event $e */
                     $e = $this->eventRepository->findByUid($eventUid);
                     if ($e != null) {
                         $createdCount++;
@@ -399,10 +406,10 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                          * @var Commitment $c
                          */
                         $c = GeneralUtility::makeInstance(Commitment::class);
+
                         if ($e->getDateTime() > $now) {
                             $c->setEvent($e);
                             $c->setUser($u);
-
                             $planningPresent = $u->getCurrentlyOffDuty() ? false : $this->calculatePlanningPresent($u, $e);
 
                             $c->setPresent(
@@ -558,7 +565,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
                     break;
                 case PersonalDutyRosterPlanningTask::PERSONAL_DUTY_ROSTER_PAGE_UID:
                     $this->personalDutyRosterPageUid = intval($value);
-                    break; 
+                    break;
                 case PersonalDutyRosterPlanningTask::SPECIFIED_USER_UIDS:
                     $this->specifiedUserUids = $this->intExplode($value);
                     break;
@@ -583,7 +590,7 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
     }
 
     /**
-     * 
+     *
      * @deprecated remove if all instances with the correct types are saved.
      * @return bool
      */
@@ -601,6 +608,4 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         return parent::save();
 
     }
-
-
 }

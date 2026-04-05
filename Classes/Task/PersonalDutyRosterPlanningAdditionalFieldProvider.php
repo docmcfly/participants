@@ -262,6 +262,7 @@ class PersonalDutyRosterPlanningAdditionalFieldProvider extends AbstractAddition
 
     public function saveAdditionalFields(array $submittedData, AbstractTask $task)
     {
+        /** @var PersonalDutyRosterPlanningTask $task */
         $task->set($submittedData);
     }
 

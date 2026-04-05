@@ -2,6 +2,8 @@
 
 ## Change log
 
+* 5.11.3  :: CLN : Clean code.
+* 5.11.2  :: RMV : Removes the oversized page repository from the scheduler task validation.
 * 5.11.1  :: FIX : The planer task can work with email free users and a missing error text is added.
 * 5.11.0  :: UPD : Release the bootsrap version 16
 * 5.10.0  :: UPD : The calendar can render canceled events and the event color style is adjusted.
