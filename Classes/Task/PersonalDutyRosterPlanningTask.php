@@ -127,28 +127,24 @@ class PersonalDutyRosterPlanningTask extends AbstractTask
         $this->frontendUserRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
         $this->frontendUserRepository->injectPersistenceManager($this->persistenceManager);
         $querySettings = $this->frontendUserRepository->createQuery()->getQuerySettings();
-        $querySettings->setIgnoreEnableFields(true);
         $querySettings->setStoragePageIds($this->getFeUserStorageUids());
         $this->frontendUserRepository->setDefaultQuerySettings($querySettings);
 
         $this->frontendUserGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
         $this->frontendUserGroupRepository->injectPersistenceManager($this->persistenceManager);
         $querySettings = $this->frontendUserGroupRepository->createQuery()->getQuerySettings();
-        $querySettings->setIgnoreEnableFields(true);
         $querySettings->setStoragePageIds($this->getFeUsergroupStorageUids());
         $this->frontendUserGroupRepository->setDefaultQuerySettings($querySettings);
 
         $this->eventRepository = GeneralUtility::makeInstance(EventRepository::class);
         $this->eventRepository->injectPersistenceManager($this->persistenceManager);
         $querySettings = $this->eventRepository->createQuery()->getQuerySettings();
-        $querySettings->setIgnoreEnableFields(true);
         $querySettings->setStoragePageIds($this->getDutyRosterStorageUids());
         $this->eventRepository->setDefaultQuerySettings($querySettings);
 
         $this->commitmentRepository = GeneralUtility::makeInstance(CommitmentRepository::class);
         $this->commitmentRepository->injectPersistenceManager($this->persistenceManager);
         $querySettings = $this->commitmentRepository->createQuery()->getQuerySettings();
-        $querySettings->setIgnoreEnableFields(true);
         $querySettings->setStoragePageIds([
             $this->planningStorageUid
         ]);

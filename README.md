@@ -2,6 +2,7 @@
 
 ## Change log
 
+* 5.11.4  :: FIX : It was a mistake that the 'ignore enabled' flag was set to 'true'.
 * 5.11.3  :: CLN : Clean code.
 * 5.11.2  :: RMV : Removes the oversized page repository from the scheduler task validation.
 * 5.11.1  :: FIX : The planer task can work with email free users and a missing error text is added.
